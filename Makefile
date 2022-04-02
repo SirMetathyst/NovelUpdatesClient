@@ -4,10 +4,13 @@ all: run
 run:
 	go run ./cmd/nuc/main.go
 
-generate: tags genre
+./cmd/nug/nug:
+	go build -o ./cmd/nug/nug ./cmd/nug/main.go
 
-tags:
-	go run ./cmd/tagc/main.go | gofmt > ./tags.go
+generate: ./cmd/nug tags genre
 
-genre:
-	go run ./cmd/genrec/main.go | gofmt > ./genres.go
+tags: ./cmd/nug/nug
+	./cmd/nug/nug -type=tags | gofmt > ./tags_generated.go
+
+genre: ./cmd/nug/nug
+	./cmd/nug/nug -type=genres | gofmt > ./genres_generated.go

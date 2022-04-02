@@ -22,8 +22,8 @@ func TestSeriesFinder_Returns_ResultsCount_As_25(t *testing.T) {
 
 	resp, _ := NovelUpdatesClient.SeriesFinder()
 
-	if len(resp.Results) != 25 {
-		t.Errorf("got `%d`, expected `25`", len(resp.Results))
+	if len(resp) != 25 {
+		t.Errorf("got `%d`, expected `25`", len(resp))
 	}
 }
 
@@ -60,8 +60,8 @@ func TestSeriesFinder_Returns_Title(t *testing.T) {
 	}
 
 	for i, expectedTitle := range expectedTitles {
-		if resp.Results[i].Title != expectedTitle {
-			t.Errorf("expected title: `%s`, got `%s`", expectedTitle, resp.Results[i].Title)
+		if resp[i].Title != expectedTitle {
+			t.Errorf("expected title: `%s`, got `%s`", expectedTitle, resp[i].Title)
 		}
 	}
 }

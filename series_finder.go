@@ -11,11 +11,7 @@ type SeriesFinderSearchResult struct {
 	Title string `json:"title"`
 }
 
-type SeriesFinderSearchResponse struct {
-	Results []SeriesFinderSearchResult `json:"results"`
-}
-
-func SeriesFinder() (*SeriesFinderSearchResponse, error) {
+func SeriesFinder() ([]SeriesFinderSearchResult, error) {
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{
@@ -47,7 +43,7 @@ func SeriesFinder() (*SeriesFinderSearchResponse, error) {
 		log.Fatal(err)
 	}
 
-	return &SeriesFinderSearchResponse{Results: findSFSearchResults(doc)}, nil
+	return findSFSearchResults(doc), nil
 }
 
 func findSFSearchResults(doc *goquery.Document) []SeriesFinderSearchResult {
