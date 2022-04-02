@@ -9,6 +9,34 @@ import (
 	"strings"
 )
 
+func main() {
+
+	flagPackageName := flag.String("package", "NovelUpdatesClient", "The name of the package for the generated output")
+	flagType := flag.String("type", "all", "The type of output to generate: all|tags|genres")
+	flag.Parse()
+
+	b := &strings.Builder{}
+
+	switch *flagType {
+	case "all":
+		writeHeader(b, *flagPackageName)
+		writeGenres(b)
+		writeTags(b)
+		fmt.Println(b.String())
+		return
+	case "genres":
+		writeHeader(b, *flagPackageName)
+		writeGenres(b)
+		fmt.Println(b.String())
+		return
+	case "tags":
+		writeHeader(b, *flagPackageName)
+		writeTags(b)
+		fmt.Println(b.String())
+		return
+	}
+}
+
 func normalisedName(n string) string {
 	n = strcase.ToCamel(n)
 	n = strings.Replace(n, " ", "", -1)
@@ -105,32 +133,4 @@ func writeTags(b *strings.Builder) {
 
 	b.WriteString("}\n")
 	b.WriteString(")")
-}
-
-func main() {
-
-	flagPackageName := flag.String("package", "NovelUpdatesClient", "The name of the package for the generated output")
-	flagType := flag.String("type", "all", "The type of output to generate: all|tags|genres")
-	flag.Parse()
-
-	b := &strings.Builder{}
-
-	switch *flagType {
-	case "all":
-		writeHeader(b, *flagPackageName)
-		writeGenres(b)
-		writeTags(b)
-		fmt.Println(b.String())
-		return
-	case "genres":
-		writeHeader(b, *flagPackageName)
-		writeGenres(b)
-		fmt.Println(b.String())
-		return
-	case "tags":
-		writeHeader(b, *flagPackageName)
-		writeTags(b)
-		fmt.Println(b.String())
-		return
-	}
 }
