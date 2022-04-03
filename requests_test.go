@@ -1,13 +1,13 @@
 package NovelUpdatesClient_test
 
 import (
-	"NovelUpdatesClient"
+	"github.com/SirMetathyst/NovelUpdatesClient"
 	"testing"
 )
 
-func TestSeriesFinder_DoesNotReturn_Nil(t *testing.T) {
+func TestDoSearchRequest_DoesNotReturn_Nil(t *testing.T) {
 
-	resp, err := NovelUpdatesClient.SeriesFinder()
+	resp, err := NovelUpdatesClient.DoSearchRequest(NovelUpdatesClient.Default)
 
 	if err != nil {
 		t.Errorf("expected `nil` error, got `%v`", err)
@@ -18,18 +18,18 @@ func TestSeriesFinder_DoesNotReturn_Nil(t *testing.T) {
 	}
 }
 
-func TestSeriesFinder_Returns_ResultsCount_As_25(t *testing.T) {
+func TestDoSearchRequest_Returns_ResultsCount_As_25(t *testing.T) {
 
-	resp, _ := NovelUpdatesClient.SeriesFinder()
+	resp, _ := NovelUpdatesClient.DoSearchRequest(NovelUpdatesClient.Default)
 
 	if len(resp) != 25 {
 		t.Errorf("got `%d`, expected `25`", len(resp))
 	}
 }
 
-func TestSeriesFinder_Returns_Title(t *testing.T) {
+func TestDoSearchRequest_Returns_Title(t *testing.T) {
 
-	resp, _ := NovelUpdatesClient.SeriesFinder()
+	resp, _ := NovelUpdatesClient.DoSearchRequest(NovelUpdatesClient.Default)
 
 	expectedTitles := []string{
 		".hack//AI Buster",

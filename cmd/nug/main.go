@@ -55,21 +55,21 @@ func writeHeader(b *strings.Builder, packageName string) {
 
 func writeGenres(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.Genres()
+	results, err := NovelUpdatesClient.DoFetchGenresRequest(NovelUpdatesClient.Default)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	//////// Genres
+	//////// Genre
 	b.WriteString("type Genre string\n\n")
-	b.WriteString(fmt.Sprintf("// Genres: Total(%d)\n", len(results)))
+	b.WriteString(fmt.Sprintf("// Genre: Total(%d)\n", len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\tGenre%s Genre = \"%s\"\n", normalisedName(result.Name), result.Value))
 	}
 
-	b.WriteString(")\n")
+	b.WriteString(")\n\n")
 
 	//////// GenreToName
 	b.WriteString("var (\n")
@@ -91,26 +91,26 @@ func writeGenres(b *strings.Builder) {
 	}
 
 	b.WriteString("}\n")
-	b.WriteString(")")
+	b.WriteString(")\n")
 }
 
 func writeTags(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.Tags()
+	results, err := NovelUpdatesClient.DoFetchTagsRequest(NovelUpdatesClient.Default)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	//////// Tags
+	//////// Tag
 	b.WriteString("type Tag string\n\n")
-	b.WriteString(fmt.Sprintf("// Tags: Total(%d)\n", len(results)))
+	b.WriteString(fmt.Sprintf("// Tag: Total(%d)\n", len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\tTag%s Tag = \"%s\"\n", normalisedName(result.Name), result.Value))
 	}
 
-	b.WriteString(")\n")
+	b.WriteString(")\n\n")
 
 	//////// TagToName
 	b.WriteString("var (\n")
@@ -132,5 +132,5 @@ func writeTags(b *strings.Builder) {
 	}
 
 	b.WriteString("}\n")
-	b.WriteString(")")
+	b.WriteString(")\n")
 }
