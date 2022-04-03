@@ -82,7 +82,7 @@ func DoFetchTagsRequest() (r []TagResult, err error) {
 
 func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 
-	doc, err := createDocumentFromURL(fmt.Sprintf("https://www.novelupdates.com/series-finder/%s", buildParamStringFromSearchQuery(q)))
+	doc, err := createDocumentFromURL(fmt.Sprintf("https://www.novelupdates.com/series-finder/%s", BuildSearchStringFromQuery(q)))
 	if err != nil {
 		return nil, err
 	}

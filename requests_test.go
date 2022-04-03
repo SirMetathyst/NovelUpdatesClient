@@ -29,7 +29,7 @@ func TestDoSearchRequest_Returns_ResultsCount_As_25(t *testing.T) {
 
 func TestDoSearchRequest_Returns_Title(t *testing.T) {
 
-	resp, _ := NovelUpdatesClient.DoSearchRequest(nil)
+	resp, _ := NovelUpdatesClient.DoSearchRequest(&NovelUpdatesClient.SearchQuery{OrderBy: NovelUpdatesClient.OrderAscending})
 
 	expectedTitles := []string{
 		".hack//AI Buster",
