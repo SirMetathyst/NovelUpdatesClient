@@ -1,15 +1,57 @@
 package NovelUpdatesClient
 
-import "github.com/PuerkitoBio/goquery"
+import (
+	"fmt"
+	"github.com/PuerkitoBio/goquery"
+)
 
-func DoFetchGenresRequest(client Interface) (r []GenreResult, err error) {
+func DoFetchNovelTypeRequest() (r []NovelTypeResult, err error) {
 
-	// Do request
-	doc, err := NewGetRequest(client, "https://www.novelupdates.com/series-finder")
+	// Create Document From URL
+	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
 
+	// Find & Extract Data
+	doc.Find(".rankfl > div:nth-child(3) a").Each(func(i int, s *goquery.Selection) {
+		r = append(r, NovelTypeResult{
+			Name:  s.Text(),
+			Value: s.AttrOr("genreid", ""),
+		})
+	})
+
+	return r, nil
+}
+
+func DoFetchLanguageRequest() (r []NovelTypeResult, err error) {
+
+	// Create Document From URL
+	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	if err != nil {
+		return nil, err
+	}
+
+	// Find & Extract Data
+	doc.Find("div.g-cols:nth-child(5) a").Each(func(i int, s *goquery.Selection) {
+		r = append(r, NovelTypeResult{
+			Name:  s.Text(),
+			Value: s.AttrOr("genreid", ""),
+		})
+	})
+
+	return r, nil
+}
+
+func DoFetchGenresRequest() (r []GenreResult, err error) {
+
+	// Create Document From URL
+	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	if err != nil {
+		return nil, err
+	}
+
+	// Find & Extract Data
 	doc.Find("div.g-cols:nth-child(24) a").Each(func(i int, s *goquery.Selection) {
 		r = append(r, GenreResult{
 			Name:  s.Text(),
@@ -20,15 +62,14 @@ func DoFetchGenresRequest(client Interface) (r []GenreResult, err error) {
 	return r, nil
 }
 
-func DoFetchTagsRequest(client Interface) (r []TagResult, err error) {
+func DoFetchTagsRequest() (r []TagResult, err error) {
 
-	// Do request
-	doc, err := NewGetRequest(client, "https://www.novelupdates.com/series-finder")
+	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
 
-	// Find data
+	// Find & Extract Data
 	doc.Find("select#tags_include option").Each(func(i int, s *goquery.Selection) {
 		r = append(r, TagResult{
 			Name:  s.Text(),
@@ -39,15 +80,14 @@ func DoFetchTagsRequest(client Interface) (r []TagResult, err error) {
 	return r, nil
 }
 
-func DoSearchRequest(client Interface) (r []SearchResult, err error) {
+func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 
-	// Do request
-	doc, err := NewGetRequest(client, "https://www.novelupdates.com/series-finder/?sf=1&sort=sdate&order=asc")
+	doc, err := createDocumentFromURL(fmt.Sprintf("https://www.novelupdates.com/series-finder/%s", buildParamStringFromSearchQuery(q)))
 	if err != nil {
 		return nil, err
 	}
 
-	// Find data
+	// Find & Extract Data
 	doc.Find("div.search_main_box_nu").Each(func(i int, s *goquery.Selection) {
 		r = append(r, SearchResult{Title: s.Find(".search_title").Text()})
 	})
