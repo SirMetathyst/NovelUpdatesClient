@@ -5,10 +5,10 @@ const (
 )
 
 const (
-	StoryStatusAll       = 1
-	StoryStatusCompleted = 2
-	StoryStatusOngoing   = 3
-	StoryStatusHiatus    = 4
+	StoryStatusAll       = "1"
+	StoryStatusCompleted = "2"
+	StoryStatusOngoing   = "3"
+	StoryStatusHiatus    = "4"
 )
 
 const (
