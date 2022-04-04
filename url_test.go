@@ -939,7 +939,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 	for _, n := range data {
 		urlString := buildSearchStringFromQuery(&n.Query)
 		parsedUrl, _ := url.ParseQuery(urlString)
-		t.Logf("URL: %s", urlString)
+		t.Logf("QUERY: %s", urlString)
 
 		for k, v := range n.Expected {
 			actual := parsedUrl.Get(k)

@@ -3,6 +3,8 @@ package NovelUpdatesClient
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"strconv"
+	"strings"
 )
 
 func DoFetchNovelTypeRequest() (r []NovelTypeResult, err error) {
@@ -89,7 +91,58 @@ func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 
 	// Find & Extract Data
 	doc.Find("div.search_main_box_nu").Each(func(i int, s *goquery.Selection) {
-		r = append(r, SearchResult{Title: s.Find(".search_title").Text()})
+
+		oTitle := s.Find(".search_title").Text()
+
+		///////////////////////////////////////////////////////////
+		Chapters := -1
+		{
+			oChapters := s.Find(".search_stats span:nth-child(1)").Text()
+			oChapters = strings.Replace(oChapters, "Chapters", "", -1)
+			oChapters = strings.Trim(oChapters, " ")
+			if Chapters, err = strconv.Atoi(oChapters); err != nil {
+				Chapters = -1
+			}
+		}
+		///////////////////////////////////////////////////////////
+		ReleaseFrequency := -1.0
+		{
+			oReleaseFrequency := s.Find(".search_stats span:nth-child(2)").Text()
+			oReleaseFrequency = strings.Replace(oReleaseFrequency, "Day(s)", "", -1)
+			oReleaseFrequency = strings.Replace(oReleaseFrequency, "Every", "", -1)
+			oReleaseFrequency = strings.Trim(oReleaseFrequency, " ")
+			if ReleaseFrequency, err = strconv.ParseFloat(oReleaseFrequency, 32); err != nil {
+				ReleaseFrequency = -1.0
+			}
+		}
+		///////////////////////////////////////////////////////////
+		Readers := -1
+		{
+			oReaders := s.Find(".search_stats span:nth-child(3)").Text()
+			oReaders = strings.Replace(oReaders, "Readers", "", -1)
+			oReaders = strings.Trim(oReaders, " ")
+			if Readers, err = strconv.Atoi(oReaders); err != nil {
+				Readers = -1.0
+			}
+		}
+		///////////////////////////////////////////////////////////
+		Reviews := -1
+		{
+			oReviews := s.Find(".search_stats span:nth-child(4)").Text()
+			oReviews = strings.Replace(oReviews, "Reviews", "", -1)
+			oReviews = strings.Trim(oReviews, " ")
+			if Reviews, err = strconv.Atoi(oReviews); err != nil {
+				Reviews = -1.0
+			}
+		}
+
+		r = append(r, SearchResult{
+			Title:                  oTitle,
+			Chapters:               Chapters,
+			ReleaseFrequencyInDays: ReleaseFrequency,
+			Readers:                Readers,
+			Reviews:                Reviews,
+		})
 	})
 
 	return r, nil

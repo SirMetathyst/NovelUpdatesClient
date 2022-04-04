@@ -88,5 +88,14 @@ type SearchQuery struct {
 }
 
 type SearchResult struct {
-	Title string `json:"title"`
+	Title                  string   `json:"title"`
+	Chapters               int      `json:"chapters"`
+	ReleaseFrequencyInDays float64  `json:"release_frequency_in_days"`
+	Readers                int      `json:"readers"`
+	Reviews                int      `json:"reviews"`
+	LastUpdated            string   `json:"last_updated"`
+	Genre                  []string `json:"genre"`
+	Description            string   `json:"description"`
+	ShortLanguage          string   `json:"short_language"`
+	Rating                 string   `json:"rating"`
 }

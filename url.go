@@ -223,6 +223,9 @@ func buildOrder(q *SearchQuery) string {
 }
 
 func buildSearchStringFromQuery(q *SearchQuery) string {
+	if q == nil {
+		return fmt.Sprintf("%s=1", urlSeriesFinderKey)
+	}
 	var params []string
 	params = append(params, fmt.Sprintf("%s=1", urlSeriesFinderKey))
 	params = appendNonEmpty(params, buildNovelType(q))
