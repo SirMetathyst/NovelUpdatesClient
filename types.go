@@ -1,51 +1,40 @@
 package NovelUpdatesClient
 
-type StoryStatus int
-
 const (
-	StoryStatusDefault   StoryStatus = 1
-	StoryStatusAll       StoryStatus = 1
-	StoryStatusCompleted StoryStatus = 2
-	StoryStatusOngoing   StoryStatus = 3
-	StoryStatusHiatus    StoryStatus = 4
+	SeriesFinderEnabled = "1"
 )
 
-type Sort string
-
 const (
-	SortByDefault     Sort = "sdate"
-	SortByChapters    Sort = "srel"
-	SortByFrequency   Sort = "sfrel"
-	SortByRank        Sort = "srank"
-	SortByRating      Sort = "srating"
-	SortByReaders     Sort = "sread"
-	SortByReviews     Sort = "sreview"
-	SortByTitle       Sort = "abc"
-	SortByLastUpdated Sort = "sdate"
+	StoryStatusAll       = 1
+	StoryStatusCompleted = 2
+	StoryStatusOngoing   = 3
+	StoryStatusHiatus    = 4
 )
 
-type Order string
-
 const (
-	OrderDefault    Order = "desc"
-	OrderAscending  Order = "asc"
-	OrderDescending Order = "desc"
+	SortByChapters    = "srel"
+	SortByFrequency   = "sfrel"
+	SortByRank        = "srank"
+	SortByRating      = "srating"
+	SortByReaders     = "sread"
+	SortByReviews     = "sreview"
+	SortByTitle       = "abc"
+	SortByLastUpdated = "sdate"
 )
 
-type ScaleType string
-
 const (
-	ScaleDefault ScaleType = "min"
-	ScaleMin     ScaleType = "min"
-	ScaleMax     ScaleType = "max"
+	OrderAscending  = "asc"
+	OrderDescending = "desc"
 )
 
-type Operator string
+const (
+	ScaleMin = "min"
+	ScaleMax = "max"
+)
 
 const (
-	OperatorDefault Operator = "and"
-	OperatorAnd     Operator = "and"
-	OperatorOr      Operator = "or"
+	OperatorAnd = "and"
+	OperatorOr  = "or"
 )
 
 type NovelTypeResult struct {
@@ -69,33 +58,33 @@ type TagResult struct {
 }
 
 type SearchQuery struct {
-	NovelType              []NovelType `json:"novel_type"`
-	Language               []Language  `json:"language"`
-	ChaptersMinMax         ScaleType   `json:"chapters_min_max"`
-	Chapters               int         `json:"chapters"`
-	ReleaseFrequencyMinMax ScaleType   `json:"release_frequency_min_max"`
-	ReleaseFrequency       int         `json:"release_frequency"`
-	ReviewsMinMax          ScaleType   `json:"reviews_min_max"`
-	Reviews                int         `json:"reviews"`
-	RatingMinMax           ScaleType   `json:"rating_min_max"`
-	Rating                 int         `json:"rating"`
-	NumberOfRatingsMinMax  ScaleType   `json:"number_of_ratings_min_max"`
-	NumberOfRatings        int         `json:"number_of_ratings"`
-	ReadersMinMax          ScaleType   `json:"readers_min_max"`
-	Readers                int         `json:"readers"`
-	FirstReleaseDateMinMax ScaleType   `json:"first_release_date_min_max"`
-	FirstReleaseDate       string      `json:"first_release_date"`
-	LastReleaseDateMinMax  ScaleType   `json:"last_release_date_min_max"`
-	LastReleaseDate        string      `json:"last_release_date"`
-	GenreOperator          Operator    `json:"genre_operator"`
-	GenreInclude           []Genre     `json:"genre_include"`
-	GenreExclude           []Genre     `json:"genre_exclude"`
-	TagOperator            Operator    `json:"tag_operator"`
-	TagInclude             []Tag       `json:"tag_include"`
-	TagExclude             []Tag       `json:"tag_exclude"`
-	StoryStatus            StoryStatus `json:"story_status"`
-	SortBy                 Sort        `json:"sort_by"`
-	OrderBy                Order       `json:"order_by"`
+	NovelType             []string `json:"novel_type"`
+	Language              []string `json:"language"`
+	ChaptersScale         string   `json:"chapters_scale"`
+	Chapters              int      `json:"chapters"`
+	ReleaseFrequencyScale string   `json:"release_frequency_scale"`
+	ReleaseFrequency      int      `json:"release_frequency"`
+	ReviewsScale          string   `json:"reviews_scale"`
+	Reviews               int      `json:"reviews"`
+	RatingScale           string   `json:"rating_scale"`
+	Rating                int      `json:"rating"`
+	NumberOfRatingsScale  string   `json:"number_of_ratings_scale"`
+	NumberOfRatings       int      `json:"number_of_ratings"`
+	ReadersScale          string   `json:"readers_scale"`
+	Readers               int      `json:"readers"`
+	FirstReleaseDateScale string   `json:"first_release_date_scale"`
+	FirstReleaseDate      string   `json:"first_release_date"`
+	LastReleaseDateScale  string   `json:"last_release_date_scale"`
+	LastReleaseDate       string   `json:"last_release_date"`
+	GenreOperator         string   `json:"genre_operator"`
+	GenreInclude          []string `json:"genre_include"`
+	GenreExclude          []string `json:"genre_exclude"`
+	TagOperator           string   `json:"tag_operator"`
+	TagInclude            []string `json:"tag_include"`
+	TagExclude            []string `json:"tag_exclude"`
+	StoryStatus           string   `json:"story_status"`
+	SortBy                string   `json:"sort_by"`
+	OrderBy               string   `json:"order_by"`
 }
 
 type SearchResult struct {

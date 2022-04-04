@@ -1,59 +1,246 @@
-package NovelUpdatesClient_test
+package NovelUpdatesClient
 
 import (
-	"github.com/SirMetathyst/NovelUpdatesClient"
+	"github.com/stretchr/testify/assert"
+	"net/url"
+	"strings"
 	"testing"
 )
 
-func TestBuildSearchStringFromQuery_NovelType_Empty(t *testing.T) {
+func TestBuildSearchStringFromQuery(t *testing.T) {
 
-	expected := "?sf=1&sort=sdate&order=desc"
-	if str := NovelUpdatesClient.BuildSearchStringFromQuery(nil); str != expected {
-		t.Errorf("expected `%s`, got `%s`", expected, str)
-	}
-}
-
-func TestBuildSearchStringFromQuery_NovelType_One(t *testing.T) {
-
-	q := &NovelUpdatesClient.SearchQuery{
-		NovelType: []NovelUpdatesClient.NovelType{
-			NovelUpdatesClient.NovelTypeWebNovel,
+	data := []struct {
+		Query    SearchQuery
+		Expected map[string][]string
+	}{
+		{
+			Query: SearchQuery{
+				NovelType: []string{
+					NovelTypeLightNovel,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlNovelTypeKey:    {NovelTypeLightNovel},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				NovelType: []string{
+					NovelTypeLightNovel,
+					NovelTypeWebNovel,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlNovelTypeKey:    {NovelTypeLightNovel, NovelTypeWebNovel},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				NovelType: []string{
+					NovelTypeLightNovel,
+					NovelTypeWebNovel,
+					NovelTypePublishedNovel,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlNovelTypeKey:    {NovelTypeLightNovel, NovelTypeWebNovel, NovelTypePublishedNovel},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Language: []string{
+					LanguageChinese,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlLanguageKey:     {LanguageChinese},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Language: []string{
+					LanguageChinese,
+					LanguageFilipino,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlLanguageKey:     {LanguageChinese, LanguageFilipino},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Language: []string{
+					LanguageChinese,
+					LanguageFilipino,
+					LanguageIndonesian,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlLanguageKey:     {LanguageChinese, LanguageFilipino, LanguageIndonesian},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Language: []string{
+					LanguageChinese,
+					LanguageFilipino,
+					LanguageIndonesian,
+					LanguageJapanese,
+				},
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlLanguageKey:     {LanguageChinese, LanguageFilipino, LanguageIndonesian, LanguageJapanese},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Chapters: 10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:  {SeriesFinderEnabled},
+				urlChaptersScaleKey: {ScaleMin},
+				urlChaptersKey:      {"10"},
+				urlSortKey:          {SortByLastUpdated},
+				urlOrderKey:         {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ChaptersScale: ScaleMin,
+				Chapters:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:  {SeriesFinderEnabled},
+				urlChaptersScaleKey: {ScaleMin},
+				urlChaptersKey:      {"10"},
+				urlSortKey:          {SortByLastUpdated},
+				urlOrderKey:         {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ChaptersScale: ScaleMax,
+				Chapters:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:  {SeriesFinderEnabled},
+				urlChaptersScaleKey: {ScaleMax},
+				urlChaptersKey:      {"10"},
+				urlSortKey:          {SortByLastUpdated},
+				urlOrderKey:         {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ReleaseFrequency: 10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:          {SeriesFinderEnabled},
+				urlReleaseFrequencyScaleKey: {ScaleMax},
+				urlReleaseFrequencyKey:      {"10"},
+				urlSortKey:                  {SortByLastUpdated},
+				urlOrderKey:                 {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ReleaseFrequencyScale: ScaleMin,
+				ReleaseFrequency:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:          {SeriesFinderEnabled},
+				urlReleaseFrequencyScaleKey: {ScaleMin},
+				urlReleaseFrequencyKey:      {"10"},
+				urlSortKey:                  {SortByLastUpdated},
+				urlOrderKey:                 {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ReleaseFrequencyScale: ScaleMax,
+				ReleaseFrequency:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey:          {SeriesFinderEnabled},
+				urlReleaseFrequencyScaleKey: {ScaleMax},
+				urlReleaseFrequencyKey:      {"10"},
+				urlSortKey:                  {SortByLastUpdated},
+				urlOrderKey:                 {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				Reviews: 10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlReviewsScaleKey: {ScaleMin},
+				urlReviewsKey:      {"10"},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ReviewsScale: ScaleMin,
+				Reviews:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlReviewsScaleKey: {ScaleMin},
+				urlReviewsKey:      {"10"},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
+		},
+		{
+			Query: SearchQuery{
+				ReviewsScale: ScaleMax,
+				Reviews:      10,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlReviewsScaleKey: {ScaleMax},
+				urlReviewsKey:      {"10"},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+			},
 		},
 	}
 
-	expected := "?sf=1&nt=2444&sort=sdate&order=desc"
-	if str := NovelUpdatesClient.BuildSearchStringFromQuery(q); str != expected {
-		t.Errorf("expected `%s`, got `%s`", expected, str)
-	}
-}
+	for _, n := range data {
+		urlString := buildSearchStringFromQuery(&n.Query)
+		parsedUrl, _ := url.ParseQuery(urlString)
+		t.Logf("URL: %s", urlString)
 
-func TestBuildSearchStringFromQuery_NovelType_Two(t *testing.T) {
+		for k, v := range n.Expected {
+			actual := parsedUrl.Get(k)
+			actualSplit := strings.Split(actual, ",")
 
-	q := &NovelUpdatesClient.SearchQuery{
-		NovelType: []NovelUpdatesClient.NovelType{
-			NovelUpdatesClient.NovelTypeWebNovel,
-			NovelUpdatesClient.NovelTypePublishedNovel,
-		},
-	}
-
-	expected := "?sf=1&nt=2444,26874&sort=sdate&order=desc"
-	if str := NovelUpdatesClient.BuildSearchStringFromQuery(q); str != expected {
-		t.Errorf("expected `%s`, got `%s`", expected, str)
-	}
-}
-
-func TestBuildSearchStringFromQuery_NovelType_Three(t *testing.T) {
-
-	q := &NovelUpdatesClient.SearchQuery{
-		NovelType: []NovelUpdatesClient.NovelType{
-			NovelUpdatesClient.NovelTypeWebNovel,
-			NovelUpdatesClient.NovelTypePublishedNovel,
-			NovelUpdatesClient.NovelTypePublishedNovel,
-		},
-	}
-
-	expected := "?sf=1&nt=2444,26874,26874&sort=sdate&order=desc"
-	if str := NovelUpdatesClient.BuildSearchStringFromQuery(q); str != expected {
-		t.Errorf("expected `%s`, got `%s`", expected, str)
+			for _, vv := range v {
+				assert.Containsf(t, actualSplit, vv, "for query param: %s", k)
+			}
+		}
 	}
 }

@@ -1,13 +1,12 @@
-package NovelUpdatesClient_test
+package NovelUpdatesClient
 
 import (
-	"github.com/SirMetathyst/NovelUpdatesClient"
 	"testing"
 )
 
 func TestDoSearchRequest_DoesNotReturn_Nil(t *testing.T) {
 
-	resp, err := NovelUpdatesClient.DoSearchRequest(nil)
+	resp, err := DoSearchRequest(nil)
 
 	if err != nil {
 		t.Errorf("expected `nil` error, got `%v`", err)
@@ -20,7 +19,7 @@ func TestDoSearchRequest_DoesNotReturn_Nil(t *testing.T) {
 
 func TestDoSearchRequest_Returns_ResultsCount_As_25(t *testing.T) {
 
-	resp, _ := NovelUpdatesClient.DoSearchRequest(nil)
+	resp, _ := DoSearchRequest(nil)
 
 	if len(resp) != 25 {
 		t.Errorf("got `%d`, expected `25`", len(resp))
@@ -29,7 +28,7 @@ func TestDoSearchRequest_Returns_ResultsCount_As_25(t *testing.T) {
 
 func TestDoSearchRequest_Returns_Title(t *testing.T) {
 
-	resp, _ := NovelUpdatesClient.DoSearchRequest(&NovelUpdatesClient.SearchQuery{OrderBy: NovelUpdatesClient.OrderAscending})
+	resp, _ := DoSearchRequest(&SearchQuery{OrderBy: OrderAscending})
 
 	expectedTitles := []string{
 		".hack//AI Buster",
