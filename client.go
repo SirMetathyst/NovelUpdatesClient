@@ -4,33 +4,16 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"io"
 	"net/http"
+	"strings"
 )
 
 var client = &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{MaxVersion: tls.VersionTLS12}}}
 
-func createDocumentFromURL(url string) (*goquery.Document, error) {
+type BasicRequester struct{}
 
-	response, err := doGetRequest(url)
-	if err != nil {
-		return nil, err
-	}
-
-	// NewDocumentFromReader does not
-	// close body itself.
-	body := response.Body
-	defer body.Close()
-
-	// Create GoQuery Document
-	doc, err := goquery.NewDocumentFromReader(body)
-	if err != nil {
-		return nil, err
-	}
-
-	return doc, nil
-}
-
-func doGetRequest(url string) (*http.Response, error) {
+func (s *BasicRequester) Request(url string) (io.ReadCloser, error) {
 
 	// Create GET Request
 	req, err := http.NewRequest("GET", url, nil)
@@ -46,5 +29,37 @@ func doGetRequest(url string) (*http.Response, error) {
 		return nil, fmt.Errorf("err: %s", response.Status)
 	}
 
-	return response, nil
+	return response.Body, nil
+}
+
+func createDocumentFromRequest(req Requester, url string) (*goquery.Document, error) {
+
+	response, err := req.Request(url)
+	if err != nil {
+		return nil, err
+	}
+
+	// NewDocumentFromReader does not
+	// close body itself.
+	defer response.Close()
+
+	// Create GoQuery Document
+	doc, err := goquery.NewDocumentFromReader(response)
+	if err != nil {
+		return nil, err
+	}
+
+	return doc, nil
+}
+
+type closerWrapper struct{ io.Reader }
+
+func (s closerWrapper) Close() error { return nil }
+
+func DummyRequester(content string) RequesterFunc {
+	return func(url string) (io.ReadCloser, error) {
+		reader := strings.NewReader(content)
+		readCloser := closerWrapper{reader}
+		return readCloser, nil
+	}
 }

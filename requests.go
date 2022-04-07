@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-func DoFetchNovelTypeRequest() (r []NovelTypeResult, err error) {
+func DoFetchNovelTypeRequest(req Requester) (r []NovelTypeResult, err error) {
 
 	// Create Document From URL
-	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
@@ -26,10 +26,10 @@ func DoFetchNovelTypeRequest() (r []NovelTypeResult, err error) {
 	return r, nil
 }
 
-func DoFetchLanguageRequest() (r []NovelTypeResult, err error) {
+func DoFetchLanguageRequest(req Requester) (r []NovelTypeResult, err error) {
 
 	// Create Document From URL
-	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
@@ -45,10 +45,10 @@ func DoFetchLanguageRequest() (r []NovelTypeResult, err error) {
 	return r, nil
 }
 
-func DoFetchGenresRequest() (r []GenreResult, err error) {
+func DoFetchGenresRequest(req Requester) (r []GenreResult, err error) {
 
 	// Create Document From URL
-	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
@@ -64,9 +64,9 @@ func DoFetchGenresRequest() (r []GenreResult, err error) {
 	return r, nil
 }
 
-func DoFetchTagsRequest() (r []TagResult, err error) {
+func DoFetchTagsRequest(req Requester) (r []TagResult, err error) {
 
-	doc, err := createDocumentFromURL("https://www.novelupdates.com/series-finder")
+	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
 	if err != nil {
 		return nil, err
 	}
@@ -82,9 +82,9 @@ func DoFetchTagsRequest() (r []TagResult, err error) {
 	return r, nil
 }
 
-func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
+func DoSearchRequest(req Requester, q *SearchQuery) (r []SearchResult, err error) {
 
-	doc, err := createDocumentFromURL(fmt.Sprintf("https://www.novelupdates.com/series-finder/?%s", buildSearchStringFromQuery(q)))
+	doc, err := createDocumentFromRequest(req, fmt.Sprintf("https://www.novelupdates.com/series-finder/?%s", buildSearchStringFromQuery(q)))
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,13 @@ func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 	// Find & Extract Data
 	doc.Find("div.search_main_box_nu").Each(func(i int, s *goquery.Selection) {
 
-		oTitle := s.Find(".search_title").Text()
+		Title := "ERR"
+		{
+			oTitle := s.Find(".search_title").Text()
+			if oTitle != "" {
+				Title = oTitle
+			}
+		}
 
 		///////////////////////////////////////////////////////////
 		Chapters := -1
@@ -111,7 +117,7 @@ func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 			oReleaseFrequency = strings.Replace(oReleaseFrequency, "Day(s)", "", -1)
 			oReleaseFrequency = strings.Replace(oReleaseFrequency, "Every", "", -1)
 			oReleaseFrequency = strings.Trim(oReleaseFrequency, " ")
-			if ReleaseFrequency, err = strconv.ParseFloat(oReleaseFrequency, 32); err != nil {
+			if ReleaseFrequency, err = strconv.ParseFloat(oReleaseFrequency, 64); err != nil {
 				ReleaseFrequency = -1.0
 			}
 		}
@@ -137,7 +143,7 @@ func DoSearchRequest(q *SearchQuery) (r []SearchResult, err error) {
 		}
 
 		r = append(r, SearchResult{
-			Title:                  oTitle,
+			Title:                  Title,
 			Chapters:               Chapters,
 			ReleaseFrequencyInDays: ReleaseFrequency,
 			Readers:                Readers,

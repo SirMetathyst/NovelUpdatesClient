@@ -934,6 +934,17 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				urlOrderKey:        {OrderAscending},
 			},
 		},
+		{
+			Query: SearchQuery{
+				Page: 1,
+			},
+			Expected: map[string][]string{
+				urlSeriesFinderKey: {SeriesFinderEnabled},
+				urlSortKey:         {SortByLastUpdated},
+				urlOrderKey:        {OrderDescending},
+				urlPageKey:         {"1"},
+			},
+		},
 	}
 
 	for _, n := range data {

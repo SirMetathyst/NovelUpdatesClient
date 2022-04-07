@@ -1,5 +1,17 @@
 package NovelUpdatesClient
 
+import "io"
+
+type Requester interface {
+	Request(url string) (io.ReadCloser, error)
+}
+
+type RequesterFunc func(url string) (io.ReadCloser, error)
+
+func (f RequesterFunc) Request(url string) (io.ReadCloser, error) {
+	return f(url)
+}
+
 const (
 	SeriesFinderEnabled = "1"
 )
@@ -85,10 +97,12 @@ type SearchQuery struct {
 	StoryStatus           string   `json:"story_status"`
 	SortBy                string   `json:"sort_by"`
 	OrderBy               string   `json:"order_by"`
+	Page                  int      `json:"page"`
 }
 
 type SearchResult struct {
 	Title                  string   `json:"title"`
+	Slug                   string   `json:"slug"`
 	Chapters               int      `json:"chapters"`
 	ReleaseFrequencyInDays float64  `json:"release_frequency_in_days"`
 	Readers                int      `json:"readers"`

@@ -34,6 +34,7 @@ const (
 	urlStoryStatusKey           = "ss"
 	urlSortKey                  = "sort"
 	urlOrderKey                 = "order"
+	urlPageKey                  = "pg"
 )
 
 // TODO: this code is crap (but it works) so clean it up later
@@ -222,6 +223,13 @@ func buildOrder(q *SearchQuery) string {
 	return fmt.Sprintf("%s=%s", urlOrderKey, OrderDescending)
 }
 
+func buildPage(q *SearchQuery) string {
+	if q != nil && q.Page >= 1 {
+		return fmt.Sprintf("%s=%d", urlPageKey, q.Page)
+	}
+	return ""
+}
+
 func buildSearchStringFromQuery(q *SearchQuery) string {
 	if q == nil {
 		return fmt.Sprintf("%s=1", urlSeriesFinderKey)
@@ -243,5 +251,6 @@ func buildSearchStringFromQuery(q *SearchQuery) string {
 	params = appendNonEmpty(params, buildStoryStatus(q))
 	params = appendNonEmpty(params, buildSort(q))
 	params = appendNonEmpty(params, buildOrder(q))
+	params = appendNonEmpty(params, buildPage(q))
 	return strings.Join(params, "&")
 }
