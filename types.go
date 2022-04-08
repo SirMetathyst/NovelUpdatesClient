@@ -111,5 +111,5 @@ type SearchResult struct {
 	Genre                  []string `json:"genre"`
 	Description            string   `json:"description"`
 	ShortLanguage          string   `json:"short_language"`
-	Rating                 string   `json:"rating"`
+	Rating                 float64  `json:"rating"`
 }

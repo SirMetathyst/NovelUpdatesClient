@@ -3701,28 +3701,17 @@ You must be logged in to use this option.
    	                 
                 
             <div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_46672.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span> (3.4)</div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid46672" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/another-world-awakening-transcendental-create-skill/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i> 04-07-2022</span></div><div class="search_genre"><a class="gennew search" gid="8" href="https://www.novelupdates.com/genre/action/" title="View All Action Related Series" >Action</a> <a class="gennew search" gid="13" href="https://www.novelupdates.com/genre/adventure/" title="View All Adventure Related Series" >Adventure</a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" >Fantasy</a> <a class="gennew search" gid="3" href="https://www.novelupdates.com/genre/harem/" title="View All Harem Related Series" >Harem</a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" >Romance</a></div>A bus accident during a school trip sends the entire class to another world. After being transported to another world, they are attacked by monsters and bandits, and while their classmates awaken sword and magic skills one after another, Takaya Nagami’s abilities never awaken, and he ends up being kicked out of the class party. Finding himself all alone in a world where he can’t rely on anyone, Takaya despairs and impulsively tries to commit suicide, but he survived and is rescued by local adventurers while in a miserable state.<span class="dots">... </span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
-In the course of his adventures with these adventurers, he gradually gains strength, confidence, and trust (as well as cute girls!) by using his production and processing skills. An exhilarating and thrilling tale of growth in a different world that follows the dullest boy in his class as he becomes an unstoppable adventurer!
+			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span></div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid46672" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/another-world-awakening-transcendental-create-skill/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="8" href="https://www.novelupdates.com/genre/action/" title="View All Action Related Series" ></a> <a class="gennew search" gid="13" href="https://www.novelupdates.com/genre/adventure/" title="View All Adventure Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="3" href="https://www.novelupdates.com/genre/harem/" title="View All Harem Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_30279.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span> (4.1)</div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid30279" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/ill-become-a-villainess-that-will-go-down-in-history/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i> 04-07-2022</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" >Comedy</a> <a class="gennew search" gid="9" href="https://www.novelupdates.com/genre/drama/" title="View All Drama Related Series" >Drama</a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" >Fantasy</a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" >Romance</a> <a class="gennew search" gid="157" href="https://www.novelupdates.com/genre/shoujo/" title="View All Shoujo Related Series" >Shoujo</a></div>I’ve always dreamed of becoming a villainess, but I never thought that I would actually become one….!<span class="dots">... </span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
-This is the story of a young girl who aspires to become a villainous noble girl who’s capable of growing stronger through every confrontation that she is faced with.
+			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span></div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid30279" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/ill-become-a-villainess-that-will-go-down-in-history/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="9" href="https://www.novelupdates.com/genre/drama/" title="View All Drama Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a> <a class="gennew search" gid="157" href="https://www.novelupdates.com/genre/shoujo/" title="View All Shoujo Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_26659.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;">CN</span> (4.1)</div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid26659" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/i-help-the-richest-man-spend-money-to-prevent-disasters/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i> 04-07-2022</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" >Comedy</a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" >Fantasy</a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" >Romance</a></div>Ye Zhi not only inherited the run-down house, but also the engagement with a man. The man who met his true love disliked his fiancée in all ways and asked for divorce.<span class="dots">... </span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
-In order to express their guilt, the man’s family decided to make up for it with Ye Zhi. But she did not want their ‘compensation’ and simply left without turning her back.<p style="margin-top:-5px;"></p>
-The next second, Ye Zhi was picked up by a Rolls Royce.<p style="margin-top:-5px;"></p>
-Gu Ren, the son of the richest man, had a tough life and couldn’t live past 30 years old. Only Ye Zhi, who was born on the cloudy day of the lunar year, was the most suitable match that could make him survive.<p style="margin-top:-5px;"></p>
-Ye Zhi and Gu Ren got married. Gu Ren gave her a bank card. All she has to do is—<p style="margin-top:-5px;"></p>
-Spend money for him! Squander his fortune!<p style="margin-top:-5px;"></p>
-Ye Zhi bought a Lamborghini for Gu Ren, but he had an accident as soon as he drove the car.<p style="margin-top:-5px;"></p>
-As soon as she bought some Hermes platinum bags for herself, Gu Ren signed a more than one billion worth contract.<p style="margin-top:-5px;"></p>
-It turned out that the money could only be spent on herself.  The more she spent, the more prosperous she became.<p style="margin-top:-5px;"></p>
-Since then her life has changed completely. She became a rich woman who owns luxury items, limited edition bags and a villa overlooking the Forbidden City.<p style="margin-top:-5px;"></p>
-The man thought that Ye Zhi, who he had broken up with, must have suffered a lot. Until one day, he saw his former fiancée walking in the street, followed by a striking Lamborghini.<p style="margin-top:-5px;"></p>
-Wait! Who is the man next to her?<p style="margin-top:-5px;"></p>
-This man is a super-rich man—Hundreds of times richer than his own family!
+			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;">CN</span></div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid26659" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/i-help-the-richest-man-spend-money-to-prevent-disasters/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i>N/A</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_45277.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></div>
 			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;">CN</span> (3.8)</div>
 			</div><div class="search_body_nu"><div class="search_title"><span id="sid45277" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/i-just-want-to-be-a-salted-fish-quietly/">I Just Want To Be a Salted Fish Quietly</a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i> 71 Chapters</span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i> Every 10.2 Day(s)</span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i> 649 Readers</span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i> 5 Reviews</span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i> 04-07-2022</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" >Comedy</a> <a class="gennew search" gid="9" href="https://www.novelupdates.com/genre/drama/" title="View All Drama Related Series" >Drama</a> <a class="gennew search" gid="3" href="https://www.novelupdates.com/genre/harem/" title="View All Harem Related Series" >Harem</a> <a class="gennew search" gid="245" href="https://www.novelupdates.com/genre/mystery/" title="View All Mystery Related Series" >Mystery</a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" >Romance</a> <a class="gennew search" gid="6" href="https://www.novelupdates.com/genre/school-life/" title="View All School Life Related Series" >School Life</a> <a class="gennew search" gid="7" href="https://www.novelupdates.com/genre/slice-of-life/" title="View All Slice of Life Related Series" >Slice of Life</a> <a class="gennew search" gid="16" href="https://www.novelupdates.com/genre/supernatural/" title="View All Supernatural Related Series" >Supernatural</a></div>Lin Xian said bitterly: I really just want to be a salted fish quietly.<span class="dots">... </span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
@@ -4197,7 +4186,7 @@ function showtext(n){$(n).parent().find("span").show(),$(n).parent().find(".dots
 
 func TestDoSearchRequest_DoesNotReturn_Nil(t *testing.T) {
 
-	response, err := DoSearchRequest(TestSuccessRequester, nil)
+	response, err := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
@@ -4205,14 +4194,14 @@ func TestDoSearchRequest_DoesNotReturn_Nil(t *testing.T) {
 
 func TestDoSearchRequest_Returns_ResultsCount_As_25(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Len(t, response, 25)
 }
 
 func TestDoSearchRequest_Parse_Title_Success(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Equal(t, "Another World Awakening Transcendental Create Skill", response[0].Title)
 	assert.Equal(t, "I’ll Become a Villainess That Will Go Down in History", response[1].Title)
@@ -4221,7 +4210,7 @@ func TestDoSearchRequest_Parse_Title_Success(t *testing.T) {
 
 func TestDoSearchRequest_Parse_Title_Failure(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestFailureRequester, nil)
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
 	assert.Equal(t, "ERR", response[0].Title)
 	assert.Equal(t, "ERR", response[1].Title)
@@ -4230,7 +4219,7 @@ func TestDoSearchRequest_Parse_Title_Failure(t *testing.T) {
 
 func TestDoSearchRequest_Parse_ChaptersCount_Success(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Equal(t, 100, response[0].Chapters)
 	assert.Equal(t, 225, response[1].Chapters)
@@ -4239,7 +4228,7 @@ func TestDoSearchRequest_Parse_ChaptersCount_Success(t *testing.T) {
 
 func TestDoSearchRequest_Parse_ChaptersCount_Failure(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestFailureRequester, nil)
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
 	assert.Equal(t, -1, response[0].Chapters)
 	assert.Equal(t, -1, response[1].Chapters)
@@ -4248,7 +4237,7 @@ func TestDoSearchRequest_Parse_ChaptersCount_Failure(t *testing.T) {
 
 func TestDoSearchRequest_Parse_UpdateFrequency_Success(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Equal(t, 1.1, response[0].ReleaseFrequencyInDays)
 	assert.Equal(t, 1.6, response[1].ReleaseFrequencyInDays)
@@ -4257,7 +4246,7 @@ func TestDoSearchRequest_Parse_UpdateFrequency_Success(t *testing.T) {
 
 func TestDoSearchRequest_Parse_UpdateFrequency_Failure(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestFailureRequester, nil)
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
 	assert.Equal(t, -1.0, response[0].ReleaseFrequencyInDays)
 	assert.Equal(t, -1.0, response[1].ReleaseFrequencyInDays)
@@ -4266,7 +4255,7 @@ func TestDoSearchRequest_Parse_UpdateFrequency_Failure(t *testing.T) {
 
 func TestDoSearchRequest_Parse_Readers_Success(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Equal(t, 1039, response[0].Readers)
 	assert.Equal(t, 7819, response[1].Readers)
@@ -4275,7 +4264,7 @@ func TestDoSearchRequest_Parse_Readers_Success(t *testing.T) {
 
 func TestDoSearchRequest_Parse_Readers_Failure(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestFailureRequester, nil)
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
 	assert.Equal(t, -1, response[0].Readers)
 	assert.Equal(t, -1, response[1].Readers)
@@ -4284,7 +4273,7 @@ func TestDoSearchRequest_Parse_Readers_Failure(t *testing.T) {
 
 func TestDoSearchRequest_Parse_Reviews_Success(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestSuccessRequester, nil)
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
 	assert.Equal(t, 2, response[0].Reviews)
 	assert.Equal(t, 49, response[1].Reviews)
@@ -4293,9 +4282,88 @@ func TestDoSearchRequest_Parse_Reviews_Success(t *testing.T) {
 
 func TestDoSearchRequest_Parse_Reviews_Failure(t *testing.T) {
 
-	response, _ := DoSearchRequest(TestFailureRequester, nil)
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
 	assert.Equal(t, -1, response[0].Reviews)
 	assert.Equal(t, -1, response[1].Reviews)
 	assert.Equal(t, -1, response[2].Reviews)
+}
+
+func TestDoSearchRequest_Parse_LastUpdated_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, "04-07-2022", response[0].LastUpdated)
+	assert.Equal(t, "04-07-2022", response[1].LastUpdated)
+	assert.Equal(t, "04-07-2022", response[2].LastUpdated)
+}
+
+func TestDoSearchRequest_Parse_LastUpdated_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, "00-00-0000", response[0].LastUpdated)
+	assert.Equal(t, "00-00-0000", response[1].LastUpdated)
+	assert.Equal(t, "N/A", response[2].LastUpdated)
+}
+
+func TestDoSearchRequest_Parse_Genre_Success(t *testing.T) {
+
+	f := func(g string) string {
+		if v, ok := GenreToName[g]; ok {
+			return v
+		}
+		return "ERR"
+	}
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, []string{f(GenreAction), f(GenreAdventure), f(GenreFantasy), f(GenreHarem), f(GenreRomance)}, response[0].Genre)
+	assert.Equal(t, []string{f(GenreComedy), f(GenreDrama), f(GenreFantasy), f(GenreRomance), f(GenreShoujo)}, response[1].Genre)
+	assert.Equal(t, []string{f(GenreComedy), f(GenreFantasy), f(GenreRomance)}, response[2].Genre)
+}
+
+func TestDoSearchRequest_Parse_Genre_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, []string(nil), response[0].Genre)
+	assert.Equal(t, []string(nil), response[1].Genre)
+	assert.Equal(t, []string(nil), response[2].Genre)
+}
+
+func TestDoSearchRequest_Parse_Description_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, "A bus accident during a school trip sends the entire class to another world. After being transported to another world, they are attacked by monsters and bandits, and while their classmates awaken sword and magic skills one after another, Takaya Nagami’s abilities never awaken, and he ends up being kicked out of the class party. Finding himself all alone in a world where he can’t rely on anyone, Takaya despairs and impulsively tries to commit suicide, but he survived and is rescued by local adventurers while in a miserable state.\nIn the course of his adventures with these adventurers, he gradually gains strength, confidence, and trust (as well as cute girls!) by using his production and processing skills. An exhilarating and thrilling tale of growth in a different world that follows the dullest boy in his class as he becomes an unstoppable adventurer!", response[0].Description)
+	assert.Equal(t, "I’ve always dreamed of becoming a villainess, but I never thought that I would actually become one….!\nThis is the story of a young girl who aspires to become a villainous noble girl who’s capable of growing stronger through every confrontation that she is faced with.", response[1].Description)
+	assert.Equal(t, "Ye Zhi not only inherited the run-down house, but also the engagement with a man. The man who met his true love disliked his fiancée in all ways and asked for divorce.\nIn order to express their guilt, the man’s family decided to make up for it with Ye Zhi. But she did not want their ‘compensation’ and simply left without turning her back.\nThe next second, Ye Zhi was picked up by a Rolls Royce.\nGu Ren, the son of the richest man, had a tough life and couldn’t live past 30 years old. Only Ye Zhi, who was born on the cloudy day of the lunar year, was the most suitable match that could make him survive.\nYe Zhi and Gu Ren got married. Gu Ren gave her a bank card. All she has to do is—\nSpend money for him! Squander his fortune!\nYe Zhi bought a Lamborghini for Gu Ren, but he had an accident as soon as he drove the car.\nAs soon as she bought some Hermes platinum bags for herself, Gu Ren signed a more than one billion worth contract.\nIt turned out that the money could only be spent on herself.  The more she spent, the more prosperous she became.\nSince then her life has changed completely. She became a rich woman who owns luxury items, limited edition bags and a villa overlooking the Forbidden City.\nThe man thought that Ye Zhi, who he had broken up with, must have suffered a lot. Until one day, he saw his former fiancée walking in the street, followed by a striking Lamborghini.\nWait! Who is the man next to her?\nThis man is a super-rich man—Hundreds of times richer than his own family!", response[2].Description)
+}
+
+func TestDoSearchRequest_Parse_Description_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, "ERR", response[0].Description)
+	assert.Equal(t, "ERR", response[1].Description)
+	assert.Equal(t, "ERR", response[2].Description)
+}
+
+func TestDoSearchRequest_Parse_Rating_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, 3.4, response[0].Rating)
+	assert.Equal(t, 4.1, response[1].Rating)
+	assert.Equal(t, 4.1, response[2].Rating)
+}
+
+func TestDoSearchRequest_Parse_Rating_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, -1.0, response[0].Rating)
+	assert.Equal(t, -1.0, response[1].Rating)
+	assert.Equal(t, -1.0, response[2].Rating)
 }

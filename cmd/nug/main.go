@@ -71,7 +71,7 @@ func writeHeader(b *strings.Builder, packageName string) {
 
 func writeNovelType(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.DoFetchNovelTypeRequest(&NovelUpdatesClient.BasicRequester{})
+	results, err := NovelUpdatesClient.DoFetchNovelTypeRequestWith(&NovelUpdatesClient.BasicRequester{})
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -117,7 +117,7 @@ func writeNovelType(b *strings.Builder) {
 
 func writeLanguage(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.DoFetchLanguageRequest(&NovelUpdatesClient.BasicRequester{})
+	results, err := NovelUpdatesClient.DoFetchLanguageRequestWith(&NovelUpdatesClient.BasicRequester{})
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -163,7 +163,7 @@ func writeLanguage(b *strings.Builder) {
 
 func writeGenres(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.DoFetchGenresRequest(&NovelUpdatesClient.BasicRequester{})
+	results, err := NovelUpdatesClient.DoFetchGenresRequestWith(&NovelUpdatesClient.BasicRequester{})
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -209,7 +209,7 @@ func writeGenres(b *strings.Builder) {
 
 func writeTags(b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.DoFetchTagsRequest(&NovelUpdatesClient.BasicRequester{})
+	results, err := NovelUpdatesClient.DoFetchTagsRequestWith(&NovelUpdatesClient.BasicRequester{})
 	if err != nil {
 		log.Fatalln(err)
 	}

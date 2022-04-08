@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func DoFetchNovelTypeRequest(req Requester) (r []NovelTypeResult, err error) {
+func DoFetchNovelTypeRequestWith(req Requester) (r []NovelTypeResult, err error) {
 
 	// Create Document From URL
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
@@ -26,7 +26,7 @@ func DoFetchNovelTypeRequest(req Requester) (r []NovelTypeResult, err error) {
 	return r, nil
 }
 
-func DoFetchLanguageRequest(req Requester) (r []NovelTypeResult, err error) {
+func DoFetchLanguageRequestWith(req Requester) (r []NovelTypeResult, err error) {
 
 	// Create Document From URL
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
@@ -45,7 +45,7 @@ func DoFetchLanguageRequest(req Requester) (r []NovelTypeResult, err error) {
 	return r, nil
 }
 
-func DoFetchGenresRequest(req Requester) (r []GenreResult, err error) {
+func DoFetchGenresRequestWith(req Requester) (r []GenreResult, err error) {
 
 	// Create Document From URL
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
@@ -64,7 +64,7 @@ func DoFetchGenresRequest(req Requester) (r []GenreResult, err error) {
 	return r, nil
 }
 
-func DoFetchTagsRequest(req Requester) (r []TagResult, err error) {
+func DoFetchTagsRequestWith(req Requester) (r []TagResult, err error) {
 
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
 	if err != nil {
@@ -82,7 +82,7 @@ func DoFetchTagsRequest(req Requester) (r []TagResult, err error) {
 	return r, nil
 }
 
-func DoSearchRequest(req Requester, q *SearchQuery) (r []SearchResult, err error) {
+func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err error) {
 
 	doc, err := createDocumentFromRequest(req, fmt.Sprintf("https://www.novelupdates.com/series-finder/?%s", buildSearchStringFromQuery(q)))
 	if err != nil {
@@ -95,6 +95,7 @@ func DoSearchRequest(req Requester, q *SearchQuery) (r []SearchResult, err error
 		Title := "ERR"
 		{
 			oTitle := s.Find(".search_title").Text()
+			oTitle = strings.Trim(oTitle, " ")
 			if oTitle != "" {
 				Title = oTitle
 			}
@@ -141,6 +142,50 @@ func DoSearchRequest(req Requester, q *SearchQuery) (r []SearchResult, err error
 				Reviews = -1.0
 			}
 		}
+		///////////////////////////////////////////////////////////
+		LastUpdated := "00-00-0000"
+		{
+			oLastUpdated := s.Find(".search_stats span:nth-child(5)").Text()
+			oLastUpdated = strings.Trim(oLastUpdated, " ")
+			if oLastUpdated != "" {
+				LastUpdated = oLastUpdated
+			}
+		}
+		///////////////////////////////////////////////////////////
+		var Genre []string
+		{
+			s.Find(".search_genre a").Each(func(i int, selection *goquery.Selection) {
+				oGenre := selection.Text()
+				oGenre = strings.Trim(oGenre, " ")
+				if oGenre != "" {
+					Genre = append(Genre, oGenre)
+				}
+			})
+		}
+		///////////////////////////////////////////////////////////
+		Rating := -1.0
+		{
+			oRating := s.Find(".search_ratings").Text()
+			oRatingSplit := strings.Split(oRating, "(")
+			if len(oRatingSplit) == 2 {
+				oRating = strings.Trim(oRatingSplit[1], "()")
+				if Rating, err = strconv.ParseFloat(oRating, 64); err != nil {
+					Rating = -1.0
+				}
+			}
+		}
+		///////////////////////////////////////////////////////////
+		Description := "ERR"
+		{
+			oDescription := s.Find(".search_body_nu").Contents().FilterFunction(func(i int, s *goquery.Selection) bool {
+				return !s.Is(".search_title,.search_stats,.search_genre,.dots,.list")
+			}).Text()
+			oDescription = strings.Replace(oDescription, "<<less", "", -1)
+			oDescription = strings.Trim(oDescription, " \n")
+			if oDescription != "" {
+				Description = oDescription
+			}
+		}
 
 		r = append(r, SearchResult{
 			Title:                  Title,
@@ -148,6 +193,10 @@ func DoSearchRequest(req Requester, q *SearchQuery) (r []SearchResult, err error
 			ReleaseFrequencyInDays: ReleaseFrequency,
 			Readers:                Readers,
 			Reviews:                Reviews,
+			LastUpdated:            LastUpdated,
+			Genre:                  Genre,
+			Description:            Description,
+			Rating:                 Rating,
 		})
 	})
 

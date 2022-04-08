@@ -3,7 +3,7 @@
 all: run clean
 
 build:
-	go build -o ./cmd/nuc/nuc ./cmd/nuc/main.go
+	go build -o ./cmd/nu/nu ./cmd/nu/main.go
 
 run: build
 	./cmd/nuc/nuc
@@ -15,5 +15,5 @@ generate: ./cmd/nug/nug
 	./cmd/nug/nug -type=all | gofmt > ./types_generated.go
 
 clean:
-	$(RM) ./cmd/nuc/nuc
+	$(RM) ./cmd/nuc/nu
 	$(RM) ./cmd/nug/nug
