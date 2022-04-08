@@ -6,7 +6,7 @@ build:
 	go build -o ./cmd/nu/nu ./cmd/nu/main.go
 
 run: build
-	./cmd/nuc/nuc
+	./cmd/nu/nu
 
 ./cmd/nug/nug:
 	go build -o ./cmd/nug/nug ./cmd/nug/main.go
