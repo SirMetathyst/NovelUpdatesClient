@@ -77,21 +77,43 @@ func writeNovelType(b *strings.Builder) {
 	}
 
 	//////// NovelType
-	//b.WriteString("type NovelType string\n\n")
+	b.WriteString("type NovelType string\n\n")
 	b.WriteString(fmt.Sprintf("// NovelType: Total(%d)\n", len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
-		//b.WriteString(fmt.Sprintf("\tNovelType%s NovelType = \"%s\"\n", normalisedName(result.Name), result.Value))
-		b.WriteString(fmt.Sprintf("\tNovelType%s = \"%s\"\n", normalisedName(result.Name), result.Value))
+		b.WriteString(fmt.Sprintf("\tNovelType%s NovelType = \"%s\"\n", normalisedName(result.Name), result.Value))
+		//b.WriteString(fmt.Sprintf("\tNovelType%s = \"%s\"\n", normalisedName(result.Name), result.Value))
 	}
 
 	b.WriteString(")\n\n")
 
+	//////// NovelTypeList
+	b.WriteString(`type NovelTypeList []NovelType
+
+func (s NovelTypeList) StringSlice() (ss []string) {
+	for _, n := range s {
+		ss = append(ss, string(n))
+	}
+	return
+}
+
+func SlugListToNovelTypeList(s []string) (ntl NovelTypeList, err error) {
+	for _, n := range s {
+		nt, ok := SlugToNovelType[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found in novel type slugs", n)
+		}
+		ntl = append(ntl, nt)
+	}
+	return
+}
+`)
+
 	//////// NovelTypeToName
 	b.WriteString("var (\n")
-	//b.WriteString("\tNovelTypeToName = map[NovelType]string{\n")
-	b.WriteString("\tNovelTypeToName = map[string]string{\n")
+	b.WriteString("\tNovelTypeToName = map[NovelType]string{\n")
+	//b.WriteString("\tNovelTypeToName = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\tNovelType%s:\"%s\",\n", normalisedName(result.Name), result.Name))
@@ -102,11 +124,23 @@ func writeNovelType(b *strings.Builder) {
 
 	///////// NameToNovelType
 	b.WriteString("var (\n")
-	//b.WriteString("\tNameToNovelType = map[string]NovelType{\n")
-	b.WriteString("\tNameToNovelType = map[string]string{\n")
+	b.WriteString("\tNameToNovelType = map[string]NovelType{\n")
+	//b.WriteString("\tNameToNovelType = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\t\"%s\":NovelType%s,\n", result.Name, normalisedName(result.Name)))
+	}
+
+	b.WriteString("}\n")
+	b.WriteString(")\n\n")
+
+	///////// SlugToNovelType
+	b.WriteString("var (\n")
+	b.WriteString("\tSlugToNovelType = map[string]NovelType{\n")
+	//b.WriteString("\tSlugToNovelType = map[string]string{\n")
+
+	for _, result := range results {
+		b.WriteString(fmt.Sprintf("\t\"%s\":NovelType%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
 	}
 
 	b.WriteString("}\n")
@@ -123,21 +157,43 @@ func writeLanguage(b *strings.Builder) {
 	}
 
 	//////// Language
-	//b.WriteString("type Language string\n\n")
+	b.WriteString("type Language string\n\n")
 	b.WriteString(fmt.Sprintf("// Language: Total(%d)\n", len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
-		//b.WriteString(fmt.Sprintf("\tLanguage%s Language = \"%s\"\n", normalisedName(result.Name), result.Value))
-		b.WriteString(fmt.Sprintf("\tLanguage%s = \"%s\"\n", normalisedName(result.Name), result.Value))
+		b.WriteString(fmt.Sprintf("\tLanguage%s Language = \"%s\"\n", normalisedName(result.Name), result.Value))
+		//b.WriteString(fmt.Sprintf("\tLanguage%s = \"%s\"\n", normalisedName(result.Name), result.Value))
 	}
 
 	b.WriteString(")\n\n")
 
+	//////// NovelTypeList
+	b.WriteString(`type LanguageList []Language
+
+func (s LanguageList) StringSlice() (ss []string) {
+	for _, n := range s {
+		ss = append(ss, string(n))
+	}
+	return
+}
+
+func SlugListToLanguageList(s []string) (ll LanguageList, err error) {
+	for _, n := range s {
+		l, ok := SlugToLanguage[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found in language slugs", l)
+		}
+		ll = append(ll, l)
+	}
+	return
+}
+`)
+
 	//////// LanguageToName
 	b.WriteString("var (\n")
-	//b.WriteString("\tLanguageToName = map[Language]string{\n")
-	b.WriteString("\tLanguageToName = map[string]string{\n")
+	b.WriteString("\tLanguageToName = map[Language]string{\n")
+	//b.WriteString("\tLanguageToName = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\tLanguage%s:\"%s\",\n", normalisedName(result.Name), result.Name))
@@ -148,11 +204,23 @@ func writeLanguage(b *strings.Builder) {
 
 	///////// NameToLanguage
 	b.WriteString("var (\n")
-	//b.WriteString("\tNameToLanguage = map[string]Language{\n")
-	b.WriteString("\tNameToLanguage = map[string]string{\n")
+	b.WriteString("\tNameToLanguage = map[string]Language{\n")
+	//b.WriteString("\tNameToLanguage = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\t\"%s\":Language%s,\n", result.Name, normalisedName(result.Name)))
+	}
+
+	b.WriteString("}\n")
+	b.WriteString(")\n\n")
+
+	///////// SlugToNovelType
+	b.WriteString("var (\n")
+	b.WriteString("\tSlugToLanguage = map[string]Language{\n")
+	//b.WriteString("\tSlugToLanguage = map[string]string{\n")
+
+	for _, result := range results {
+		b.WriteString(fmt.Sprintf("\t\"%s\":Language%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
 	}
 
 	b.WriteString("}\n")
@@ -169,21 +237,42 @@ func writeGenres(b *strings.Builder) {
 	}
 
 	//////// Genre
-	//b.WriteString("type Genre string\n\n")
+	b.WriteString("type Genre string\n\n")
 	b.WriteString(fmt.Sprintf("// Genre: Total(%d)\n", len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
-		//b.WriteString(fmt.Sprintf("\tGenre%s Genre = \"%s\"\n", normalisedName(result.Name), result.Value))
-		b.WriteString(fmt.Sprintf("\tGenre%s = \"%s\"\n", normalisedName(result.Name), result.Value))
+		b.WriteString(fmt.Sprintf("\tGenre%s Genre = \"%s\"\n", normalisedName(result.Name), result.Value))
+		//b.WriteString(fmt.Sprintf("\tGenre%s = \"%s\"\n", normalisedName(result.Name), result.Value))
 	}
-
 	b.WriteString(")\n\n")
+
+	////// GenreList
+	b.WriteString(`type GenreList []Genre
+	
+	func (s GenreList) StringSlice() (ss []string) {
+		for _, n := range s {
+			ss = append(ss, string(n))
+		}
+		return
+	}
+	
+	func SlugListToGenreList(s []string) (gl GenreList, err error) {
+		for _, n := range s {
+			g, ok := SlugToGenre[n]
+			if !ok {
+				return nil, fmt.Errorf("error: slug %s was not found in genre slugs", g)
+			}
+			gl = append(gl, g)
+		}
+		return
+	}
+	`)
 
 	//////// GenreToName
 	b.WriteString("var (\n")
-	//b.WriteString("\tGenreToName = map[Genre]string{\n")
-	b.WriteString("\tGenreToName = map[string]string{\n")
+	b.WriteString("\tGenreToName = map[Genre]string{\n")
+	//b.WriteString("\tGenreToName = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\tGenre%s:\"%s\",\n", normalisedName(result.Name), result.Name))
@@ -194,11 +283,23 @@ func writeGenres(b *strings.Builder) {
 
 	///////// NameToGenre
 	b.WriteString("var (\n")
-	//b.WriteString("\tNameToGenre = map[string]Genre{\n")
-	b.WriteString("\tNameToGenre = map[string]string{\n")
+	b.WriteString("\tNameToGenre = map[string]Genre{\n")
+	//b.WriteString("\tNameToGenre = map[string]string{\n")
 
 	for _, result := range results {
 		b.WriteString(fmt.Sprintf("\t\"%s\":Genre%s,\n", result.Name, normalisedName(result.Name)))
+	}
+
+	b.WriteString("}\n")
+	b.WriteString(")\n\n")
+
+	///////// SlugToGenre
+	b.WriteString("var (\n")
+	b.WriteString("\tSlugToGenre = map[string]Genre{\n")
+	//b.WriteString("\SlugToGenre = map[string]string{\n")
+
+	for _, result := range results {
+		b.WriteString(fmt.Sprintf("\t\"%s\":Genre%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
 	}
 
 	b.WriteString("}\n")

@@ -3701,16 +3701,16 @@ You must be logged in to use this option.
    	                 
                 
             <div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_46672.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span></div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid46672" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/another-world-awakening-transcendental-create-skill/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="8" href="https://www.novelupdates.com/genre/action/" title="View All Action Related Series" ></a> <a class="gennew search" gid="13" href="https://www.novelupdates.com/genre/adventure/" title="View All Adventure Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="3" href="https://www.novelupdates.com/genre/harem/" title="View All Harem Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;"></span></div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid46672" class="rl_icons_en"></span><a href="m/series/anothe-world-awakening-transcendental-create-skill/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="8" href="https://www.novelupdates.com/genre/action/" title="View All Action Related Series" ></a> <a class="gennew search" gid="13" href="https://www.novelupdates.com/genre/adventure/" title="View All Adventure Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="3" href="https://www.novelupdates.com/genre/harem/" title="View All Harem Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
 
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_30279.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;">JP</span></div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid30279" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/ill-become-a-villainess-that-will-go-down-in-history/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="9" href="https://www.novelupdates.com/genre/drama/" title="View All Drama Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a> <a class="gennew search" gid="157" href="https://www.novelupdates.com/genre/shoujo/" title="View All Shoujo Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+			<div dp="yes" class="search_ratings"><span class="orgjp" style="font-weight: bold;"></span></div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid30279" class="rl_icons_en"></span><a href="https://www.novel-become-a-villainess-that-will-go-down-in-history/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i></span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="9" href="https://www.novelupdates.com/genre/drama/" title="View All Drama Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a> <a class="gennew search" gid="157" href="https://www.novelupdates.com/genre/shoujo/" title="View All Shoujo Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
 
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_26659.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
-			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;">CN</span></div>
-			</div><div class="search_body_nu"><div class="search_title"><span id="sid26659" class="rl_icons_en"></span><a href="https://www.novelupdates.com/series/i-help-the-richest-man-spend-money-to-prevent-disasters/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i>N/A</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
+			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;"></span> (0.2a)</div>
+			</div><div class="search_body_nu"><div class="search_title"><span id="sid26659" class="rl_icons_en"></span><a href="https://www.novelupdates.com/seest-man-spend-money-to-prevent-disasters/"></a></div><div class="search_stats"><span class="ss_desk"><i title="Chapter Count" style="padding-left: 0px;" class="fa fa-list-alt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Updates Frequency" class="fa fa-bolt pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Readers" class="fa fa-user-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Reviews" class="fa fa-pencil-square-o pad" aria-hidden="true"></i></span><span class="ss_desk"><i title="Last Updated" class="fa fa-calendar pad" aria-hidden="true"></i>N/A</span></div><div class="search_genre"><a class="gennew search" gid="17" href="https://www.novelupdates.com/genre/comedy/" title="View All Comedy Related Series" ></a> <a class="gennew search" gid="5" href="https://www.novelupdates.com/genre/fantasy/" title="View All Fantasy Related Series" ></a> <a class="gennew search" gid="15" href="https://www.novelupdates.com/genre/romance/" title="View All Romance Related Series" ></a></div><span class="dots"></span><span class="morelink list" href="#" onclick="showtext(this); return false;">more>></span><span class="testhide" style="display:none"><p style="margin-top:-5px;"></p>
 
 <span class="morelink list" href="#" onclick="hidetext(this); return false;"> &lt;&lt;less</span></span></div></div><div style="clear: both;"></div><div class="search_main_box_nu" dp="yes"><div class="search_img_nu" dp="yes"><img dp="yes" src="https://cdn.novelupdates.com/imgmid/series_45277.jpg" /><div dp="yes" class="search_stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></div>
 			<div dp="yes" class="search_ratings"><span class="orgcn" style="font-weight: bold;">CN</span> (3.8)</div>
@@ -4217,6 +4217,42 @@ func TestDoSearchRequest_Parse_Title_Failure(t *testing.T) {
 	assert.Equal(t, "ERR", response[2].Title)
 }
 
+func TestDoSearchRequest_Parse_Slug_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, "another-world-awakening-transcendental-create-skill", response[0].Slug)
+	assert.Equal(t, "ill-become-a-villainess-that-will-go-down-in-history", response[1].Slug)
+	assert.Equal(t, "i-help-the-richest-man-spend-money-to-prevent-disasters", response[2].Slug)
+}
+
+func TestDoSearchRequest_Parse_Slug_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, "ERR", response[0].Slug)
+	assert.Equal(t, "ERR", response[1].Slug)
+	assert.Equal(t, "ERR", response[2].Slug)
+}
+
+func TestDoSearchRequest_Parse_SlugURL_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, "https://www.novelupdates.com/series/another-world-awakening-transcendental-create-skill/", response[0].SlugURL)
+	assert.Equal(t, "https://www.novelupdates.com/series/ill-become-a-villainess-that-will-go-down-in-history/", response[1].SlugURL)
+	assert.Equal(t, "https://www.novelupdates.com/series/i-help-the-richest-man-spend-money-to-prevent-disasters/", response[2].SlugURL)
+}
+
+//func TestDoSearchRequest_Parse_Slug_Failure(t *testing.T) {
+//
+//	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+//
+//	assert.Equal(t, "ERR", response[0].Slug)
+//	assert.Equal(t, "ERR", response[1].Slug)
+//	assert.Equal(t, "ERR", response[2].Slug)
+//}
+
 func TestDoSearchRequest_Parse_ChaptersCount_Success(t *testing.T) {
 
 	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
@@ -4308,28 +4344,20 @@ func TestDoSearchRequest_Parse_LastUpdated_Failure(t *testing.T) {
 }
 
 func TestDoSearchRequest_Parse_Genre_Success(t *testing.T) {
-
-	f := func(g string) string {
-		if v, ok := GenreToName[g]; ok {
-			return v
-		}
-		return "ERR"
-	}
-
 	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
 
-	assert.Equal(t, []string{f(GenreAction), f(GenreAdventure), f(GenreFantasy), f(GenreHarem), f(GenreRomance)}, response[0].Genre)
-	assert.Equal(t, []string{f(GenreComedy), f(GenreDrama), f(GenreFantasy), f(GenreRomance), f(GenreShoujo)}, response[1].Genre)
-	assert.Equal(t, []string{f(GenreComedy), f(GenreFantasy), f(GenreRomance)}, response[2].Genre)
+	assert.Equal(t, GenreList{GenreAction, GenreAdventure, GenreFantasy, GenreHarem, GenreRomance}, response[0].Genre)
+	assert.Equal(t, GenreList{GenreComedy, GenreDrama, GenreFantasy, GenreRomance, GenreShoujo}, response[1].Genre)
+	assert.Equal(t, GenreList{GenreComedy, GenreFantasy, GenreRomance}, response[2].Genre)
 }
 
 func TestDoSearchRequest_Parse_Genre_Failure(t *testing.T) {
 
 	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
 
-	assert.Equal(t, []string(nil), response[0].Genre)
-	assert.Equal(t, []string(nil), response[1].Genre)
-	assert.Equal(t, []string(nil), response[2].Genre)
+	assert.Equal(t, GenreList(nil), response[0].Genre)
+	assert.Equal(t, GenreList(nil), response[1].Genre)
+	assert.Equal(t, GenreList(nil), response[2].Genre)
 }
 
 func TestDoSearchRequest_Parse_Description_Success(t *testing.T) {
@@ -4348,6 +4376,24 @@ func TestDoSearchRequest_Parse_Description_Failure(t *testing.T) {
 	assert.Equal(t, "ERR", response[0].Description)
 	assert.Equal(t, "ERR", response[1].Description)
 	assert.Equal(t, "ERR", response[2].Description)
+}
+
+func TestDoSearchRequest_Parse_ShortLanguage_Success(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestSuccessRequester, nil)
+
+	assert.Equal(t, "JP", response[0].ShortLanguage)
+	assert.Equal(t, "JP", response[1].ShortLanguage)
+	assert.Equal(t, "CN", response[2].ShortLanguage)
+}
+
+func TestDoSearchRequest_Parse_ShortLanguage_Failure(t *testing.T) {
+
+	response, _ := DoSearchRequestWith(TestFailureRequester, nil)
+
+	assert.Equal(t, "ERR", response[0].ShortLanguage)
+	assert.Equal(t, "ERR", response[1].ShortLanguage)
+	assert.Equal(t, "ERR", response[2].ShortLanguage)
 }
 
 func TestDoSearchRequest_Parse_Rating_Success(t *testing.T) {

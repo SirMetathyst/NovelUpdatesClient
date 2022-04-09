@@ -48,14 +48,14 @@ func appendNonEmpty(dst []string, src string) []string {
 
 func buildNovelType(q *SearchQuery) string {
 	if q != nil && len(q.NovelType) > 0 {
-		return fmt.Sprintf("%s=%s", urlNovelTypeKey, strings.Join(q.NovelType, ","))
+		return fmt.Sprintf("%s=%s", urlNovelTypeKey, strings.Join(q.NovelType.StringSlice(), ","))
 	}
 	return ""
 }
 
 func buildLanguage(q *SearchQuery) string {
 	if q != nil && len(q.Language) > 0 {
-		return fmt.Sprintf("%s=%s", urlLanguageKey, strings.Join(q.Language, ","))
+		return fmt.Sprintf("%s=%s", urlLanguageKey, strings.Join(q.Language.StringSlice(), ","))
 	}
 	return ""
 }
@@ -168,10 +168,10 @@ func buildGenre(q *SearchQuery) string {
 	if q != nil && len(q.GenreInclude) > 0 || len(q.GenreExclude) > 0 {
 		v := ""
 		if len(q.GenreInclude) > 0 {
-			v += fmt.Sprintf("%s=%s", urlGenreIncludeKey, strings.Join(q.GenreInclude, ","))
+			v += fmt.Sprintf("%s=%s", urlGenreIncludeKey, strings.Join(q.GenreInclude.StringSlice(), ","))
 		}
 		if len(q.GenreExclude) > 0 {
-			v += fmt.Sprintf("&%s=%s", urlGenreExcludeKey, strings.Join(q.GenreExclude, ","))
+			v += fmt.Sprintf("&%s=%s", urlGenreExcludeKey, strings.Join(q.GenreExclude.StringSlice(), ","))
 		}
 		if q.GenreOperator == "" {
 			v += fmt.Sprintf("&%s=%s", urlGenreOperatorKey, OperatorAnd)

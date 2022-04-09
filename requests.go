@@ -92,6 +92,7 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 	// Find & Extract Data
 	doc.Find("div.search_main_box_nu").Each(func(i int, s *goquery.Selection) {
 
+		///////////////////////////////////////////////////////////
 		Title := "ERR"
 		{
 			oTitle := s.Find(".search_title").Text()
@@ -100,7 +101,22 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 				Title = oTitle
 			}
 		}
-
+		///////////////////////////////////////////////////////////
+		Slug := "ERR"
+		SlugURL := "ERR"
+		{
+			oSlug := s.Find(".search_title a").AttrOr("href", "")
+			oSlug = strings.Trim(oSlug, " ")
+			if oSlug != "" {
+				SlugURL = oSlug
+			}
+			oSlugSplit := strings.Split(oSlug, "/")
+			if len(oSlugSplit) == 6 {
+				if oSlug != "" {
+					Slug = oSlugSplit[4]
+				}
+			}
+		}
 		///////////////////////////////////////////////////////////
 		Chapters := -1
 		{
@@ -152,22 +168,29 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 			}
 		}
 		///////////////////////////////////////////////////////////
-		var Genre []string
+		var genreList GenreList
 		{
 			s.Find(".search_genre a").Each(func(i int, selection *goquery.Selection) {
 				oGenre := selection.Text()
 				oGenre = strings.Trim(oGenre, " ")
-				if oGenre != "" {
-					Genre = append(Genre, oGenre)
+				if genre, ok := NameToGenre[oGenre]; ok && oGenre != "" {
+					genreList = append(genreList, genre)
 				}
 			})
 		}
 		///////////////////////////////////////////////////////////
 		Rating := -1.0
+		ShortLanguage := "ERR"
 		{
 			oRating := s.Find(".search_ratings").Text()
-			oRatingSplit := strings.Split(oRating, "(")
+			oRatingSplit := strings.Split(oRating, " ")
+
 			if len(oRatingSplit) == 2 {
+				oShortLanguage := oRatingSplit[0]
+				oShortLanguage = strings.Trim(oShortLanguage, " ")
+				if oShortLanguage != "" {
+					ShortLanguage = oShortLanguage
+				}
 				oRating = strings.Trim(oRatingSplit[1], "()")
 				if Rating, err = strconv.ParseFloat(oRating, 64); err != nil {
 					Rating = -1.0
@@ -189,13 +212,16 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 
 		r = append(r, SearchResult{
 			Title:                  Title,
+			Slug:                   Slug,
+			SlugURL:                SlugURL,
 			Chapters:               Chapters,
 			ReleaseFrequencyInDays: ReleaseFrequency,
 			Readers:                Readers,
 			Reviews:                Reviews,
 			LastUpdated:            LastUpdated,
-			Genre:                  Genre,
+			Genre:                  genreList,
 			Description:            Description,
+			ShortLanguage:          ShortLanguage,
 			Rating:                 Rating,
 		})
 	})

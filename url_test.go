@@ -15,34 +15,34 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 	}{
 		{
 			Query: SearchQuery{
-				NovelType: []string{
+				NovelType: NovelTypeList{
 					NovelTypeLightNovel,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlNovelTypeKey:    {NovelTypeLightNovel},
+				urlNovelTypeKey:    {string(NovelTypeLightNovel)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				NovelType: []string{
+				NovelType: NovelTypeList{
 					NovelTypeLightNovel,
 					NovelTypeWebNovel,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlNovelTypeKey:    {NovelTypeLightNovel, NovelTypeWebNovel},
+				urlNovelTypeKey:    {string(NovelTypeLightNovel), string(NovelTypeWebNovel)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				NovelType: []string{
+				NovelType: NovelTypeList{
 					NovelTypeLightNovel,
 					NovelTypeWebNovel,
 					NovelTypePublishedNovel,
@@ -50,41 +50,41 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlNovelTypeKey:    {NovelTypeLightNovel, NovelTypeWebNovel, NovelTypePublishedNovel},
+				urlNovelTypeKey:    {string(NovelTypeLightNovel), string(NovelTypeWebNovel), string(NovelTypePublishedNovel)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				Language: []string{
+				Language: LanguageList{
 					LanguageChinese,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlLanguageKey:     {LanguageChinese},
+				urlLanguageKey:     {string(LanguageChinese)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				Language: []string{
+				Language: LanguageList{
 					LanguageChinese,
 					LanguageFilipino,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlLanguageKey:     {LanguageChinese, LanguageFilipino},
+				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				Language: []string{
+				Language: LanguageList{
 					LanguageChinese,
 					LanguageFilipino,
 					LanguageIndonesian,
@@ -92,14 +92,14 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlLanguageKey:     {LanguageChinese, LanguageFilipino, LanguageIndonesian},
+				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino), string(LanguageIndonesian)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				Language: []string{
+				Language: LanguageList{
 					LanguageChinese,
 					LanguageFilipino,
 					LanguageIndonesian,
@@ -108,7 +108,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlLanguageKey:     {LanguageChinese, LanguageFilipino, LanguageIndonesian, LanguageJapanese},
+				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino), string(LanguageIndonesian), string(LanguageJapanese)},
 				urlSortKey:         {SortByLastUpdated},
 				urlOrderKey:        {OrderDescending},
 			},
@@ -419,21 +419,21 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		},
 		{
 			Query: SearchQuery{
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAction,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreAction},
+				urlGenreIncludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -443,7 +443,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -451,7 +451,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorAnd,
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -461,7 +461,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -469,7 +469,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorOr,
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -479,28 +479,28 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
-				urlGenreIncludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreExcludeKey:  {GenreAction},
+				urlGenreExcludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -510,7 +510,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -518,7 +518,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorAnd,
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -528,7 +528,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -536,7 +536,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorOr,
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -546,38 +546,38 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreFantasy,
 				},
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 				},
 			},
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreFantasy},
-				urlGenreExcludeKey:  {GenreAction},
+				urlGenreIncludeKey:  {string(GenreFantasy)},
+				urlGenreExcludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
 		},
 		{
 			Query: SearchQuery{
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAdult,
 					GenreDrama,
 					GenreHarem,
 					GenreHistorical,
 				},
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -587,8 +587,8 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreAdult, GenreDrama, GenreHarem, GenreHistorical},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -596,13 +596,13 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorAnd,
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAdult,
 					GenreDrama,
 					GenreHarem,
 					GenreHistorical,
 				},
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -612,8 +612,8 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
-				urlGenreIncludeKey:  {GenreAdult, GenreDrama, GenreHarem, GenreHistorical},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
@@ -621,13 +621,13 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 		{
 			Query: SearchQuery{
 				GenreOperator: OperatorOr,
-				GenreInclude: []string{
+				GenreInclude: GenreList{
 					GenreAdult,
 					GenreDrama,
 					GenreHarem,
 					GenreHistorical,
 				},
-				GenreExclude: []string{
+				GenreExclude: GenreList{
 					GenreAction,
 					GenreAdventure,
 					GenreComedy,
@@ -637,8 +637,8 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			Expected: map[string][]string{
 				urlSeriesFinderKey:  {SeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
-				urlGenreIncludeKey:  {GenreAdult, GenreDrama, GenreHarem, GenreHistorical},
-				urlGenreExcludeKey:  {GenreAction, GenreAdventure, GenreComedy, GenreFantasy},
+				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
+				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated},
 				urlOrderKey:         {OrderDescending},
 			},
