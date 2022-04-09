@@ -11,7 +11,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 
 	data := []struct {
 		Query    SearchQuery
-		Expected map[string][]string
+		Expected map[string][]interface{}
 	}{
 		{
 			Query: SearchQuery{
@@ -19,11 +19,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					NovelTypeLightNovel,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlNovelTypeKey:    {string(NovelTypeLightNovel)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -33,11 +33,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					NovelTypeWebNovel,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlNovelTypeKey:    {string(NovelTypeLightNovel), string(NovelTypeWebNovel)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -48,11 +48,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					NovelTypePublishedNovel,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlNovelTypeKey:    {string(NovelTypeLightNovel), string(NovelTypeWebNovel), string(NovelTypePublishedNovel)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -61,11 +61,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					LanguageChinese,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlLanguageKey:     {string(LanguageChinese)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -75,11 +75,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					LanguageFilipino,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -90,11 +90,11 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					LanguageIndonesian,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino), string(LanguageIndonesian)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -106,23 +106,23 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					LanguageJapanese,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlLanguageKey:     {string(LanguageChinese), string(LanguageFilipino), string(LanguageIndonesian), string(LanguageJapanese)},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				Chapters: 10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlChaptersScaleKey: {ScaleMin},
 				urlChaptersKey:      {"10"},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -130,12 +130,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ChaptersScale: ScaleMin,
 				Chapters:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlChaptersScaleKey: {ScaleMin},
 				urlChaptersKey:      {"10"},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -143,24 +143,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ChaptersScale: ScaleMax,
 				Chapters:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlChaptersScaleKey: {ScaleMax},
 				urlChaptersKey:      {"10"},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				ReleaseFrequency: 10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlReleaseFrequencyScaleKey: {ScaleMax},
 				urlReleaseFrequencyKey:      {"10"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
@@ -168,12 +168,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReleaseFrequencyScale: ScaleMin,
 				ReleaseFrequency:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlReleaseFrequencyScaleKey: {ScaleMin},
 				urlReleaseFrequencyKey:      {"10"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
@@ -181,24 +181,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReleaseFrequencyScale: ScaleMax,
 				ReleaseFrequency:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlReleaseFrequencyScaleKey: {ScaleMax},
 				urlReleaseFrequencyKey:      {"10"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				Reviews: 10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReviewsScaleKey: {ScaleMin},
 				urlReviewsKey:      {"10"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -206,12 +206,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReviewsScale: ScaleMin,
 				Reviews:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReviewsScaleKey: {ScaleMin},
 				urlReviewsKey:      {"10"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -219,24 +219,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReviewsScale: ScaleMax,
 				Reviews:      10,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReviewsScaleKey: {ScaleMax},
 				urlReviewsKey:      {"10"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				Rating: 5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlRatingScaleKey:  {ScaleMin},
 				urlRatingKey:       {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -244,12 +244,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				RatingScale: ScaleMin,
 				Rating:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlRatingScaleKey:  {ScaleMin},
 				urlRatingKey:       {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -257,24 +257,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				RatingScale: ScaleMax,
 				Rating:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlRatingScaleKey:  {ScaleMax},
 				urlRatingKey:       {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				NumberOfRatings: 5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlNumberOfRatingsScaleKey: {ScaleMin},
 				urlNumberOfRatingsKey:      {"5"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
@@ -282,12 +282,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				NumberOfRatingsScale: ScaleMin,
 				NumberOfRatings:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlNumberOfRatingsScaleKey: {ScaleMin},
 				urlNumberOfRatingsKey:      {"5"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
@@ -295,24 +295,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				NumberOfRatingsScale: ScaleMax,
 				NumberOfRatings:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlNumberOfRatingsScaleKey: {ScaleMax},
 				urlNumberOfRatingsKey:      {"5"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				Readers: 5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReadersScaleKey: {ScaleMin},
 				urlReadersKey:      {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -320,12 +320,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReadersScale: ScaleMin,
 				Readers:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReadersScaleKey: {ScaleMin},
 				urlReadersKey:      {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
@@ -333,24 +333,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				ReadersScale: ScaleMax,
 				Readers:      5,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlReadersScaleKey: {ScaleMax},
 				urlReadersKey:      {"5"},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				FirstReleaseDate: "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlFirstReleaseDateScaleKey: {ScaleMin},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
@@ -358,12 +358,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				FirstReleaseDateScale: ScaleMin,
 				FirstReleaseDate:      "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlFirstReleaseDateScaleKey: {ScaleMin},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
@@ -371,24 +371,24 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				FirstReleaseDateScale: ScaleMax,
 				FirstReleaseDate:      "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:          {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
 				urlFirstReleaseDateScaleKey: {ScaleMax},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                  {SortByLastUpdated},
-				urlOrderKey:                 {OrderDescending},
+				urlSortKey:                  {SortByLastUpdated.String()},
+				urlOrderKey:                 {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				LastReleaseDate: "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlLastReleaseDateScaleKey: {ScaleMin},
 				urlLastReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
@@ -396,12 +396,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				LastReleaseDateScale: ScaleMin,
 				LastReleaseDate:      "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlLastReleaseDateScaleKey: {ScaleMin},
 				urlLastReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
@@ -409,12 +409,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 				LastReleaseDateScale: ScaleMax,
 				LastReleaseDate:      "04/04/2022",
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:         {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
 				urlLastReleaseDateScaleKey: {ScaleMax},
 				urlLastReleaseDateKey:      {"04/04/2022"},
-				urlSortKey:                 {SortByLastUpdated},
-				urlOrderKey:                {OrderDescending},
+				urlSortKey:                 {SortByLastUpdated.String()},
+				urlOrderKey:                {OrderByDescending.String()},
 			},
 		},
 		{
@@ -423,12 +423,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreAction,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreAction)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -440,12 +440,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -458,12 +458,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -476,12 +476,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -490,12 +490,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreAction,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreExcludeKey:  {string(GenreAction)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -507,12 +507,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -525,12 +525,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -543,12 +543,12 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -560,13 +560,13 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreAction,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreFantasy)},
 				urlGenreExcludeKey:  {string(GenreAction)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -584,13 +584,13 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -609,13 +609,13 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorAnd},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
@@ -634,314 +634,313 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 					GenreFantasy,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey:  {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
 				urlGenreOperatorKey: {OperatorOr},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
-				urlSortKey:          {SortByLastUpdated},
-				urlOrderKey:         {OrderDescending},
+				urlSortKey:          {SortByLastUpdated.String()},
+				urlOrderKey:         {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagBlacksmith,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagBlacksmith},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagBlacksmith.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorOr,
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorAnd,
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorAnd},
-				urlTagIncludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
-		///////////////////////////////////////////////
 		{
 			Query: SearchQuery{
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagBlacksmith,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagExcludeKey:   {TagBlacksmith},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagExcludeKey:   {TagBlacksmith.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagExcludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorOr,
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagExcludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorAnd,
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtificialIntelligence,
 					TagBetrayal,
 					TagAliens,
 					TagApocalypse,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorAnd},
-				urlTagExcludeKey:   {TagArtificialIntelligence, TagBetrayal, TagAliens, TagApocalypse},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagBlacksmith,
 				},
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtists,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagBlacksmith},
-				urlTagExcludeKey:   {TagArtists},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagBlacksmith.String()},
+				urlTagExcludeKey:   {TagArtists.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagBlacksmith,
 					TagArtificialIntelligence,
 					TagAbsentParents,
 					TagAcademy,
 				},
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtists,
 					TagDestiny,
 					TagColdProtagonist,
 					TagDemonicCultivationTechnique,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagBlacksmith, TagArtificialIntelligence, TagAbsentParents, TagAcademy},
-				urlTagExcludeKey:   {TagArtists, TagDestiny, TagColdProtagonist, TagDemonicCultivationTechnique},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
+				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorOr,
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagBlacksmith,
 					TagArtificialIntelligence,
 					TagAbsentParents,
 					TagAcademy,
 				},
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtists,
 					TagDestiny,
 					TagColdProtagonist,
 					TagDemonicCultivationTechnique,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorOr},
-				urlTagIncludeKey:   {TagBlacksmith, TagArtificialIntelligence, TagAbsentParents, TagAcademy},
-				urlTagExcludeKey:   {TagArtists, TagDestiny, TagColdProtagonist, TagDemonicCultivationTechnique},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
+				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				TagOperator: OperatorAnd,
-				TagInclude: []string{
+				TagInclude: TagList{
 					TagBlacksmith,
 					TagArtificialIntelligence,
 					TagAbsentParents,
 					TagAcademy,
 				},
-				TagExclude: []string{
+				TagExclude: TagList{
 					TagArtists,
 					TagDestiny,
 					TagColdProtagonist,
 					TagDemonicCultivationTechnique,
 				},
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
 				urlTagOperatorKey:  {OperatorAnd},
-				urlTagIncludeKey:   {TagBlacksmith, TagArtificialIntelligence, TagAbsentParents, TagAcademy},
-				urlTagExcludeKey:   {TagArtists, TagDestiny, TagColdProtagonist, TagDemonicCultivationTechnique},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
+				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				StoryStatus: StoryStatusAll,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlStoryStatusKey:  {StoryStatusAll},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlStoryStatusKey:  {StoryStatusAll.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				StoryStatus: StoryStatusCompleted,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlStoryStatusKey:  {StoryStatusCompleted},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlStoryStatusKey:  {StoryStatusCompleted.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				StoryStatus: StoryStatusOngoing,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlStoryStatusKey:  {StoryStatusOngoing},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlStoryStatusKey:  {StoryStatusOngoing.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				StoryStatus: StoryStatusHiatus,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlStoryStatusKey:  {StoryStatusHiatus},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlStoryStatusKey:  {StoryStatusHiatus.String()},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				SortBy: SortByReviews,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlSortKey:         {SortByReviews},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlSortKey:         {SortByReviews.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
-				OrderBy: OrderAscending,
+				OrderBy: OrderByAscending,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderAscending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByAscending.String()},
 			},
 		},
 		{
 			Query: SearchQuery{
 				Page: 1,
 			},
-			Expected: map[string][]string{
-				urlSeriesFinderKey: {SeriesFinderEnabled},
-				urlSortKey:         {SortByLastUpdated},
-				urlOrderKey:        {OrderDescending},
+			Expected: map[string][]interface{}{
+				urlSeriesFinderKey: {urlSeriesFinderEnabled},
+				urlSortKey:         {SortByLastUpdated.String()},
+				urlOrderKey:        {OrderByDescending.String()},
 				urlPageKey:         {"1"},
 			},
 		},

@@ -12,41 +12,94 @@ import (
 func main() {
 
 	flagPackageName := flag.String("package", "NovelUpdatesClient", "The name of the package for the generated output")
-	flagType := flag.String("type", "all", "The type of output to generate: all|tags|genres")
+	flagType := flag.String("type", "all", "The type of output to generate: all|noveltype|language|genres|tags|storyStatus|sortBy|orderBy")
 	flag.Parse()
 
 	b := &strings.Builder{}
+	doFallthrough := false
+
+	writeHeader(b, *flagPackageName)
+	var err error
 
 	switch *flagType {
 	case "all":
-		writeHeader(b, *flagPackageName)
-		writeNovelType(b)
-		writeLanguage(b)
-		writeGenres(b)
-		writeTags(b)
-		fmt.Println(b.String())
-		return
+		doFallthrough = true
+		fallthrough
 	case "noveltype":
-		writeHeader(b, *flagPackageName)
-		writeNovelType(b)
-		fmt.Println(b.String())
-		return
+		results, err := NovelUpdatesClient.DoFetchNovelTypeRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("NovelType", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
 	case "language":
-		writeHeader(b, *flagPackageName)
-		writeLanguage(b)
-		fmt.Println(b.String())
-		return
+		results, err := NovelUpdatesClient.DoFetchLanguageRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("Language", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
 	case "genres":
-		writeHeader(b, *flagPackageName)
-		writeGenres(b)
-		fmt.Println(b.String())
-		return
+		results, err := NovelUpdatesClient.DoFetchGenresRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("Genre", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
 	case "tags":
-		writeHeader(b, *flagPackageName)
-		writeTags(b)
-		fmt.Println(b.String())
-		return
+		results, err := NovelUpdatesClient.DoFetchTagsRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("Tag", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
+	case "storyStatus":
+		results, err := NovelUpdatesClient.DoFetchStoryStatusRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("StoryStatus", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
+	case "sortBy":
+		results, err := NovelUpdatesClient.DoFetchSortByRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("SortBy", results, b)
+		if !doFallthrough {
+			break
+		}
+		fallthrough
+	case "orderBy":
+		results, err := NovelUpdatesClient.DoFetchOrderByRequestWith(&NovelUpdatesClient.BasicRequester{})
+		if err != nil {
+			log.Fatalln(err)
+		}
+		writeFor("OrderBy", results, b)
+		if !doFallthrough {
+			break
+		}
 	}
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println(b.String())
 }
 
 func normalisedName(n string) string {
@@ -54,6 +107,14 @@ func normalisedName(n string) string {
 	n = strings.Replace(n, " ", "", -1)
 	n = strings.Replace(n, "-", "", -1)
 	n = strings.Replace(n, "/", "", -1)
+	n = strings.Replace(n, "'", "", -1)
+	return n
+}
+
+func normalisedSlug(n string) string {
+	n = strcase.ToCamel(n)
+	n = strings.Replace(n, " ", "-", -1)
+	n = strings.Replace(n, "//", "-", -1)
 	n = strings.Replace(n, "'", "", -1)
 	return n
 }
@@ -69,285 +130,117 @@ func writeHeader(b *strings.Builder, packageName string) {
 
 ////////////////////////////////////////////////////////
 
-func writeNovelType(b *strings.Builder) {
+func writeFor(s string, results []NovelUpdatesClient.KeyValueResult, b *strings.Builder) {
 
-	results, err := NovelUpdatesClient.DoFetchNovelTypeRequestWith(&NovelUpdatesClient.BasicRequester{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	//////// NovelType
-	b.WriteString("type NovelType string\n\n")
-	b.WriteString(fmt.Sprintf("// NovelType: Total(%d)\n", len(results)))
+	//////// Main
+	b.WriteString(fmt.Sprintf("type %s string\n\n", s))
+	b.WriteString(fmt.Sprintf("// %s: Total(%d)\n", s, len(results)))
 	b.WriteString("const (\n")
 
 	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tNovelType%s NovelType = \"%s\"\n", normalisedName(result.Name), result.Value))
-		//b.WriteString(fmt.Sprintf("\tNovelType%s = \"%s\"\n", normalisedName(result.Name), result.Value))
+		b.WriteString(fmt.Sprintf("\t%s%s %s = \"%s\"\n", s, normalisedName(result.Name), s, result.Value))
 	}
-
 	b.WriteString(")\n\n")
 
-	//////// NovelTypeList
-	b.WriteString(`type NovelTypeList []NovelType
-
-func (s NovelTypeList) StringSlice() (ss []string) {
-	for _, n := range s {
-		ss = append(ss, string(n))
-	}
-	return
-}
-
-func SlugListToNovelTypeList(s []string) (ntl NovelTypeList, err error) {
-	for _, n := range s {
-		nt, ok := SlugToNovelType[n]
-		if !ok {
-			return nil, fmt.Errorf("error: slug %s was not found in novel type slugs", n)
-		}
-		ntl = append(ntl, nt)
-	}
-	return
-}
-`)
-
-	//////// NovelTypeToName
+	//////// ToDisplayString
 	b.WriteString("var (\n")
-	b.WriteString("\tNovelTypeToName = map[NovelType]string{\n")
-	//b.WriteString("\tNovelTypeToName = map[string]string{\n")
+	b.WriteString(fmt.Sprintf("\t%sToDisplayString = map[%s]string{\n", s, s))
 
 	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tNovelType%s:\"%s\",\n", normalisedName(result.Name), result.Name))
+		b.WriteString(fmt.Sprintf("\t%s%s:\"%s\",\n", s, normalisedName(result.Name), result.Name))
 	}
 
 	b.WriteString("}\n")
 	b.WriteString(")\n\n")
 
-	///////// NameToNovelType
+	/////////// DisplayStringTo
 	b.WriteString("var (\n")
-	b.WriteString("\tNameToNovelType = map[string]NovelType{\n")
-	//b.WriteString("\tNameToNovelType = map[string]string{\n")
+	b.WriteString(fmt.Sprintf("\tDisplayStringTo%s = map[string]%s{\n", s, s))
 
 	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":NovelType%s,\n", result.Name, normalisedName(result.Name)))
+		b.WriteString(fmt.Sprintf("\t\"%s\":%s%s,\n", result.Name, s, normalisedName(result.Name)))
 	}
 
 	b.WriteString("}\n")
 	b.WriteString(")\n\n")
 
-	///////// SlugToNovelType
+	/////////// SlugStringTo
 	b.WriteString("var (\n")
-	b.WriteString("\tSlugToNovelType = map[string]NovelType{\n")
-	//b.WriteString("\tSlugToNovelType = map[string]string{\n")
+	b.WriteString(fmt.Sprintf("\tSlugStringTo%s = map[string]%s{\n", s, s))
 
 	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":NovelType%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
+		b.WriteString(fmt.Sprintf("\t\"%s\":%s%s,\n", normalisedSlug(result.Name), s, normalisedName(result.Name)))
+	}
+
+	b.WriteString("}\n")
+	b.WriteString(")\n\n")
+
+	/////////// ToSlugString
+	b.WriteString("var (\n")
+	b.WriteString(fmt.Sprintf("\t%sToSlugString = map[%s]string{\n", s, s))
+
+	for _, result := range results {
+		b.WriteString(fmt.Sprintf("\t%s%s:\"%s\",\n", s, normalisedName(result.Name), normalisedSlug(result.Name)))
 	}
 
 	b.WriteString("}\n")
 	b.WriteString(")\n")
-}
 
-////////////////////////////////////////////////////////
-
-func writeLanguage(b *strings.Builder) {
-
-	results, err := NovelUpdatesClient.DoFetchLanguageRequestWith(&NovelUpdatesClient.BasicRequester{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	//////// Language
-	b.WriteString("type Language string\n\n")
-	b.WriteString(fmt.Sprintf("// Language: Total(%d)\n", len(results)))
-	b.WriteString("const (\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tLanguage%s Language = \"%s\"\n", normalisedName(result.Name), result.Value))
-		//b.WriteString(fmt.Sprintf("\tLanguage%s = \"%s\"\n", normalisedName(result.Name), result.Value))
-	}
-
-	b.WriteString(")\n\n")
-
-	//////// NovelTypeList
-	b.WriteString(`type LanguageList []Language
-
-func (s LanguageList) StringSlice() (ss []string) {
-	for _, n := range s {
-		ss = append(ss, string(n))
-	}
-	return
-}
-
-func SlugListToLanguageList(s []string) (ll LanguageList, err error) {
-	for _, n := range s {
-		l, ok := SlugToLanguage[n]
-		if !ok {
-			return nil, fmt.Errorf("error: slug %s was not found in language slugs", l)
+	//////// Functions
+	b.WriteString(strings.Replace(`func (s ${s}) String() string {
+			return string(s)
 		}
-		ll = append(ll, l)
-	}
-	return
-}
-`)
-
-	//////// LanguageToName
-	b.WriteString("var (\n")
-	b.WriteString("\tLanguageToName = map[Language]string{\n")
-	//b.WriteString("\tLanguageToName = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tLanguage%s:\"%s\",\n", normalisedName(result.Name), result.Name))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n\n")
-
-	///////// NameToLanguage
-	b.WriteString("var (\n")
-	b.WriteString("\tNameToLanguage = map[string]Language{\n")
-	//b.WriteString("\tNameToLanguage = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":Language%s,\n", result.Name, normalisedName(result.Name)))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n\n")
-
-	///////// SlugToNovelType
-	b.WriteString("var (\n")
-	b.WriteString("\tSlugToLanguage = map[string]Language{\n")
-	//b.WriteString("\tSlugToLanguage = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":Language%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n")
-}
-
-////////////////////////////////////////////////////////
-
-func writeGenres(b *strings.Builder) {
-
-	results, err := NovelUpdatesClient.DoFetchGenresRequestWith(&NovelUpdatesClient.BasicRequester{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	//////// Genre
-	b.WriteString("type Genre string\n\n")
-	b.WriteString(fmt.Sprintf("// Genre: Total(%d)\n", len(results)))
-	b.WriteString("const (\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tGenre%s Genre = \"%s\"\n", normalisedName(result.Name), result.Value))
-		//b.WriteString(fmt.Sprintf("\tGenre%s = \"%s\"\n", normalisedName(result.Name), result.Value))
-	}
-	b.WriteString(")\n\n")
-
-	////// GenreList
-	b.WriteString(`type GenreList []Genre
 	
-	func (s GenreList) StringSlice() (ss []string) {
-		for _, n := range s {
-			ss = append(ss, string(n))
+		func (s ${s}) SlugString() string {
+			v, _ := ${s}ToSlugString[s]
+			return v
 		}
-		return
-	}
 	
-	func SlugListToGenreList(s []string) (gl GenreList, err error) {
-		for _, n := range s {
-			g, ok := SlugToGenre[n]
-			if !ok {
-				return nil, fmt.Errorf("error: slug %s was not found in genre slugs", g)
+		func (s ${s}) DisplayString() string {
+			v, _ := ${s}ToDisplayString[s]
+			return v
+		}
+	
+		func SlugStringTo${s}Or(s string, def ${s}) ${s} {
+			if v, ok := SlugStringTo${s}[s]; ok {
+				return v
 			}
-			gl = append(gl, g)
+			return def
 		}
-		return
-	}
-	`)
-
-	//////// GenreToName
-	b.WriteString("var (\n")
-	b.WriteString("\tGenreToName = map[Genre]string{\n")
-	//b.WriteString("\tGenreToName = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tGenre%s:\"%s\",\n", normalisedName(result.Name), result.Name))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n\n")
-
-	///////// NameToGenre
-	b.WriteString("var (\n")
-	b.WriteString("\tNameToGenre = map[string]Genre{\n")
-	//b.WriteString("\tNameToGenre = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":Genre%s,\n", result.Name, normalisedName(result.Name)))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n\n")
-
-	///////// SlugToGenre
-	b.WriteString("var (\n")
-	b.WriteString("\tSlugToGenre = map[string]Genre{\n")
-	//b.WriteString("\SlugToGenre = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":Genre%s,\n", strings.ToLower(strings.Replace(result.Name, " ", "-", -1)), normalisedName(result.Name)))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n")
-}
-
-////////////////////////////////////////////////////////
-
-func writeTags(b *strings.Builder) {
-
-	results, err := NovelUpdatesClient.DoFetchTagsRequestWith(&NovelUpdatesClient.BasicRequester{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	//////// Tag
-	//b.WriteString("type Tag string\n\n")
-	b.WriteString(fmt.Sprintf("// Tag: Total(%d)\n", len(results)))
-	b.WriteString("const (\n")
-
-	for _, result := range results {
-		//b.WriteString(fmt.Sprintf("\tTag%s Tag = \"%s\"\n", normalisedName(result.Name), result.Value))
-		b.WriteString(fmt.Sprintf("\tTag%s = \"%s\"\n", normalisedName(result.Name), result.Value))
-	}
-
-	b.WriteString(")\n\n")
-
-	//////// TagToName
-	b.WriteString("var (\n")
-	//b.WriteString("\tTagToName = map[Tag]string{\n")
-	b.WriteString("\tTagToName = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\tTag%s:\"%s\",\n", normalisedName(result.Name), result.Name))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n\n")
-
-	///////// NameToTag
-	b.WriteString("var (\n")
-	//b.WriteString("\tNameToTag = map[string]Tag{\n")
-	b.WriteString("\tNameToTag = map[string]string{\n")
-
-	for _, result := range results {
-		b.WriteString(fmt.Sprintf("\t\"%s\":Tag%s,\n", result.Name, normalisedName(result.Name)))
-	}
-
-	b.WriteString("}\n")
-	b.WriteString(")\n")
+	
+		func (s ${s}) IsValid() bool {
+			if _, ok := ${s}ToSlugString[s]; ok {
+				return true
+			}
+			return false
+		}
+	
+		type ${s}List []${s}
+	
+		func (s ${s}List) StringSlice() (sl []string) {
+			for _, n := range s {
+				sl = append(sl, string(n))
+			}
+			return
+		}
+	
+		func SlugListTo${s}List(s []string) (tl ${s}List, err error) {
+			for _, n := range s {
+				tli, ok := SlugStringTo${s}[n]
+				if !ok {
+					return nil, fmt.Errorf("error: slug %s was not found ${s} slugs", tli)
+				}
+				tl = append(tl, tli)
+			}
+			return
+		}
+	
+		func MustSlugListTo${s}List(s []string) (${s}List) {
+			list, err := SlugListTo${s}List(s)
+			if err != nil {
+				panic(err)
+			}
+			return list
+		}
+	`, "${s}", s, -1))
 }

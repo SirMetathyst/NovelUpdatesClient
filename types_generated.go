@@ -12,28 +12,8 @@ const (
 	NovelTypeWebNovel       NovelType = "2444"
 )
 
-type NovelTypeList []NovelType
-
-func (s NovelTypeList) StringSlice() (ss []string) {
-	for _, n := range s {
-		ss = append(ss, string(n))
-	}
-	return
-}
-
-func SlugListToNovelTypeList(s []string) (ntl NovelTypeList, err error) {
-	for _, n := range s {
-		nt, ok := SlugToNovelType[n]
-		if !ok {
-			return nil, fmt.Errorf("error: slug %s was not found in novel type slugs", n)
-		}
-		ntl = append(ntl, nt)
-	}
-	return
-}
-
 var (
-	NovelTypeToName = map[NovelType]string{
+	NovelTypeToDisplayString = map[NovelType]string{
 		NovelTypeLightNovel:     "Light Novel",
 		NovelTypePublishedNovel: "Published Novel",
 		NovelTypeWebNovel:       "Web Novel",
@@ -41,7 +21,7 @@ var (
 )
 
 var (
-	NameToNovelType = map[string]NovelType{
+	DisplayStringToNovelType = map[string]NovelType{
 		"Light Novel":     NovelTypeLightNovel,
 		"Published Novel": NovelTypePublishedNovel,
 		"Web Novel":       NovelTypeWebNovel,
@@ -49,12 +29,76 @@ var (
 )
 
 var (
-	SlugToNovelType = map[string]NovelType{
+	SlugStringToNovelType = map[string]NovelType{
 		"light-novel":     NovelTypeLightNovel,
 		"published-novel": NovelTypePublishedNovel,
 		"web-novel":       NovelTypeWebNovel,
 	}
 )
+
+var (
+	NovelTypeToSlugString = map[NovelType]string{
+		NovelTypeLightNovel:     "light-novel",
+		NovelTypePublishedNovel: "published-novel",
+		NovelTypeWebNovel:       "web-novel",
+	}
+)
+
+func (s NovelType) String() string {
+	return string(s)
+}
+
+func (s NovelType) SlugString() string {
+	v, _ := NovelTypeToSlugString[s]
+	return v
+}
+
+func (s NovelType) DisplayString() string {
+	v, _ := NovelTypeToDisplayString[s]
+	return v
+}
+
+func SlugStringToNovelTypeOr(s string, def NovelType) NovelType {
+	if v, ok := SlugStringToNovelType[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s NovelType) IsValid() bool {
+	if _, ok := NovelTypeToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type NovelTypeList []NovelType
+
+func (s NovelTypeList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToNovelTypeList(s []string) (tl NovelTypeList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToNovelType[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found NovelType slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToNovelTypeList(s []string) NovelTypeList {
+	list, err := SlugListToNovelTypeList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
 
 type Language string
 
@@ -71,28 +115,8 @@ const (
 	LanguageVietnamese Language = "9177"
 )
 
-type LanguageList []Language
-
-func (s LanguageList) StringSlice() (ss []string) {
-	for _, n := range s {
-		ss = append(ss, string(n))
-	}
-	return
-}
-
-func SlugListToLanguageList(s []string) (ll LanguageList, err error) {
-	for _, n := range s {
-		l, ok := SlugToLanguage[n]
-		if !ok {
-			return nil, fmt.Errorf("error: slug %s was not found in language slugs", l)
-		}
-		ll = append(ll, l)
-	}
-	return
-}
-
 var (
-	LanguageToName = map[Language]string{
+	LanguageToDisplayString = map[Language]string{
 		LanguageChinese:    "Chinese",
 		LanguageFilipino:   "Filipino",
 		LanguageIndonesian: "Indonesian",
@@ -106,7 +130,7 @@ var (
 )
 
 var (
-	NameToLanguage = map[string]Language{
+	DisplayStringToLanguage = map[string]Language{
 		"Chinese":    LanguageChinese,
 		"Filipino":   LanguageFilipino,
 		"Indonesian": LanguageIndonesian,
@@ -120,7 +144,7 @@ var (
 )
 
 var (
-	SlugToLanguage = map[string]Language{
+	SlugStringToLanguage = map[string]Language{
 		"chinese":    LanguageChinese,
 		"filipino":   LanguageFilipino,
 		"indonesian": LanguageIndonesian,
@@ -132,6 +156,76 @@ var (
 		"vietnamese": LanguageVietnamese,
 	}
 )
+
+var (
+	LanguageToSlugString = map[Language]string{
+		LanguageChinese:    "chinese",
+		LanguageFilipino:   "filipino",
+		LanguageIndonesian: "indonesian",
+		LanguageJapanese:   "japanese",
+		LanguageKhmer:      "khmer",
+		LanguageKorean:     "korean",
+		LanguageMalaysian:  "malaysian",
+		LanguageThai:       "thai",
+		LanguageVietnamese: "vietnamese",
+	}
+)
+
+func (s Language) String() string {
+	return string(s)
+}
+
+func (s Language) SlugString() string {
+	v, _ := LanguageToSlugString[s]
+	return v
+}
+
+func (s Language) DisplayString() string {
+	v, _ := LanguageToDisplayString[s]
+	return v
+}
+
+func SlugStringToLanguageOr(s string, def Language) Language {
+	if v, ok := SlugStringToLanguage[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s Language) IsValid() bool {
+	if _, ok := LanguageToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type LanguageList []Language
+
+func (s LanguageList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToLanguageList(s []string) (tl LanguageList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToLanguage[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found Language slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToLanguageList(s []string) LanguageList {
+	list, err := SlugListToLanguageList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
 
 type Genre string
 
@@ -174,28 +268,8 @@ const (
 	GenreYuri          Genre = "922"
 )
 
-type GenreList []Genre
-
-func (s GenreList) StringSlice() (ss []string) {
-	for _, n := range s {
-		ss = append(ss, string(n))
-	}
-	return
-}
-
-func SlugListToGenreList(s []string) (gl GenreList, err error) {
-	for _, n := range s {
-		g, ok := SlugToGenre[n]
-		if !ok {
-			return nil, fmt.Errorf("error: slug %s was not found in genre slugs", g)
-		}
-		gl = append(gl, g)
-	}
-	return
-}
-
 var (
-	GenreToName = map[Genre]string{
+	GenreToDisplayString = map[Genre]string{
 		GenreAction:        "Action",
 		GenreAdult:         "Adult",
 		GenreAdventure:     "Adventure",
@@ -235,7 +309,7 @@ var (
 )
 
 var (
-	NameToGenre = map[string]Genre{
+	DisplayStringToGenre = map[string]Genre{
 		"Action":        GenreAction,
 		"Adult":         GenreAdult,
 		"Adventure":     GenreAdventure,
@@ -275,7 +349,7 @@ var (
 )
 
 var (
-	SlugToGenre = map[string]Genre{
+	SlugStringToGenre = map[string]Genre{
 		"action":        GenreAction,
 		"adult":         GenreAdult,
 		"adventure":     GenreAdventure,
@@ -314,777 +388,875 @@ var (
 	}
 )
 
+var (
+	GenreToSlugString = map[Genre]string{
+		GenreAction:        "action",
+		GenreAdult:         "adult",
+		GenreAdventure:     "adventure",
+		GenreComedy:        "comedy",
+		GenreDrama:         "drama",
+		GenreEcchi:         "ecchi",
+		GenreFantasy:       "fantasy",
+		GenreGenderBender:  "gender-bender",
+		GenreHarem:         "harem",
+		GenreHistorical:    "historical",
+		GenreHorror:        "horror",
+		GenreJosei:         "josei",
+		GenreMartialArts:   "martial-arts",
+		GenreMature:        "mature",
+		GenreMecha:         "mecha",
+		GenreMystery:       "mystery",
+		GenrePsychological: "psychological",
+		GenreRomance:       "romance",
+		GenreSchoolLife:    "school-life",
+		GenreSciFi:         "sci-fi",
+		GenreSeinen:        "seinen",
+		GenreShoujo:        "shoujo",
+		GenreShoujoAi:      "shoujo-ai",
+		GenreShounen:       "shounen",
+		GenreShounenAi:     "shounen-ai",
+		GenreSliceOfLife:   "slice-of-life",
+		GenreSmut:          "smut",
+		GenreSports:        "sports",
+		GenreSupernatural:  "supernatural",
+		GenreTragedy:       "tragedy",
+		GenreWuxia:         "wuxia",
+		GenreXianxia:       "xianxia",
+		GenreXuanhuan:      "xuanhuan",
+		GenreYaoi:          "yaoi",
+		GenreYuri:          "yuri",
+	}
+)
+
+func (s Genre) String() string {
+	return string(s)
+}
+
+func (s Genre) SlugString() string {
+	v, _ := GenreToSlugString[s]
+	return v
+}
+
+func (s Genre) DisplayString() string {
+	v, _ := GenreToDisplayString[s]
+	return v
+}
+
+func SlugStringToGenreOr(s string, def Genre) Genre {
+	if v, ok := SlugStringToGenre[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s Genre) IsValid() bool {
+	if _, ok := GenreToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type GenreList []Genre
+
+func (s GenreList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToGenreList(s []string) (tl GenreList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToGenre[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found Genre slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToGenreList(s []string) GenreList {
+	list, err := SlugListToGenreList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
+
+type Tag string
+
 // Tag: Total(765)
 const (
-	TagAbandonedChildren                = "16185"
-	TagAbilitySteal                     = "4859"
-	TagAbsentParents                    = "1248"
-	TagAbusiveCharacters                = "11325"
-	TagAcademy                          = "4885"
-	TagAcceleratedGrowth                = "475"
-	TagActing                           = "13403"
-	TagAdaptedFromManga                 = "4976"
-	TagAdaptedFromManhua                = "6280"
-	TagAdaptedToAnime                   = "269"
-	TagAdaptedToDrama                   = "2999"
-	TagAdaptedToDramaCD                 = "928"
-	TagAdaptedToGame                    = "891"
-	TagAdaptedToManga                   = "270"
-	TagAdaptedToManhua                  = "182"
-	TagAdaptedToManhwa                  = "2721"
-	TagAdaptedToMovie                   = "1133"
-	TagAdaptedToVisualNovel             = "1334"
-	TagAdoptedChildren                  = "858"
-	TagAdoptedProtagonist               = "603"
-	TagAdultery                         = "4974"
-	TagAdventurers                      = "3108"
-	TagAffair                           = "3802"
-	TagAgeProgression                   = "357"
-	TagAgeRegression                    = "216"
-	TagAggressiveCharacters             = "13720"
-	TagAlchemy                          = "234"
-	TagAliens                           = "621"
-	TagAllGirlsSchool                   = "598"
-	TagAlternateWorld                   = "7909"
-	TagAmnesia                          = "625"
-	TagAmusementPark                    = "774"
-	TagAnal                             = "4594"
-	TagAncientChina                     = "476"
-	TagAncientTimes                     = "2662"
-	TagAndrogynousCharacters            = "13263"
-	TagAndroids                         = "892"
-	TagAngels                           = "1327"
-	TagAnimalCharacteristics            = "255"
-	TagAnimalRearing                    = "7323"
-	TagAntiMagic                        = "724"
-	TagAntiSocialProtagonist            = "1732"
-	TagAntiheroProtagonist              = "4297"
-	TagAntiqueShop                      = "203"
-	TagApartmentLife                    = "513"
-	TagApatheticProtagonist             = "12913"
-	TagApocalypse                       = "217"
-	TagAppearanceChanges                = "721"
-	TagAppearanceDifferentFromActualAge = "430"
-	TagArchery                          = "697"
-	TagAristocracy                      = "6442"
-	TagArmsDealers                      = "9591"
-	TagArmy                             = "306"
-	TagArmyBuilding                     = "9522"
-	TagArrangedMarriage                 = "2676"
-	TagArrogantCharacters               = "13427"
-	TagArtifactCrafting                 = "9851"
-	TagArtifacts                        = "4699"
-	TagArtificialIntelligence           = "141"
-	TagArtists                          = "271"
-	TagAssassins                        = "81"
-	TagAstrologers                      = "8965"
-	TagAutism                           = "9776"
-	TagAutomatons                       = "11491"
-	TagAverageLookingProtagonist        = "12917"
-	TagAwardWinningWork                 = "1134"
-	TagAwkwardProtagonist               = "13016"
-	TagBands                            = "4975"
-	TagBasedOnAMovie                    = "1346"
-	TagBasedOnASong                     = "1632"
-	TagBasedOnATVShow                   = "6572"
-	TagBasedOnAVideoGame                = "1442"
-	TagBasedOnAVisualNovel              = "1447"
-	TagBasedOnAnAnime                   = "1230"
-	TagBattleAcademy                    = "825"
-	TagBattleCompetition                = "6308"
-	TagBDSM                             = "10668"
-	TagBeastCompanions                  = "5363"
-	TagBeastkin                         = "5406"
-	TagBeasts                           = "116"
-	TagBeautifulFemaleLead              = "111"
-	TagBestiality                       = "15625"
-	TagBetrayal                         = "256"
-	TagBickeringCouple                  = "2573"
-	TagBiochip                          = "13371"
-	TagBisexualProtagonist              = "6359"
-	TagBlackBelly                       = "2943"
-	TagBlackmail                        = "916"
-	TagBlacksmith                       = "2734"
-	TagBlindDates                       = "9280"
-	TagBlindProtagonist                 = "2347"
-	TagBloodManipulation                = "9492"
-	TagBloodlines                       = "5824"
-	TagBodySwap                         = "2642"
-	TagBodyTempering                    = "9907"
-	TagBodyDouble                       = "568"
-	TagBodyguards                       = "224"
-	TagBooks                            = "1288"
-	TagBookworm                         = "13805"
-	TagBossSubordinateRelationship      = "325"
-	TagBrainwashing                     = "1710"
-	TagBreastFetish                     = "5607"
-	TagBrokenEngagement                 = "9410"
-	TagBrotherComplex                   = "604"
-	TagBrotherhood                      = "8185"
-	TagBuddhism                         = "3825"
-	TagBullying                         = "123"
-	TagBusinessManagement               = "782"
-	TagBusinessmen                      = "11786"
-	TagButlers                          = "1597"
-	TagCalmProtagonist                  = "12910"
-	TagCannibalism                      = "4248"
-	TagCardGames                        = "2774"
-	TagCarefreeProtagonist              = "11345"
-	TagCaringProtagonist                = "12951"
-	TagCautiousProtagonist              = "12914"
-	TagCelebrities                      = "2304"
-	TagCharacterGrowth                  = "257"
-	TagCharismaticProtagonist           = "14493"
-	TagCharmingProtagonist              = "14985"
-	TagChatRooms                        = "1942"
-	TagCheats                           = "5708"
-	TagChefs                            = "1832"
-	TagChildAbuse                       = "1368"
-	TagChildProtagonist                 = "3470"
-	TagChildcare                        = "1391"
-	TagChildhoodFriends                 = "85"
-	TagChildhoodLove                    = "917"
-	TagChildhoodPromise                 = "691"
-	TagChildishProtagonist              = "14986"
-	TagChuunibyou                       = "169"
-	TagClanBuilding                     = "4423"
-	TagClassic                          = "7777"
-	TagCleverProtagonist                = "14587"
-	TagClingyLover                      = "2356"
-	TagClones                           = "2274"
-	TagClubs                            = "611"
-	TagClumsyLoveInterests              = "14989"
-	TagCoWorkers                        = "7951"
-	TagCohabitation                     = "710"
-	TagColdLoveInterests                = "14606"
-	TagColdProtagonist                  = "14605"
-	TagCollectionOfShortStories         = "8656"
-	TagCollegeUniversity                = "7776"
-	TagComa                             = "1675"
-	TagComedicUndertone                 = "124"
-	TagComingOfAge                      = "282"
-	TagComplexFamilyRelationships       = "4822"
-	TagConditionalPower                 = "7117"
-	TagConfidentProtagonist             = "14673"
-	TagConfinement                      = "1404"
-	TagConflictingLoyalties             = "3241"
-	TagContracts                        = "859"
-	TagCooking                          = "2506"
-	TagCorruption                       = "352"
-	TagCosmicWars                       = "9926"
-	TagCosplay                          = "7844"
-	TagCoupleGrowth                     = "592"
-	TagCourtOfficial                    = "5792"
-	TagCousins                          = "836"
-	TagCowardlyProtagonist              = "3752"
-	TagCrafting                         = "5944"
-	TagCrime                            = "2969"
-	TagCriminals                        = "443"
-	TagCrossDressing                    = "769"
-	TagCrossover                        = "1795"
-	TagCruelCharacters                  = "12956"
-	TagCryostasis                       = "19556"
-	TagCultivation                      = "117"
-	TagCunnilingus                      = "4596"
-	TagCunningProtagonist               = "14593"
-	TagCuriousProtagonist               = "14990"
-	TagCurses                           = "579"
-	TagCuteChildren                     = "16457"
-	TagCuteProtagonist                  = "14987"
-	TagCuteStory                        = "5525"
-	TagDancers                          = "8248"
-	TagDaoCompanion                     = "10343"
-	TagDaoComprehension                 = "6242"
-	TagDaoism                           = "3824"
-	TagDark                             = "4599"
-	TagDeadProtagonist                  = "2215"
-	TagDeath                            = "2142"
-	TagDeathOfLovedOnes                 = "1615"
-	TagDebts                            = "5333"
-	TagDelinquents                      = "749"
-	TagDelusions                        = "1362"
-	TagDemiHumans                       = "5526"
-	TagDemonLord                        = "2386"
-	TagDemonicCultivationTechnique      = "21268"
-	TagDemons                           = "86"
-	TagDenseProtagonist                 = "14541"
-	TagDepictionsOfCruelty              = "12964"
-	TagDepression                       = "1946"
-	TagDestiny                          = "3135"
-	TagDetectives                       = "1200"
-	TagDeterminedProtagonist            = "12959"
-	TagDevotedLoveInterests             = "15456"
-	TagDifferentSocialStatus            = "2243"
-	TagDisabilities                     = "19241"
-	TagDiscrimination                   = "258"
-	TagDisfigurement                    = "13407"
-	TagDishonestProtagonist             = "2343"
-	TagDistrustfulProtagonist           = "7949"
-	TagDivination                       = "2019"
-	TagDivineProtection                 = "4706"
-	TagDivorce                          = "2305"
-	TagDoctors                          = "2876"
-	TagDollsPuppets                     = "16412"
-	TagDomesticAffairs                  = "2663"
-	TagDotingLoveInterests              = "15026"
-	TagDotingOlderSiblings              = "15025"
-	TagDotingParents                    = "14674"
-	TagDragonRiders                     = "509"
-	TagDragonSlayers                    = "897"
-	TagDragons                          = "72"
-	TagDreams                           = "1406"
-	TagDrugs                            = "311"
-	TagDruids                           = "8126"
-	TagDungeonMaster                    = "174"
-	TagDungeons                         = "175"
-	TagDwarfs                           = "3569"
-	TagDystopia                         = "1283"
-	TagESports                          = "15108"
-	TagEarlyRomance                     = "7711"
-	TagEarthInvasion                    = "1661"
-	TagEasyGoingLife                    = "5431"
-	TagEconomics                        = "784"
-	TagEditors                          = "1878"
-	TagEideticMemory                    = "3796"
-	TagElderlyProtagonist               = "13177"
-	TagElementalMagic                   = "9855"
-	TagElves                            = "165"
-	TagEmotionallyWeakProtagonist       = "13305"
-	TagEmpires                          = "3570"
-	TagEnemiesBecomeAllies              = "840"
-	TagEnemiesBecomeLovers              = "113"
-	TagEngagement                       = "263"
-	TagEngineer                         = "2735"
-	TagEnlightenment                    = "4480"
-	TagEpisodic                         = "1798"
-	TagEunuch                           = "10593"
-	TagEuropeanAmbience                 = "7778"
-	TagEvilGods                         = "10172"
-	TagEvilOrganizations                = "5411"
-	TagEvilProtagonist                  = "12874"
-	TagEvilReligions                    = "7087"
-	TagEvolution                        = "2049"
-	TagExhibitionism                    = "6365"
-	TagExorcism                         = "711"
-	TagEyePowers                        = "200"
-	TagFairies                          = "525"
-	TagFallenAngels                     = "134"
-	TagFallenNobility                   = "734"
-	TagFamilialLove                     = "12009"
-	TagFamiliars                        = "2152"
-	TagFamily                           = "641"
-	TagFamilyBusiness                   = "2013"
-	TagFamilyConflict                   = "8664"
-	TagFamousParents                    = "1833"
-	TagFamousProtagonist                = "14555"
-	TagFanaticism                       = "5399"
-	TagFanfiction                       = "5691"
-	TagFantasyCreatures                 = "771"
-	TagFantasyWorld                     = "99"
-	TagFarming                          = "3068"
-	TagFastCultivation                  = "5068"
-	TagFastLearner                      = "7599"
-	TagFatProtagonist                   = "13721"
-	TagFatToFit                         = "15974"
-	TagFatedLovers                      = "2574"
-	TagFearlessProtagonist              = "14675"
-	TagFellatio                         = "3953"
-	TagFemaleMaster                     = "5262"
-	TagFemaleProtagonist                = "2879"
-	TagFemaleToMale                     = "4178"
-	TagFengShui                         = "10919"
-	TagFirearms                         = "9340"
-	TagFirstLove                        = "1569"
-	TagFirstTimeIntercourse             = "4880"
-	TagFlashbacks                       = "6061"
-	TagFleetBattles                     = "17020"
-	TagFolklore                         = "923"
-	TagForcedIntoARelationship          = "1353"
-	TagForcedLivingArrangements         = "606"
-	TagForcedMarriage                   = "3052"
-	TagForgetfulProtagonist             = "2367"
-	TagFormerHero                       = "7405"
-	TagFoxSpirits                       = "6222"
-	TagFriendsBecomeEnemies             = "1576"
-	TagFriendship                       = "1476"
-	TagFujoshi                          = "797"
-	TagFutanari                         = "3468"
-	TagFuturisticSetting                = "2616"
-	TagGalge                            = "7643"
-	TagGambling                         = "9425"
-	TagGameElements                     = "93"
-	TagGameRankingSystem                = "16272"
-	TagGamers                           = "225"
-	TagGangs                            = "313"
-	TagGateToAnotherWorld               = "5382"
-	TagGenderlessProtagonist            = "9295"
-	TagGenerals                         = "13888"
-	TagGeneticModifications             = "17629"
-	TagGenies                           = "2014"
-	TagGeniusProtagonist                = "14581"
-	TagGhosts                           = "515"
-	TagGladiators                       = "2044"
-	TagGlassesWearingLoveInterests      = "15547"
-	TagGlassesWearingProtagonist        = "15548"
-	TagGoblins                          = "11494"
-	TagGodProtagonist                   = "6683"
-	TagGodHumanRelationship             = "1354"
-	TagGoddesses                        = "1355"
-	TagGodlyPowers                      = "73"
-	TagGods                             = "177"
-	TagGolems                           = "4437"
-	TagGore                             = "455"
-	TagGraveKeepers                     = "1736"
-	TagGrinding                         = "807"
-	TagGuardianRelationship             = "2005"
-	TagGuilds                           = "438"
-	TagGunfighters                      = "792"
-	TagHackers                          = "1753"
-	TagHalfHumanProtagonist             = "9445"
-	TagHandjob                          = "9873"
-	TagHandsomeMaleLead                 = "192"
-	TagHardWorkingProtagonist           = "14431"
-	TagHaremSeekingProtagonist          = "14992"
-	TagHarshTraining                    = "8149"
-	TagHatedProtagonist                 = "2307"
-	TagHealers                          = "12141"
-	TagHeartwarming                     = "5267"
-	TagHeaven                           = "242"
-	TagHeavenlyTribulation              = "4770"
-	TagHell                             = "4720"
-	TagHelpfulProtagonist               = "15545"
-	TagHerbalist                        = "808"
-	TagHeroes                           = "100"
-	TagHeterochromia                    = "2111"
-	TagHiddenAbilities                  = "7227"
-	TagHidingTrueAbilities              = "6384"
-	TagHidingTrueIdentity               = "10134"
-	TagHikikomori                       = "765"
-	TagHomunculus                       = "2741"
-	TagHonestProtagonist                = "1772"
-	TagHospital                         = "1387"
-	TagHotBloodedProtagonist            = "13502"
-	TagHumanExperimentation             = "12338"
-	TagHumanWeapon                      = "1687"
-	TagHumanNonhumanRelationship        = "259"
-	TagHumanoidProtagonist              = "17218"
-	TagHunters                          = "494"
-	TagHypnotism                        = "1711"
-	TagIdentityCrisis                   = "10075"
-	TagImaginaryFriend                  = "3555"
-	TagImmortals                        = "233"
-	TagImperialHarem                    = "9033"
-	TagIncest                           = "626"
-	TagIncubus                          = "3398"
-	TagIndecisiveProtagonist            = "2319"
-	TagIndustrialization                = "12135"
-	TagInferiorityComplex               = "506"
-	TagInheritance                      = "1400"
-	TagInscriptions                     = "5132"
-	TagInsects                          = "550"
-	TagInterconnectedStorylines         = "4539"
-	TagInterdimensionalTravel           = "11229"
-	TagIntrovertedProtagonist           = "14993"
-	TagInvestigations                   = "9064"
-	TagInvisibility                     = "3978"
-	TagJackOfAllTrades                  = "3687"
-	TagJealousy                         = "1864"
-	TagJiangshi                         = "6665"
-	TagJoblessClass                     = "7086"
-	TagJSDF                             = "5300"
-	TagKidnappings                      = "1250"
-	TagKindLoveInterests                = "13901"
-	TagKingdomBuilding                  = "3869"
-	TagKingdoms                         = "1904"
-	TagKnights                          = "137"
-	TagKuudere                          = "571"
-	TagLackOfCommonSense                = "5086"
-	TagLanguageBarrier                  = "5426"
-	TagLateRomance                      = "5920"
-	TagLawyers                          = "4551"
-	TagLazyProtagonist                  = "338"
-	TagLeadership                       = "6706"
-	TagLegends                          = "3430"
-	TagLevelSystem                      = "7443"
-	TagLibrary                          = "1402"
-	TagLimitedLifespan                  = "2222"
-	TagLivingAbroad                     = "3154"
-	TagLivingAlone                      = "1437"
-	TagLoli                             = "3715"
-	TagLoneliness                       = "865"
-	TagLonerProtagonist                 = "651"
-	TagLongSeparations                  = "2891"
-	TagLongDistanceRelationship         = "1859"
-	TagLostCivilizations                = "1696"
-	TagLottery                          = "7151"
-	TagLoveAtFirstSight                 = "1561"
-	TagLoveInterestFallsInLoveFirst     = "19605"
-	TagLoveRivals                       = "627"
-	TagLoveTriangles                    = "607"
-	TagLoversReunited                   = "1616"
-	TagLowKeyProtagonist                = "9161"
-	TagLoyalSubordinates                = "12035"
-	TagLuckyProtagonist                 = "6526"
-	TagMagic                            = "60"
-	TagMagicBeasts                      = "6095"
-	TagMagicFormations                  = "3038"
-	TagMagicalGirls                     = "516"
-	TagMagicalSpace                     = "3460"
-	TagMagicalTechnology                = "14900"
-	TagMaids                            = "336"
-	TagMaleProtagonist                  = "3257"
-	TagMaleToFemale                     = "171"
-	TagMaleYandere                      = "557"
-	TagManagement                       = "2604"
-	TagMangaka                          = "2781"
-	TagManipulativeCharacters           = "12963"
-	TagManlyGayCouple                   = "2084"
-	TagMarriage                         = "642"
-	TagMarriageOfConvenience            = "706"
-	TagMartialSpirits                   = "10145"
-	TagMasochisticCharacters            = "19604"
-	TagMasterDiscipleRelationship       = "667"
-	TagMasterServantRelationship        = "260"
-	TagMasturbation                     = "2501"
-	TagMatriarchy                       = "6437"
-	TagMatureProtagonist                = "279"
-	TagMedicalKnowledge                 = "9021"
-	TagMedieval                         = "4498"
-	TagMercenaries                      = "9573"
-	TagMerchants                        = "14516"
-	TagMilitary                         = "589"
-	TagMindBreak                        = "6073"
-	TagMindControl                      = "456"
-	TagMisandry                         = "11503"
-	TagMismatchedCouple                 = "1516"
-	TagMisunderstandings                = "172"
-	TagMMORPG                           = "105"
-	TagMobProtagonist                   = "12487"
-	TagModels                           = "14781"
-	TagModernDay                        = "2606"
-	TagModernKnowledge                  = "2666"
-	TagMoneyGrubber                     = "3754"
-	TagMonsterGirls                     = "510"
-	TagMonsterSociety                   = "8988"
-	TagMonsterTamer                     = "253"
-	TagMonsters                         = "261"
-	TagMovies                           = "345"
-	TagMpreg                            = "20139"
-	TagMultipleIdentities               = "7163"
-	TagMultiplePersonalities            = "8266"
-	TagMultiplePOV                      = "14639"
-	TagMultipleProtagonists             = "441"
-	TagMultipleRealms                   = "3706"
-	TagMultipleReincarnatedIndividuals  = "5149"
-	TagMultipleTimelines                = "7802"
-	TagMultipleTransportedIndividuals   = "16138"
-	TagMurders                          = "885"
-	TagMusic                            = "1231"
-	TagMutatedCreatures                 = "5036"
-	TagMutations                        = "68"
-	TagMuteCharacter                    = "1141"
-	TagMysteriousFamilyBackground       = "8440"
-	TagMysteriousIllness                = "2224"
-	TagMysteriousPast                   = "4783"
-	TagMysterySolving                   = "3537"
-	TagMythicalBeasts                   = "8995"
-	TagMythology                        = "1474"
-	TagNaiveProtagonist                 = "14644"
-	TagNarcissisticProtagonist          = "14994"
-	TagNationalism                      = "6204"
-	TagNearDeathExperience              = "130"
-	TagNecromancer                      = "186"
-	TagNeet                             = "1728"
-	TagNetorare                         = "4126"
-	TagNetorase                         = "11561"
-	TagNetori                           = "3862"
-	TagNightmares                       = "6164"
-	TagNinjas                           = "1725"
-	TagNobles                           = "265"
-	TagNonHumanoidProtagonist           = "17199"
-	TagNonLinearStorytelling            = "2514"
-	TagNudity                           = "1524"
-	TagNurses                           = "7551"
-	TagObsessiveLove                    = "1477"
-	TagOfficeRomance                    = "9331"
-	TagOlderLoveInterests               = "16202"
-	TagOmegaverse                       = "14574"
-	TagOneshot                          = "10980"
-	TagOnlineRomance                    = "5122"
-	TagOnmyouji                         = "2060"
-	TagOrcs                             = "6211"
-	TagOrganizedCrime                   = "2645"
-	TagOrgy                             = "11994"
-	TagOrphans                          = "125"
-	TagOtaku                            = "277"
-	TagOtomeGame                        = "466"
-	TagOutcasts                         = "726"
-	TagOutdoorIntercourse               = "1222"
-	TagOuterSpace                       = "875"
-	TagOverpoweredProtagonist           = "4598"
-	TagOverprotectiveSiblings           = "145"
-	TagPacifistProtagonist              = "8832"
-	TagPaizuri                          = "6049"
-	TagParallelWorlds                   = "318"
-	TagParasites                        = "1300"
-	TagParentComplex                    = "4741"
-	TagParody                           = "2350"
-	TagPartTimeJob                      = "628"
-	TagPastPlaysABigRole                = "220"
-	TagPastTrauma                       = "6457"
-	TagPersistentLoveInterests          = "15546"
-	TagPersonalityChanges               = "488"
-	TagPervertedProtagonist             = "14643"
-	TagPets                             = "2710"
-	TagPharmacist                       = "5623"
-	TagPhilosophical                    = "1799"
-	TagPhobias                          = "1817"
-	TagPhoenixes                        = "8790"
-	TagPhotography                      = "1371"
-	TagPillBasedCultivation             = "3019"
-	TagPillConcocting                   = "9071"
-	TagPilots                           = "1215"
-	TagPirates                          = "3025"
-	TagPlayboys                         = "1311"
-	TagPlayfulProtagonist               = "13369"
-	TagPoetry                           = "7813"
-	TagPoisons                          = "2674"
-	TagPolice                           = "83"
-	TagPoliteProtagonist                = "14996"
-	TagPolitics                         = "298"
-	TagPolyandry                        = "11890"
-	TagPolygamy                         = "2684"
-	TagPoorProtagonist                  = "12909"
-	TagPoorToRich                       = "8801"
-	TagPopularLoveInterests             = "13481"
-	TagPossession                       = "94"
-	TagPossessiveCharacters             = "12966"
-	TagPostApocalyptic                  = "1301"
-	TagPowerCouple                      = "2551"
-	TagPowerStruggle                    = "673"
-	TagPragmaticProtagonist             = "564"
-	TagPrecognition                     = "2020"
-	TagPregnancy                        = "3330"
-	TagPretendLovers                    = "1763"
-	TagPreviousLifeTalent               = "1124"
-	TagPriestesses                      = "3534"
-	TagPriests                          = "2341"
-	TagPrison                           = "1426"
-	TagProactiveProtagonist             = "701"
-	TagProgrammer                       = "6302"
-	TagProphecies                       = "13215"
-	TagProstitutes                      = "1892"
-	TagProtagonistFallsInLoveFirst      = "19606"
-	TagProtagonistStrongFromTheStart    = "167"
-	TagProtagonistWithMultipleBodies    = "18652"
-	TagPsychicPowers                    = "13480"
-	TagPsychopaths                      = "846"
-	TagPuppeteers                       = "9950"
-	TagQuietCharacters                  = "13370"
-	TagQuirkyCharacters                 = "931"
-	TagR15                              = "2738"
-	TagR18                              = "4074"
-	TagRaceChange                       = "2903"
-	TagRacism                           = "3314"
-	TagRape                             = "431"
-	TagRapeVictimBecomesLover           = "11714"
-	TagRebellion                        = "5574"
-	TagReincarnatedAsAMonster           = "447"
-	TagReincarnatedAsAnObject           = "9480"
-	TagReincarnatedInAGameWorld         = "7297"
-	TagReincarnatedInAnotherWorld       = "6304"
-	TagReincarnation                    = "120"
-	TagReligions                        = "15178"
-	TagReluctantProtagonist             = "179"
-	TagReporters                        = "1684"
-	TagRestaurant                       = "1835"
-	TagResurrection                     = "1209"
-	TagReturningFromAnotherWorld        = "13303"
-	TagRevenge                          = "121"
-	TagReverseHarem                     = "558"
-	TagReverseRape                      = "4500"
-	TagReversibleCouple                 = "28883"
-	TagRichToPoor                       = "11448"
-	TagRighteousProtagonist             = "7780"
-	TagRivalry                          = "614"
-	TagRomanticSubplot                  = "334"
-	TagRoommates                        = "106"
-	TagRoyalty                          = "335"
-	TagRuthlessProtagonist              = "12916"
-	TagSadisticCharacters               = "13496"
-	TagSaints                           = "7288"
-	TagSalaryman                        = "1189"
-	TagSamurai                          = "826"
-	TagSavingTheWorld                   = "788"
-	TagSchemesAndConspiracies           = "24959"
-	TagSchizophrenia                    = "2288"
-	TagScientists                       = "843"
-	TagSculptors                        = "426"
-	TagSealedPower                      = "732"
-	TagSecondChance                     = "2571"
-	TagSecretCrush                      = "1475"
-	TagSecretIdentity                   = "214"
-	TagSecretOrganizations              = "827"
-	TagSecretRelationship               = "1190"
-	TagSecretiveProtagonist             = "14997"
-	TagSecrets                          = "1623"
-	TagSectDevelopment                  = "7536"
-	TagSeduction                        = "2595"
-	TagSeeingThingsOtherHumansCant      = "201"
-	TagSelfishProtagonist               = "1463"
-	TagSelflessProtagonist              = "1372"
-	TagSemeProtagonist                  = "14319"
-	TagSenpaiKouhaiRelationship         = "629"
-	TagSentientObjects                  = "13520"
-	TagSentimentalProtagonist           = "13498"
-	TagSerialKillers                    = "1328"
-	TagServants                         = "254"
-	TagSevenDeadlySins                  = "3863"
-	TagSevenVirtues                     = "13993"
-	TagSexFriends                       = "4432"
-	TagSexSlaves                        = "656"
-	TagSexualAbuse                      = "3252"
-	TagSexualCultivationTechnique       = "6245"
-	TagShamelessProtagonist             = "13802"
-	TagShapeshifters                    = "10602"
-	TagSharingABody                     = "7874"
-	TagSharpTonguedCharacters           = "13996"
-	TagShieldUser                       = "17746"
-	TagShikigami                        = "2280"
-	TagShortStory                       = "3358"
-	TagShota                            = "5580"
-	TagShoujoAiSubplot                  = "7147"
-	TagShounenAiSubplot                 = "7146"
-	TagShowbiz                          = "565"
-	TagShyCharacters                    = "13499"
-	TagSiblingRivalry                   = "1971"
-	TagSiblingsCare                     = "8186"
-	TagSiblings                         = "1411"
-	TagSiblingsNotRelatedByBlood        = "65"
-	TagSicklyCharacters                 = "13199"
-	TagSignLanguage                     = "8631"
-	TagSingers                          = "209"
-	TagSingleParent                     = "1985"
-	TagSisterComplex                    = "668"
-	TagSkillAssimilation                = "3820"
-	TagSkillBooks                       = "7032"
-	TagSkillCreation                    = "6753"
-	TagSlaveHarem                       = "3936"
-	TagSlaveProtagonist                 = "5420"
-	TagSlaves                           = "180"
-	TagSleeping                         = "3014"
-	TagSlowGrowthAtStart                = "3185"
-	TagSlowRomance                      = "76"
-	TagSmartCouple                      = "831"
-	TagSocialOutcasts                   = "652"
-	TagSoldiers                         = "674"
-	TagSoulPower                        = "7828"
-	TagSouls                            = "4627"
-	TagSpatialManipulation              = "8777"
-	TagSpearWielder                     = "4842"
-	TagSpecialAbilities                 = "323"
-	TagSpies                            = "2069"
-	TagSpiritAdvisor                    = "2586"
-	TagSpiritUsers                      = "11422"
-	TagSpirits                          = "202"
-	TagStalkers                         = "1713"
-	TagStockholmSyndrome                = "1373"
-	TagStoicCharacters                  = "13500"
-	TagStoreOwner                       = "13633"
-	TagStraightSeme                     = "1191"
-	TagStraightUke                      = "1594"
-	TagStrategicBattles                 = "675"
-	TagStrategist                       = "4777"
-	TagStrengthBasedSocialHierarchy     = "14788"
-	TagStrongLoveInterests              = "12881"
-	TagStrongToStronger                 = "4971"
-	TagStubbornProtagonist              = "1643"
-	TagStudentCouncil                   = "608"
-	TagStudentTeacherRelationship       = "1224"
-	TagSuccubus                         = "645"
-	TagSuddenStrengthGain               = "898"
-	TagSuddenWealth                     = "9574"
-	TagSuicides                         = "1743"
-	TagSummonedHero                     = "2990"
-	TagSummoningMagic                   = "4127"
-	TagSurvival                         = "347"
-	TagSurvivalGame                     = "348"
-	TagSwordAndMagic                    = "4302"
-	TagSwordWielder                     = "18792"
-	TagSystemAdministrator              = "7357"
-	TagTeachers                         = "1749"
-	TagTeamwork                         = "1847"
-	TagTechnologicalGap                 = "16962"
-	TagTentacles                        = "8760"
-	TagTerminalIllness                  = "2225"
-	TagTerrorists                       = "2196"
-	TagThieves                          = "1360"
-	TagThreesome                        = "1420"
-	TagThriller                         = "2970"
-	TagTimeLoop                         = "886"
-	TagTimeManipulation                 = "2054"
-	TagTimeParadox                      = "887"
-	TagTimeSkip                         = "360"
-	TagTimeTravel                       = "92"
-	TagTimidProtagonist                 = "5085"
-	TagTomboyishFemaleLead              = "267"
-	TagTorture                          = "355"
-	TagToys                             = "14264"
-	TagTragicPast                       = "148"
-	TagTransformationAbility            = "16178"
-	TagTransmigration                   = "3046"
-	TagTransplantedMemories             = "4323"
-	TagTransportedIntoAGameWorld        = "7663"
-	TagTransportedModernStructure       = "6559"
-	TagTransportedToAnotherWorld        = "15008"
-	TagTrap                             = "1279"
-	TagTribalSociety                    = "5825"
-	TagTrickster                        = "4856"
-	TagTsundere                         = "795"
-	TagTwins                            = "518"
-	TagTwistedPersonality               = "10488"
-	TagUglyProtagonist                  = "12155"
-	TagUglyToBeautiful                  = "4851"
-	TagUnconditionalLove                = "1595"
-	TagUnderestimatedProtagonist        = "12907"
-	TagUniqueCultivationTechnique       = "3718"
-	TagUniqueWeaponUser                 = "13875"
-	TagUniqueWeapons                    = "13874"
-	TagUnlimitedFlow                    = "38534"
-	TagUnluckyProtagonist               = "2314"
-	TagUnreliableNarrator               = "4697"
-	TagUnrequitedLove                   = "1268"
-	TagValkyries                        = "17588"
-	TagVampires                         = "149"
-	TagVillainessNobleGirls             = "11404"
-	TagVirtualReality                   = "109"
-	TagVocaloid                         = "1634"
-	TagVoiceActors                      = "2887"
-	TagVoyeurism                        = "3256"
-	TagWaiters                          = "1216"
-	TagWarRecords                       = "5128"
-	TagWars                             = "101"
-	TagWeakProtagonist                  = "12813"
-	TagWeakToStrong                     = "71"
-	TagWealthyCharacters                = "13334"
-	TagWerebeasts                       = "17533"
-	TagWishes                           = "1338"
-	TagWitches                          = "1829"
-	TagWizards                          = "634"
-	TagWorldHopping                     = "21767"
-	TagWorldTravel                      = "364"
-	TagWorldTree                        = "13198"
-	TagWriters                          = "548"
-	TagYandere                          = "291"
-	TagYoukai                           = "926"
-	TagYoungerBrothers                  = "11677"
-	TagYoungerLoveInterests             = "16201"
-	TagYoungerSisters                   = "11678"
-	TagZombies                          = "350"
+	TagAbandonedChildren                Tag = "16185"
+	TagAbilitySteal                     Tag = "4859"
+	TagAbsentParents                    Tag = "1248"
+	TagAbusiveCharacters                Tag = "11325"
+	TagAcademy                          Tag = "4885"
+	TagAcceleratedGrowth                Tag = "475"
+	TagActing                           Tag = "13403"
+	TagAdaptedFromManga                 Tag = "4976"
+	TagAdaptedFromManhua                Tag = "6280"
+	TagAdaptedToAnime                   Tag = "269"
+	TagAdaptedToDrama                   Tag = "2999"
+	TagAdaptedToDramaCD                 Tag = "928"
+	TagAdaptedToGame                    Tag = "891"
+	TagAdaptedToManga                   Tag = "270"
+	TagAdaptedToManhua                  Tag = "182"
+	TagAdaptedToManhwa                  Tag = "2721"
+	TagAdaptedToMovie                   Tag = "1133"
+	TagAdaptedToVisualNovel             Tag = "1334"
+	TagAdoptedChildren                  Tag = "858"
+	TagAdoptedProtagonist               Tag = "603"
+	TagAdultery                         Tag = "4974"
+	TagAdventurers                      Tag = "3108"
+	TagAffair                           Tag = "3802"
+	TagAgeProgression                   Tag = "357"
+	TagAgeRegression                    Tag = "216"
+	TagAggressiveCharacters             Tag = "13720"
+	TagAlchemy                          Tag = "234"
+	TagAliens                           Tag = "621"
+	TagAllGirlsSchool                   Tag = "598"
+	TagAlternateWorld                   Tag = "7909"
+	TagAmnesia                          Tag = "625"
+	TagAmusementPark                    Tag = "774"
+	TagAnal                             Tag = "4594"
+	TagAncientChina                     Tag = "476"
+	TagAncientTimes                     Tag = "2662"
+	TagAndrogynousCharacters            Tag = "13263"
+	TagAndroids                         Tag = "892"
+	TagAngels                           Tag = "1327"
+	TagAnimalCharacteristics            Tag = "255"
+	TagAnimalRearing                    Tag = "7323"
+	TagAntiMagic                        Tag = "724"
+	TagAntiSocialProtagonist            Tag = "1732"
+	TagAntiheroProtagonist              Tag = "4297"
+	TagAntiqueShop                      Tag = "203"
+	TagApartmentLife                    Tag = "513"
+	TagApatheticProtagonist             Tag = "12913"
+	TagApocalypse                       Tag = "217"
+	TagAppearanceChanges                Tag = "721"
+	TagAppearanceDifferentFromActualAge Tag = "430"
+	TagArchery                          Tag = "697"
+	TagAristocracy                      Tag = "6442"
+	TagArmsDealers                      Tag = "9591"
+	TagArmy                             Tag = "306"
+	TagArmyBuilding                     Tag = "9522"
+	TagArrangedMarriage                 Tag = "2676"
+	TagArrogantCharacters               Tag = "13427"
+	TagArtifactCrafting                 Tag = "9851"
+	TagArtifacts                        Tag = "4699"
+	TagArtificialIntelligence           Tag = "141"
+	TagArtists                          Tag = "271"
+	TagAssassins                        Tag = "81"
+	TagAstrologers                      Tag = "8965"
+	TagAutism                           Tag = "9776"
+	TagAutomatons                       Tag = "11491"
+	TagAverageLookingProtagonist        Tag = "12917"
+	TagAwardWinningWork                 Tag = "1134"
+	TagAwkwardProtagonist               Tag = "13016"
+	TagBands                            Tag = "4975"
+	TagBasedOnAMovie                    Tag = "1346"
+	TagBasedOnASong                     Tag = "1632"
+	TagBasedOnATVShow                   Tag = "6572"
+	TagBasedOnAVideoGame                Tag = "1442"
+	TagBasedOnAVisualNovel              Tag = "1447"
+	TagBasedOnAnAnime                   Tag = "1230"
+	TagBattleAcademy                    Tag = "825"
+	TagBattleCompetition                Tag = "6308"
+	TagBDSM                             Tag = "10668"
+	TagBeastCompanions                  Tag = "5363"
+	TagBeastkin                         Tag = "5406"
+	TagBeasts                           Tag = "116"
+	TagBeautifulFemaleLead              Tag = "111"
+	TagBestiality                       Tag = "15625"
+	TagBetrayal                         Tag = "256"
+	TagBickeringCouple                  Tag = "2573"
+	TagBiochip                          Tag = "13371"
+	TagBisexualProtagonist              Tag = "6359"
+	TagBlackBelly                       Tag = "2943"
+	TagBlackmail                        Tag = "916"
+	TagBlacksmith                       Tag = "2734"
+	TagBlindDates                       Tag = "9280"
+	TagBlindProtagonist                 Tag = "2347"
+	TagBloodManipulation                Tag = "9492"
+	TagBloodlines                       Tag = "5824"
+	TagBodySwap                         Tag = "2642"
+	TagBodyTempering                    Tag = "9907"
+	TagBodyDouble                       Tag = "568"
+	TagBodyguards                       Tag = "224"
+	TagBooks                            Tag = "1288"
+	TagBookworm                         Tag = "13805"
+	TagBossSubordinateRelationship      Tag = "325"
+	TagBrainwashing                     Tag = "1710"
+	TagBreastFetish                     Tag = "5607"
+	TagBrokenEngagement                 Tag = "9410"
+	TagBrotherComplex                   Tag = "604"
+	TagBrotherhood                      Tag = "8185"
+	TagBuddhism                         Tag = "3825"
+	TagBullying                         Tag = "123"
+	TagBusinessManagement               Tag = "782"
+	TagBusinessmen                      Tag = "11786"
+	TagButlers                          Tag = "1597"
+	TagCalmProtagonist                  Tag = "12910"
+	TagCannibalism                      Tag = "4248"
+	TagCardGames                        Tag = "2774"
+	TagCarefreeProtagonist              Tag = "11345"
+	TagCaringProtagonist                Tag = "12951"
+	TagCautiousProtagonist              Tag = "12914"
+	TagCelebrities                      Tag = "2304"
+	TagCharacterGrowth                  Tag = "257"
+	TagCharismaticProtagonist           Tag = "14493"
+	TagCharmingProtagonist              Tag = "14985"
+	TagChatRooms                        Tag = "1942"
+	TagCheats                           Tag = "5708"
+	TagChefs                            Tag = "1832"
+	TagChildAbuse                       Tag = "1368"
+	TagChildProtagonist                 Tag = "3470"
+	TagChildcare                        Tag = "1391"
+	TagChildhoodFriends                 Tag = "85"
+	TagChildhoodLove                    Tag = "917"
+	TagChildhoodPromise                 Tag = "691"
+	TagChildishProtagonist              Tag = "14986"
+	TagChuunibyou                       Tag = "169"
+	TagClanBuilding                     Tag = "4423"
+	TagClassic                          Tag = "7777"
+	TagCleverProtagonist                Tag = "14587"
+	TagClingyLover                      Tag = "2356"
+	TagClones                           Tag = "2274"
+	TagClubs                            Tag = "611"
+	TagClumsyLoveInterests              Tag = "14989"
+	TagCoWorkers                        Tag = "7951"
+	TagCohabitation                     Tag = "710"
+	TagColdLoveInterests                Tag = "14606"
+	TagColdProtagonist                  Tag = "14605"
+	TagCollectionOfShortStories         Tag = "8656"
+	TagCollegeUniversity                Tag = "7776"
+	TagComa                             Tag = "1675"
+	TagComedicUndertone                 Tag = "124"
+	TagComingOfAge                      Tag = "282"
+	TagComplexFamilyRelationships       Tag = "4822"
+	TagConditionalPower                 Tag = "7117"
+	TagConfidentProtagonist             Tag = "14673"
+	TagConfinement                      Tag = "1404"
+	TagConflictingLoyalties             Tag = "3241"
+	TagContracts                        Tag = "859"
+	TagCooking                          Tag = "2506"
+	TagCorruption                       Tag = "352"
+	TagCosmicWars                       Tag = "9926"
+	TagCosplay                          Tag = "7844"
+	TagCoupleGrowth                     Tag = "592"
+	TagCourtOfficial                    Tag = "5792"
+	TagCousins                          Tag = "836"
+	TagCowardlyProtagonist              Tag = "3752"
+	TagCrafting                         Tag = "5944"
+	TagCrime                            Tag = "2969"
+	TagCriminals                        Tag = "443"
+	TagCrossDressing                    Tag = "769"
+	TagCrossover                        Tag = "1795"
+	TagCruelCharacters                  Tag = "12956"
+	TagCryostasis                       Tag = "19556"
+	TagCultivation                      Tag = "117"
+	TagCunnilingus                      Tag = "4596"
+	TagCunningProtagonist               Tag = "14593"
+	TagCuriousProtagonist               Tag = "14990"
+	TagCurses                           Tag = "579"
+	TagCuteChildren                     Tag = "16457"
+	TagCuteProtagonist                  Tag = "14987"
+	TagCuteStory                        Tag = "5525"
+	TagDancers                          Tag = "8248"
+	TagDaoCompanion                     Tag = "10343"
+	TagDaoComprehension                 Tag = "6242"
+	TagDaoism                           Tag = "3824"
+	TagDark                             Tag = "4599"
+	TagDeadProtagonist                  Tag = "2215"
+	TagDeath                            Tag = "2142"
+	TagDeathOfLovedOnes                 Tag = "1615"
+	TagDebts                            Tag = "5333"
+	TagDelinquents                      Tag = "749"
+	TagDelusions                        Tag = "1362"
+	TagDemiHumans                       Tag = "5526"
+	TagDemonLord                        Tag = "2386"
+	TagDemonicCultivationTechnique      Tag = "21268"
+	TagDemons                           Tag = "86"
+	TagDenseProtagonist                 Tag = "14541"
+	TagDepictionsOfCruelty              Tag = "12964"
+	TagDepression                       Tag = "1946"
+	TagDestiny                          Tag = "3135"
+	TagDetectives                       Tag = "1200"
+	TagDeterminedProtagonist            Tag = "12959"
+	TagDevotedLoveInterests             Tag = "15456"
+	TagDifferentSocialStatus            Tag = "2243"
+	TagDisabilities                     Tag = "19241"
+	TagDiscrimination                   Tag = "258"
+	TagDisfigurement                    Tag = "13407"
+	TagDishonestProtagonist             Tag = "2343"
+	TagDistrustfulProtagonist           Tag = "7949"
+	TagDivination                       Tag = "2019"
+	TagDivineProtection                 Tag = "4706"
+	TagDivorce                          Tag = "2305"
+	TagDoctors                          Tag = "2876"
+	TagDollsPuppets                     Tag = "16412"
+	TagDomesticAffairs                  Tag = "2663"
+	TagDotingLoveInterests              Tag = "15026"
+	TagDotingOlderSiblings              Tag = "15025"
+	TagDotingParents                    Tag = "14674"
+	TagDragonRiders                     Tag = "509"
+	TagDragonSlayers                    Tag = "897"
+	TagDragons                          Tag = "72"
+	TagDreams                           Tag = "1406"
+	TagDrugs                            Tag = "311"
+	TagDruids                           Tag = "8126"
+	TagDungeonMaster                    Tag = "174"
+	TagDungeons                         Tag = "175"
+	TagDwarfs                           Tag = "3569"
+	TagDystopia                         Tag = "1283"
+	TagESports                          Tag = "15108"
+	TagEarlyRomance                     Tag = "7711"
+	TagEarthInvasion                    Tag = "1661"
+	TagEasyGoingLife                    Tag = "5431"
+	TagEconomics                        Tag = "784"
+	TagEditors                          Tag = "1878"
+	TagEideticMemory                    Tag = "3796"
+	TagElderlyProtagonist               Tag = "13177"
+	TagElementalMagic                   Tag = "9855"
+	TagElves                            Tag = "165"
+	TagEmotionallyWeakProtagonist       Tag = "13305"
+	TagEmpires                          Tag = "3570"
+	TagEnemiesBecomeAllies              Tag = "840"
+	TagEnemiesBecomeLovers              Tag = "113"
+	TagEngagement                       Tag = "263"
+	TagEngineer                         Tag = "2735"
+	TagEnlightenment                    Tag = "4480"
+	TagEpisodic                         Tag = "1798"
+	TagEunuch                           Tag = "10593"
+	TagEuropeanAmbience                 Tag = "7778"
+	TagEvilGods                         Tag = "10172"
+	TagEvilOrganizations                Tag = "5411"
+	TagEvilProtagonist                  Tag = "12874"
+	TagEvilReligions                    Tag = "7087"
+	TagEvolution                        Tag = "2049"
+	TagExhibitionism                    Tag = "6365"
+	TagExorcism                         Tag = "711"
+	TagEyePowers                        Tag = "200"
+	TagFairies                          Tag = "525"
+	TagFallenAngels                     Tag = "134"
+	TagFallenNobility                   Tag = "734"
+	TagFamilialLove                     Tag = "12009"
+	TagFamiliars                        Tag = "2152"
+	TagFamily                           Tag = "641"
+	TagFamilyBusiness                   Tag = "2013"
+	TagFamilyConflict                   Tag = "8664"
+	TagFamousParents                    Tag = "1833"
+	TagFamousProtagonist                Tag = "14555"
+	TagFanaticism                       Tag = "5399"
+	TagFanfiction                       Tag = "5691"
+	TagFantasyCreatures                 Tag = "771"
+	TagFantasyWorld                     Tag = "99"
+	TagFarming                          Tag = "3068"
+	TagFastCultivation                  Tag = "5068"
+	TagFastLearner                      Tag = "7599"
+	TagFatProtagonist                   Tag = "13721"
+	TagFatToFit                         Tag = "15974"
+	TagFatedLovers                      Tag = "2574"
+	TagFearlessProtagonist              Tag = "14675"
+	TagFellatio                         Tag = "3953"
+	TagFemaleMaster                     Tag = "5262"
+	TagFemaleProtagonist                Tag = "2879"
+	TagFemaleToMale                     Tag = "4178"
+	TagFengShui                         Tag = "10919"
+	TagFirearms                         Tag = "9340"
+	TagFirstLove                        Tag = "1569"
+	TagFirstTimeIntercourse             Tag = "4880"
+	TagFlashbacks                       Tag = "6061"
+	TagFleetBattles                     Tag = "17020"
+	TagFolklore                         Tag = "923"
+	TagForcedIntoARelationship          Tag = "1353"
+	TagForcedLivingArrangements         Tag = "606"
+	TagForcedMarriage                   Tag = "3052"
+	TagForgetfulProtagonist             Tag = "2367"
+	TagFormerHero                       Tag = "7405"
+	TagFoxSpirits                       Tag = "6222"
+	TagFriendsBecomeEnemies             Tag = "1576"
+	TagFriendship                       Tag = "1476"
+	TagFujoshi                          Tag = "797"
+	TagFutanari                         Tag = "3468"
+	TagFuturisticSetting                Tag = "2616"
+	TagGalge                            Tag = "7643"
+	TagGambling                         Tag = "9425"
+	TagGameElements                     Tag = "93"
+	TagGameRankingSystem                Tag = "16272"
+	TagGamers                           Tag = "225"
+	TagGangs                            Tag = "313"
+	TagGateToAnotherWorld               Tag = "5382"
+	TagGenderlessProtagonist            Tag = "9295"
+	TagGenerals                         Tag = "13888"
+	TagGeneticModifications             Tag = "17629"
+	TagGenies                           Tag = "2014"
+	TagGeniusProtagonist                Tag = "14581"
+	TagGhosts                           Tag = "515"
+	TagGladiators                       Tag = "2044"
+	TagGlassesWearingLoveInterests      Tag = "15547"
+	TagGlassesWearingProtagonist        Tag = "15548"
+	TagGoblins                          Tag = "11494"
+	TagGodProtagonist                   Tag = "6683"
+	TagGodHumanRelationship             Tag = "1354"
+	TagGoddesses                        Tag = "1355"
+	TagGodlyPowers                      Tag = "73"
+	TagGods                             Tag = "177"
+	TagGolems                           Tag = "4437"
+	TagGore                             Tag = "455"
+	TagGraveKeepers                     Tag = "1736"
+	TagGrinding                         Tag = "807"
+	TagGuardianRelationship             Tag = "2005"
+	TagGuilds                           Tag = "438"
+	TagGunfighters                      Tag = "792"
+	TagHackers                          Tag = "1753"
+	TagHalfHumanProtagonist             Tag = "9445"
+	TagHandjob                          Tag = "9873"
+	TagHandsomeMaleLead                 Tag = "192"
+	TagHardWorkingProtagonist           Tag = "14431"
+	TagHaremSeekingProtagonist          Tag = "14992"
+	TagHarshTraining                    Tag = "8149"
+	TagHatedProtagonist                 Tag = "2307"
+	TagHealers                          Tag = "12141"
+	TagHeartwarming                     Tag = "5267"
+	TagHeaven                           Tag = "242"
+	TagHeavenlyTribulation              Tag = "4770"
+	TagHell                             Tag = "4720"
+	TagHelpfulProtagonist               Tag = "15545"
+	TagHerbalist                        Tag = "808"
+	TagHeroes                           Tag = "100"
+	TagHeterochromia                    Tag = "2111"
+	TagHiddenAbilities                  Tag = "7227"
+	TagHidingTrueAbilities              Tag = "6384"
+	TagHidingTrueIdentity               Tag = "10134"
+	TagHikikomori                       Tag = "765"
+	TagHomunculus                       Tag = "2741"
+	TagHonestProtagonist                Tag = "1772"
+	TagHospital                         Tag = "1387"
+	TagHotBloodedProtagonist            Tag = "13502"
+	TagHumanExperimentation             Tag = "12338"
+	TagHumanWeapon                      Tag = "1687"
+	TagHumanNonhumanRelationship        Tag = "259"
+	TagHumanoidProtagonist              Tag = "17218"
+	TagHunters                          Tag = "494"
+	TagHypnotism                        Tag = "1711"
+	TagIdentityCrisis                   Tag = "10075"
+	TagImaginaryFriend                  Tag = "3555"
+	TagImmortals                        Tag = "233"
+	TagImperialHarem                    Tag = "9033"
+	TagIncest                           Tag = "626"
+	TagIncubus                          Tag = "3398"
+	TagIndecisiveProtagonist            Tag = "2319"
+	TagIndustrialization                Tag = "12135"
+	TagInferiorityComplex               Tag = "506"
+	TagInheritance                      Tag = "1400"
+	TagInscriptions                     Tag = "5132"
+	TagInsects                          Tag = "550"
+	TagInterconnectedStorylines         Tag = "4539"
+	TagInterdimensionalTravel           Tag = "11229"
+	TagIntrovertedProtagonist           Tag = "14993"
+	TagInvestigations                   Tag = "9064"
+	TagInvisibility                     Tag = "3978"
+	TagJackOfAllTrades                  Tag = "3687"
+	TagJealousy                         Tag = "1864"
+	TagJiangshi                         Tag = "6665"
+	TagJoblessClass                     Tag = "7086"
+	TagJSDF                             Tag = "5300"
+	TagKidnappings                      Tag = "1250"
+	TagKindLoveInterests                Tag = "13901"
+	TagKingdomBuilding                  Tag = "3869"
+	TagKingdoms                         Tag = "1904"
+	TagKnights                          Tag = "137"
+	TagKuudere                          Tag = "571"
+	TagLackOfCommonSense                Tag = "5086"
+	TagLanguageBarrier                  Tag = "5426"
+	TagLateRomance                      Tag = "5920"
+	TagLawyers                          Tag = "4551"
+	TagLazyProtagonist                  Tag = "338"
+	TagLeadership                       Tag = "6706"
+	TagLegends                          Tag = "3430"
+	TagLevelSystem                      Tag = "7443"
+	TagLibrary                          Tag = "1402"
+	TagLimitedLifespan                  Tag = "2222"
+	TagLivingAbroad                     Tag = "3154"
+	TagLivingAlone                      Tag = "1437"
+	TagLoli                             Tag = "3715"
+	TagLoneliness                       Tag = "865"
+	TagLonerProtagonist                 Tag = "651"
+	TagLongSeparations                  Tag = "2891"
+	TagLongDistanceRelationship         Tag = "1859"
+	TagLostCivilizations                Tag = "1696"
+	TagLottery                          Tag = "7151"
+	TagLoveAtFirstSight                 Tag = "1561"
+	TagLoveInterestFallsInLoveFirst     Tag = "19605"
+	TagLoveRivals                       Tag = "627"
+	TagLoveTriangles                    Tag = "607"
+	TagLoversReunited                   Tag = "1616"
+	TagLowKeyProtagonist                Tag = "9161"
+	TagLoyalSubordinates                Tag = "12035"
+	TagLuckyProtagonist                 Tag = "6526"
+	TagMagic                            Tag = "60"
+	TagMagicBeasts                      Tag = "6095"
+	TagMagicFormations                  Tag = "3038"
+	TagMagicalGirls                     Tag = "516"
+	TagMagicalSpace                     Tag = "3460"
+	TagMagicalTechnology                Tag = "14900"
+	TagMaids                            Tag = "336"
+	TagMaleProtagonist                  Tag = "3257"
+	TagMaleToFemale                     Tag = "171"
+	TagMaleYandere                      Tag = "557"
+	TagManagement                       Tag = "2604"
+	TagMangaka                          Tag = "2781"
+	TagManipulativeCharacters           Tag = "12963"
+	TagManlyGayCouple                   Tag = "2084"
+	TagMarriage                         Tag = "642"
+	TagMarriageOfConvenience            Tag = "706"
+	TagMartialSpirits                   Tag = "10145"
+	TagMasochisticCharacters            Tag = "19604"
+	TagMasterDiscipleRelationship       Tag = "667"
+	TagMasterServantRelationship        Tag = "260"
+	TagMasturbation                     Tag = "2501"
+	TagMatriarchy                       Tag = "6437"
+	TagMatureProtagonist                Tag = "279"
+	TagMedicalKnowledge                 Tag = "9021"
+	TagMedieval                         Tag = "4498"
+	TagMercenaries                      Tag = "9573"
+	TagMerchants                        Tag = "14516"
+	TagMilitary                         Tag = "589"
+	TagMindBreak                        Tag = "6073"
+	TagMindControl                      Tag = "456"
+	TagMisandry                         Tag = "11503"
+	TagMismatchedCouple                 Tag = "1516"
+	TagMisunderstandings                Tag = "172"
+	TagMMORPG                           Tag = "105"
+	TagMobProtagonist                   Tag = "12487"
+	TagModels                           Tag = "14781"
+	TagModernDay                        Tag = "2606"
+	TagModernKnowledge                  Tag = "2666"
+	TagMoneyGrubber                     Tag = "3754"
+	TagMonsterGirls                     Tag = "510"
+	TagMonsterSociety                   Tag = "8988"
+	TagMonsterTamer                     Tag = "253"
+	TagMonsters                         Tag = "261"
+	TagMovies                           Tag = "345"
+	TagMpreg                            Tag = "20139"
+	TagMultipleIdentities               Tag = "7163"
+	TagMultiplePersonalities            Tag = "8266"
+	TagMultiplePOV                      Tag = "14639"
+	TagMultipleProtagonists             Tag = "441"
+	TagMultipleRealms                   Tag = "3706"
+	TagMultipleReincarnatedIndividuals  Tag = "5149"
+	TagMultipleTimelines                Tag = "7802"
+	TagMultipleTransportedIndividuals   Tag = "16138"
+	TagMurders                          Tag = "885"
+	TagMusic                            Tag = "1231"
+	TagMutatedCreatures                 Tag = "5036"
+	TagMutations                        Tag = "68"
+	TagMuteCharacter                    Tag = "1141"
+	TagMysteriousFamilyBackground       Tag = "8440"
+	TagMysteriousIllness                Tag = "2224"
+	TagMysteriousPast                   Tag = "4783"
+	TagMysterySolving                   Tag = "3537"
+	TagMythicalBeasts                   Tag = "8995"
+	TagMythology                        Tag = "1474"
+	TagNaiveProtagonist                 Tag = "14644"
+	TagNarcissisticProtagonist          Tag = "14994"
+	TagNationalism                      Tag = "6204"
+	TagNearDeathExperience              Tag = "130"
+	TagNecromancer                      Tag = "186"
+	TagNeet                             Tag = "1728"
+	TagNetorare                         Tag = "4126"
+	TagNetorase                         Tag = "11561"
+	TagNetori                           Tag = "3862"
+	TagNightmares                       Tag = "6164"
+	TagNinjas                           Tag = "1725"
+	TagNobles                           Tag = "265"
+	TagNonHumanoidProtagonist           Tag = "17199"
+	TagNonLinearStorytelling            Tag = "2514"
+	TagNudity                           Tag = "1524"
+	TagNurses                           Tag = "7551"
+	TagObsessiveLove                    Tag = "1477"
+	TagOfficeRomance                    Tag = "9331"
+	TagOlderLoveInterests               Tag = "16202"
+	TagOmegaverse                       Tag = "14574"
+	TagOneshot                          Tag = "10980"
+	TagOnlineRomance                    Tag = "5122"
+	TagOnmyouji                         Tag = "2060"
+	TagOrcs                             Tag = "6211"
+	TagOrganizedCrime                   Tag = "2645"
+	TagOrgy                             Tag = "11994"
+	TagOrphans                          Tag = "125"
+	TagOtaku                            Tag = "277"
+	TagOtomeGame                        Tag = "466"
+	TagOutcasts                         Tag = "726"
+	TagOutdoorIntercourse               Tag = "1222"
+	TagOuterSpace                       Tag = "875"
+	TagOverpoweredProtagonist           Tag = "4598"
+	TagOverprotectiveSiblings           Tag = "145"
+	TagPacifistProtagonist              Tag = "8832"
+	TagPaizuri                          Tag = "6049"
+	TagParallelWorlds                   Tag = "318"
+	TagParasites                        Tag = "1300"
+	TagParentComplex                    Tag = "4741"
+	TagParody                           Tag = "2350"
+	TagPartTimeJob                      Tag = "628"
+	TagPastPlaysABigRole                Tag = "220"
+	TagPastTrauma                       Tag = "6457"
+	TagPersistentLoveInterests          Tag = "15546"
+	TagPersonalityChanges               Tag = "488"
+	TagPervertedProtagonist             Tag = "14643"
+	TagPets                             Tag = "2710"
+	TagPharmacist                       Tag = "5623"
+	TagPhilosophical                    Tag = "1799"
+	TagPhobias                          Tag = "1817"
+	TagPhoenixes                        Tag = "8790"
+	TagPhotography                      Tag = "1371"
+	TagPillBasedCultivation             Tag = "3019"
+	TagPillConcocting                   Tag = "9071"
+	TagPilots                           Tag = "1215"
+	TagPirates                          Tag = "3025"
+	TagPlayboys                         Tag = "1311"
+	TagPlayfulProtagonist               Tag = "13369"
+	TagPoetry                           Tag = "7813"
+	TagPoisons                          Tag = "2674"
+	TagPolice                           Tag = "83"
+	TagPoliteProtagonist                Tag = "14996"
+	TagPolitics                         Tag = "298"
+	TagPolyandry                        Tag = "11890"
+	TagPolygamy                         Tag = "2684"
+	TagPoorProtagonist                  Tag = "12909"
+	TagPoorToRich                       Tag = "8801"
+	TagPopularLoveInterests             Tag = "13481"
+	TagPossession                       Tag = "94"
+	TagPossessiveCharacters             Tag = "12966"
+	TagPostApocalyptic                  Tag = "1301"
+	TagPowerCouple                      Tag = "2551"
+	TagPowerStruggle                    Tag = "673"
+	TagPragmaticProtagonist             Tag = "564"
+	TagPrecognition                     Tag = "2020"
+	TagPregnancy                        Tag = "3330"
+	TagPretendLovers                    Tag = "1763"
+	TagPreviousLifeTalent               Tag = "1124"
+	TagPriestesses                      Tag = "3534"
+	TagPriests                          Tag = "2341"
+	TagPrison                           Tag = "1426"
+	TagProactiveProtagonist             Tag = "701"
+	TagProgrammer                       Tag = "6302"
+	TagProphecies                       Tag = "13215"
+	TagProstitutes                      Tag = "1892"
+	TagProtagonistFallsInLoveFirst      Tag = "19606"
+	TagProtagonistStrongFromTheStart    Tag = "167"
+	TagProtagonistWithMultipleBodies    Tag = "18652"
+	TagPsychicPowers                    Tag = "13480"
+	TagPsychopaths                      Tag = "846"
+	TagPuppeteers                       Tag = "9950"
+	TagQuietCharacters                  Tag = "13370"
+	TagQuirkyCharacters                 Tag = "931"
+	TagR15                              Tag = "2738"
+	TagR18                              Tag = "4074"
+	TagRaceChange                       Tag = "2903"
+	TagRacism                           Tag = "3314"
+	TagRape                             Tag = "431"
+	TagRapeVictimBecomesLover           Tag = "11714"
+	TagRebellion                        Tag = "5574"
+	TagReincarnatedAsAMonster           Tag = "447"
+	TagReincarnatedAsAnObject           Tag = "9480"
+	TagReincarnatedInAGameWorld         Tag = "7297"
+	TagReincarnatedInAnotherWorld       Tag = "6304"
+	TagReincarnation                    Tag = "120"
+	TagReligions                        Tag = "15178"
+	TagReluctantProtagonist             Tag = "179"
+	TagReporters                        Tag = "1684"
+	TagRestaurant                       Tag = "1835"
+	TagResurrection                     Tag = "1209"
+	TagReturningFromAnotherWorld        Tag = "13303"
+	TagRevenge                          Tag = "121"
+	TagReverseHarem                     Tag = "558"
+	TagReverseRape                      Tag = "4500"
+	TagReversibleCouple                 Tag = "28883"
+	TagRichToPoor                       Tag = "11448"
+	TagRighteousProtagonist             Tag = "7780"
+	TagRivalry                          Tag = "614"
+	TagRomanticSubplot                  Tag = "334"
+	TagRoommates                        Tag = "106"
+	TagRoyalty                          Tag = "335"
+	TagRuthlessProtagonist              Tag = "12916"
+	TagSadisticCharacters               Tag = "13496"
+	TagSaints                           Tag = "7288"
+	TagSalaryman                        Tag = "1189"
+	TagSamurai                          Tag = "826"
+	TagSavingTheWorld                   Tag = "788"
+	TagSchemesAndConspiracies           Tag = "24959"
+	TagSchizophrenia                    Tag = "2288"
+	TagScientists                       Tag = "843"
+	TagSculptors                        Tag = "426"
+	TagSealedPower                      Tag = "732"
+	TagSecondChance                     Tag = "2571"
+	TagSecretCrush                      Tag = "1475"
+	TagSecretIdentity                   Tag = "214"
+	TagSecretOrganizations              Tag = "827"
+	TagSecretRelationship               Tag = "1190"
+	TagSecretiveProtagonist             Tag = "14997"
+	TagSecrets                          Tag = "1623"
+	TagSectDevelopment                  Tag = "7536"
+	TagSeduction                        Tag = "2595"
+	TagSeeingThingsOtherHumansCant      Tag = "201"
+	TagSelfishProtagonist               Tag = "1463"
+	TagSelflessProtagonist              Tag = "1372"
+	TagSemeProtagonist                  Tag = "14319"
+	TagSenpaiKouhaiRelationship         Tag = "629"
+	TagSentientObjects                  Tag = "13520"
+	TagSentimentalProtagonist           Tag = "13498"
+	TagSerialKillers                    Tag = "1328"
+	TagServants                         Tag = "254"
+	TagSevenDeadlySins                  Tag = "3863"
+	TagSevenVirtues                     Tag = "13993"
+	TagSexFriends                       Tag = "4432"
+	TagSexSlaves                        Tag = "656"
+	TagSexualAbuse                      Tag = "3252"
+	TagSexualCultivationTechnique       Tag = "6245"
+	TagShamelessProtagonist             Tag = "13802"
+	TagShapeshifters                    Tag = "10602"
+	TagSharingABody                     Tag = "7874"
+	TagSharpTonguedCharacters           Tag = "13996"
+	TagShieldUser                       Tag = "17746"
+	TagShikigami                        Tag = "2280"
+	TagShortStory                       Tag = "3358"
+	TagShota                            Tag = "5580"
+	TagShoujoAiSubplot                  Tag = "7147"
+	TagShounenAiSubplot                 Tag = "7146"
+	TagShowbiz                          Tag = "565"
+	TagShyCharacters                    Tag = "13499"
+	TagSiblingRivalry                   Tag = "1971"
+	TagSiblingsCare                     Tag = "8186"
+	TagSiblings                         Tag = "1411"
+	TagSiblingsNotRelatedByBlood        Tag = "65"
+	TagSicklyCharacters                 Tag = "13199"
+	TagSignLanguage                     Tag = "8631"
+	TagSingers                          Tag = "209"
+	TagSingleParent                     Tag = "1985"
+	TagSisterComplex                    Tag = "668"
+	TagSkillAssimilation                Tag = "3820"
+	TagSkillBooks                       Tag = "7032"
+	TagSkillCreation                    Tag = "6753"
+	TagSlaveHarem                       Tag = "3936"
+	TagSlaveProtagonist                 Tag = "5420"
+	TagSlaves                           Tag = "180"
+	TagSleeping                         Tag = "3014"
+	TagSlowGrowthAtStart                Tag = "3185"
+	TagSlowRomance                      Tag = "76"
+	TagSmartCouple                      Tag = "831"
+	TagSocialOutcasts                   Tag = "652"
+	TagSoldiers                         Tag = "674"
+	TagSoulPower                        Tag = "7828"
+	TagSouls                            Tag = "4627"
+	TagSpatialManipulation              Tag = "8777"
+	TagSpearWielder                     Tag = "4842"
+	TagSpecialAbilities                 Tag = "323"
+	TagSpies                            Tag = "2069"
+	TagSpiritAdvisor                    Tag = "2586"
+	TagSpiritUsers                      Tag = "11422"
+	TagSpirits                          Tag = "202"
+	TagStalkers                         Tag = "1713"
+	TagStockholmSyndrome                Tag = "1373"
+	TagStoicCharacters                  Tag = "13500"
+	TagStoreOwner                       Tag = "13633"
+	TagStraightSeme                     Tag = "1191"
+	TagStraightUke                      Tag = "1594"
+	TagStrategicBattles                 Tag = "675"
+	TagStrategist                       Tag = "4777"
+	TagStrengthBasedSocialHierarchy     Tag = "14788"
+	TagStrongLoveInterests              Tag = "12881"
+	TagStrongToStronger                 Tag = "4971"
+	TagStubbornProtagonist              Tag = "1643"
+	TagStudentCouncil                   Tag = "608"
+	TagStudentTeacherRelationship       Tag = "1224"
+	TagSuccubus                         Tag = "645"
+	TagSuddenStrengthGain               Tag = "898"
+	TagSuddenWealth                     Tag = "9574"
+	TagSuicides                         Tag = "1743"
+	TagSummonedHero                     Tag = "2990"
+	TagSummoningMagic                   Tag = "4127"
+	TagSurvival                         Tag = "347"
+	TagSurvivalGame                     Tag = "348"
+	TagSwordAndMagic                    Tag = "4302"
+	TagSwordWielder                     Tag = "18792"
+	TagSystemAdministrator              Tag = "7357"
+	TagTeachers                         Tag = "1749"
+	TagTeamwork                         Tag = "1847"
+	TagTechnologicalGap                 Tag = "16962"
+	TagTentacles                        Tag = "8760"
+	TagTerminalIllness                  Tag = "2225"
+	TagTerrorists                       Tag = "2196"
+	TagThieves                          Tag = "1360"
+	TagThreesome                        Tag = "1420"
+	TagThriller                         Tag = "2970"
+	TagTimeLoop                         Tag = "886"
+	TagTimeManipulation                 Tag = "2054"
+	TagTimeParadox                      Tag = "887"
+	TagTimeSkip                         Tag = "360"
+	TagTimeTravel                       Tag = "92"
+	TagTimidProtagonist                 Tag = "5085"
+	TagTomboyishFemaleLead              Tag = "267"
+	TagTorture                          Tag = "355"
+	TagToys                             Tag = "14264"
+	TagTragicPast                       Tag = "148"
+	TagTransformationAbility            Tag = "16178"
+	TagTransmigration                   Tag = "3046"
+	TagTransplantedMemories             Tag = "4323"
+	TagTransportedIntoAGameWorld        Tag = "7663"
+	TagTransportedModernStructure       Tag = "6559"
+	TagTransportedToAnotherWorld        Tag = "15008"
+	TagTrap                             Tag = "1279"
+	TagTribalSociety                    Tag = "5825"
+	TagTrickster                        Tag = "4856"
+	TagTsundere                         Tag = "795"
+	TagTwins                            Tag = "518"
+	TagTwistedPersonality               Tag = "10488"
+	TagUglyProtagonist                  Tag = "12155"
+	TagUglyToBeautiful                  Tag = "4851"
+	TagUnconditionalLove                Tag = "1595"
+	TagUnderestimatedProtagonist        Tag = "12907"
+	TagUniqueCultivationTechnique       Tag = "3718"
+	TagUniqueWeaponUser                 Tag = "13875"
+	TagUniqueWeapons                    Tag = "13874"
+	TagUnlimitedFlow                    Tag = "38534"
+	TagUnluckyProtagonist               Tag = "2314"
+	TagUnreliableNarrator               Tag = "4697"
+	TagUnrequitedLove                   Tag = "1268"
+	TagValkyries                        Tag = "17588"
+	TagVampires                         Tag = "149"
+	TagVillainessNobleGirls             Tag = "11404"
+	TagVirtualReality                   Tag = "109"
+	TagVocaloid                         Tag = "1634"
+	TagVoiceActors                      Tag = "2887"
+	TagVoyeurism                        Tag = "3256"
+	TagWaiters                          Tag = "1216"
+	TagWarRecords                       Tag = "5128"
+	TagWars                             Tag = "101"
+	TagWeakProtagonist                  Tag = "12813"
+	TagWeakToStrong                     Tag = "71"
+	TagWealthyCharacters                Tag = "13334"
+	TagWerebeasts                       Tag = "17533"
+	TagWishes                           Tag = "1338"
+	TagWitches                          Tag = "1829"
+	TagWizards                          Tag = "634"
+	TagWorldHopping                     Tag = "21767"
+	TagWorldTravel                      Tag = "364"
+	TagWorldTree                        Tag = "13198"
+	TagWriters                          Tag = "548"
+	TagYandere                          Tag = "291"
+	TagYoukai                           Tag = "926"
+	TagYoungerBrothers                  Tag = "11677"
+	TagYoungerLoveInterests             Tag = "16201"
+	TagYoungerSisters                   Tag = "11678"
+	TagZombies                          Tag = "350"
 )
 
 var (
-	TagToName = map[string]string{
+	TagToDisplayString = map[Tag]string{
 		TagAbandonedChildren:                "Abandoned Children",
 		TagAbilitySteal:                     "Ability Steal",
 		TagAbsentParents:                    "Absent Parents",
@@ -1854,7 +2026,7 @@ var (
 )
 
 var (
-	NameToTag = map[string]string{
+	DisplayStringToTag = map[string]Tag{
 		"Abandoned Children":                   TagAbandonedChildren,
 		"Ability Steal":                        TagAbilitySteal,
 		"Absent Parents":                       TagAbsentParents,
@@ -2622,3 +2794,1915 @@ var (
 		"Zombies":                              TagZombies,
 	}
 )
+
+var (
+	SlugStringToTag = map[string]Tag{
+		"abandoned-children":                   TagAbandonedChildren,
+		"ability-steal":                        TagAbilitySteal,
+		"absent-parents":                       TagAbsentParents,
+		"abusive-characters":                   TagAbusiveCharacters,
+		"academy":                              TagAcademy,
+		"accelerated-growth":                   TagAcceleratedGrowth,
+		"acting":                               TagActing,
+		"adapted-from-manga":                   TagAdaptedFromManga,
+		"adapted-from-manhua":                  TagAdaptedFromManhua,
+		"adapted-to-anime":                     TagAdaptedToAnime,
+		"adapted-to-drama":                     TagAdaptedToDrama,
+		"adapted-to-drama-cd":                  TagAdaptedToDramaCD,
+		"adapted-to-game":                      TagAdaptedToGame,
+		"adapted-to-manga":                     TagAdaptedToManga,
+		"adapted-to-manhua":                    TagAdaptedToManhua,
+		"adapted-to-manhwa":                    TagAdaptedToManhwa,
+		"adapted-to-movie":                     TagAdaptedToMovie,
+		"adapted-to-visual-novel":              TagAdaptedToVisualNovel,
+		"adopted-children":                     TagAdoptedChildren,
+		"adopted-protagonist":                  TagAdoptedProtagonist,
+		"adultery":                             TagAdultery,
+		"adventurers":                          TagAdventurers,
+		"affair":                               TagAffair,
+		"age-progression":                      TagAgeProgression,
+		"age-regression":                       TagAgeRegression,
+		"aggressive-characters":                TagAggressiveCharacters,
+		"alchemy":                              TagAlchemy,
+		"aliens":                               TagAliens,
+		"all-girls-school":                     TagAllGirlsSchool,
+		"alternate-world":                      TagAlternateWorld,
+		"amnesia":                              TagAmnesia,
+		"amusement-park":                       TagAmusementPark,
+		"anal":                                 TagAnal,
+		"ancient-china":                        TagAncientChina,
+		"ancient-times":                        TagAncientTimes,
+		"androgynous-characters":               TagAndrogynousCharacters,
+		"androids":                             TagAndroids,
+		"angels":                               TagAngels,
+		"animal-characteristics":               TagAnimalCharacteristics,
+		"animal-rearing":                       TagAnimalRearing,
+		"anti-magic":                           TagAntiMagic,
+		"anti-social-protagonist":              TagAntiSocialProtagonist,
+		"antihero-protagonist":                 TagAntiheroProtagonist,
+		"antique-shop":                         TagAntiqueShop,
+		"apartment-life":                       TagApartmentLife,
+		"apathetic-protagonist":                TagApatheticProtagonist,
+		"apocalypse":                           TagApocalypse,
+		"appearance-changes":                   TagAppearanceChanges,
+		"appearance-different-from-actual-age": TagAppearanceDifferentFromActualAge,
+		"archery":                              TagArchery,
+		"aristocracy":                          TagAristocracy,
+		"arms-dealers":                         TagArmsDealers,
+		"army":                                 TagArmy,
+		"army-building":                        TagArmyBuilding,
+		"arranged-marriage":                    TagArrangedMarriage,
+		"arrogant-characters":                  TagArrogantCharacters,
+		"artifact-crafting":                    TagArtifactCrafting,
+		"artifacts":                            TagArtifacts,
+		"artificial-intelligence":              TagArtificialIntelligence,
+		"artists":                              TagArtists,
+		"assassins":                            TagAssassins,
+		"astrologers":                          TagAstrologers,
+		"autism":                               TagAutism,
+		"automatons":                           TagAutomatons,
+		"average-looking-protagonist":          TagAverageLookingProtagonist,
+		"award-winning-work":                   TagAwardWinningWork,
+		"awkward-protagonist":                  TagAwkwardProtagonist,
+		"bands":                                TagBands,
+		"based-on-a-movie":                     TagBasedOnAMovie,
+		"based-on-a-song":                      TagBasedOnASong,
+		"based-on-a-tv-show":                   TagBasedOnATVShow,
+		"based-on-a-video-game":                TagBasedOnAVideoGame,
+		"based-on-a-visual-novel":              TagBasedOnAVisualNovel,
+		"based-on-an-anime":                    TagBasedOnAnAnime,
+		"battle-academy":                       TagBattleAcademy,
+		"battle-competition":                   TagBattleCompetition,
+		"bdsm":                                 TagBDSM,
+		"beast-companions":                     TagBeastCompanions,
+		"beastkin":                             TagBeastkin,
+		"beasts":                               TagBeasts,
+		"beautiful-female-lead":                TagBeautifulFemaleLead,
+		"bestiality":                           TagBestiality,
+		"betrayal":                             TagBetrayal,
+		"bickering-couple":                     TagBickeringCouple,
+		"biochip":                              TagBiochip,
+		"bisexual-protagonist":                 TagBisexualProtagonist,
+		"black-belly":                          TagBlackBelly,
+		"blackmail":                            TagBlackmail,
+		"blacksmith":                           TagBlacksmith,
+		"blind-dates":                          TagBlindDates,
+		"blind-protagonist":                    TagBlindProtagonist,
+		"blood-manipulation":                   TagBloodManipulation,
+		"bloodlines":                           TagBloodlines,
+		"body-swap":                            TagBodySwap,
+		"body-tempering":                       TagBodyTempering,
+		"body-double":                          TagBodyDouble,
+		"bodyguards":                           TagBodyguards,
+		"books":                                TagBooks,
+		"bookworm":                             TagBookworm,
+		"boss-subordinate-relationship":        TagBossSubordinateRelationship,
+		"brainwashing":                         TagBrainwashing,
+		"breast-fetish":                        TagBreastFetish,
+		"broken-engagement":                    TagBrokenEngagement,
+		"brother-complex":                      TagBrotherComplex,
+		"brotherhood":                          TagBrotherhood,
+		"buddhism":                             TagBuddhism,
+		"bullying":                             TagBullying,
+		"business-management":                  TagBusinessManagement,
+		"businessmen":                          TagBusinessmen,
+		"butlers":                              TagButlers,
+		"calm-protagonist":                     TagCalmProtagonist,
+		"cannibalism":                          TagCannibalism,
+		"card-games":                           TagCardGames,
+		"carefree-protagonist":                 TagCarefreeProtagonist,
+		"caring-protagonist":                   TagCaringProtagonist,
+		"cautious-protagonist":                 TagCautiousProtagonist,
+		"celebrities":                          TagCelebrities,
+		"character-growth":                     TagCharacterGrowth,
+		"charismatic-protagonist":              TagCharismaticProtagonist,
+		"charming-protagonist":                 TagCharmingProtagonist,
+		"chat-rooms":                           TagChatRooms,
+		"cheats":                               TagCheats,
+		"chefs":                                TagChefs,
+		"child-abuse":                          TagChildAbuse,
+		"child-protagonist":                    TagChildProtagonist,
+		"childcare":                            TagChildcare,
+		"childhood-friends":                    TagChildhoodFriends,
+		"childhood-love":                       TagChildhoodLove,
+		"childhood-promise":                    TagChildhoodPromise,
+		"childish-protagonist":                 TagChildishProtagonist,
+		"chuunibyou":                           TagChuunibyou,
+		"clan-building":                        TagClanBuilding,
+		"classic":                              TagClassic,
+		"clever-protagonist":                   TagCleverProtagonist,
+		"clingy-lover":                         TagClingyLover,
+		"clones":                               TagClones,
+		"clubs":                                TagClubs,
+		"clumsy-love-interests":                TagClumsyLoveInterests,
+		"co-workers":                           TagCoWorkers,
+		"cohabitation":                         TagCohabitation,
+		"cold-love-interests":                  TagColdLoveInterests,
+		"cold-protagonist":                     TagColdProtagonist,
+		"collection-of-short-stories":          TagCollectionOfShortStories,
+		"college/university":                   TagCollegeUniversity,
+		"coma":                                 TagComa,
+		"comedic-undertone":                    TagComedicUndertone,
+		"coming-of-age":                        TagComingOfAge,
+		"complex-family-relationships":         TagComplexFamilyRelationships,
+		"conditional-power":                    TagConditionalPower,
+		"confident-protagonist":                TagConfidentProtagonist,
+		"confinement":                          TagConfinement,
+		"conflicting-loyalties":                TagConflictingLoyalties,
+		"contracts":                            TagContracts,
+		"cooking":                              TagCooking,
+		"corruption":                           TagCorruption,
+		"cosmic-wars":                          TagCosmicWars,
+		"cosplay":                              TagCosplay,
+		"couple-growth":                        TagCoupleGrowth,
+		"court-official":                       TagCourtOfficial,
+		"cousins":                              TagCousins,
+		"cowardly-protagonist":                 TagCowardlyProtagonist,
+		"crafting":                             TagCrafting,
+		"crime":                                TagCrime,
+		"criminals":                            TagCriminals,
+		"cross-dressing":                       TagCrossDressing,
+		"crossover":                            TagCrossover,
+		"cruel-characters":                     TagCruelCharacters,
+		"cryostasis":                           TagCryostasis,
+		"cultivation":                          TagCultivation,
+		"cunnilingus":                          TagCunnilingus,
+		"cunning-protagonist":                  TagCunningProtagonist,
+		"curious-protagonist":                  TagCuriousProtagonist,
+		"curses":                               TagCurses,
+		"cute-children":                        TagCuteChildren,
+		"cute-protagonist":                     TagCuteProtagonist,
+		"cute-story":                           TagCuteStory,
+		"dancers":                              TagDancers,
+		"dao-companion":                        TagDaoCompanion,
+		"dao-comprehension":                    TagDaoComprehension,
+		"daoism":                               TagDaoism,
+		"dark":                                 TagDark,
+		"dead-protagonist":                     TagDeadProtagonist,
+		"death":                                TagDeath,
+		"death-of-loved-ones":                  TagDeathOfLovedOnes,
+		"debts":                                TagDebts,
+		"delinquents":                          TagDelinquents,
+		"delusions":                            TagDelusions,
+		"demi-humans":                          TagDemiHumans,
+		"demon-lord":                           TagDemonLord,
+		"demonic-cultivation-technique":        TagDemonicCultivationTechnique,
+		"demons":                               TagDemons,
+		"dense-protagonist":                    TagDenseProtagonist,
+		"depictions-of-cruelty":                TagDepictionsOfCruelty,
+		"depression":                           TagDepression,
+		"destiny":                              TagDestiny,
+		"detectives":                           TagDetectives,
+		"determined-protagonist":               TagDeterminedProtagonist,
+		"devoted-love-interests":               TagDevotedLoveInterests,
+		"different-social-status":              TagDifferentSocialStatus,
+		"disabilities":                         TagDisabilities,
+		"discrimination":                       TagDiscrimination,
+		"disfigurement":                        TagDisfigurement,
+		"dishonest-protagonist":                TagDishonestProtagonist,
+		"distrustful-protagonist":              TagDistrustfulProtagonist,
+		"divination":                           TagDivination,
+		"divine-protection":                    TagDivineProtection,
+		"divorce":                              TagDivorce,
+		"doctors":                              TagDoctors,
+		"dolls/puppets":                        TagDollsPuppets,
+		"domestic-affairs":                     TagDomesticAffairs,
+		"doting-love-interests":                TagDotingLoveInterests,
+		"doting-older-siblings":                TagDotingOlderSiblings,
+		"doting-parents":                       TagDotingParents,
+		"dragon-riders":                        TagDragonRiders,
+		"dragon-slayers":                       TagDragonSlayers,
+		"dragons":                              TagDragons,
+		"dreams":                               TagDreams,
+		"drugs":                                TagDrugs,
+		"druids":                               TagDruids,
+		"dungeon-master":                       TagDungeonMaster,
+		"dungeons":                             TagDungeons,
+		"dwarfs":                               TagDwarfs,
+		"dystopia":                             TagDystopia,
+		"e-sports":                             TagESports,
+		"early-romance":                        TagEarlyRomance,
+		"earth-invasion":                       TagEarthInvasion,
+		"easy-going-life":                      TagEasyGoingLife,
+		"economics":                            TagEconomics,
+		"editors":                              TagEditors,
+		"eidetic-memory":                       TagEideticMemory,
+		"elderly-protagonist":                  TagElderlyProtagonist,
+		"elemental-magic":                      TagElementalMagic,
+		"elves":                                TagElves,
+		"emotionally-weak-protagonist":         TagEmotionallyWeakProtagonist,
+		"empires":                              TagEmpires,
+		"enemies-become-allies":                TagEnemiesBecomeAllies,
+		"enemies-become-lovers":                TagEnemiesBecomeLovers,
+		"engagement":                           TagEngagement,
+		"engineer":                             TagEngineer,
+		"enlightenment":                        TagEnlightenment,
+		"episodic":                             TagEpisodic,
+		"eunuch":                               TagEunuch,
+		"european-ambience":                    TagEuropeanAmbience,
+		"evil-gods":                            TagEvilGods,
+		"evil-organizations":                   TagEvilOrganizations,
+		"evil-protagonist":                     TagEvilProtagonist,
+		"evil-religions":                       TagEvilReligions,
+		"evolution":                            TagEvolution,
+		"exhibitionism":                        TagExhibitionism,
+		"exorcism":                             TagExorcism,
+		"eye-powers":                           TagEyePowers,
+		"fairies":                              TagFairies,
+		"fallen-angels":                        TagFallenAngels,
+		"fallen-nobility":                      TagFallenNobility,
+		"familial-love":                        TagFamilialLove,
+		"familiars":                            TagFamiliars,
+		"family":                               TagFamily,
+		"family-business":                      TagFamilyBusiness,
+		"family-conflict":                      TagFamilyConflict,
+		"famous-parents":                       TagFamousParents,
+		"famous-protagonist":                   TagFamousProtagonist,
+		"fanaticism":                           TagFanaticism,
+		"fanfiction":                           TagFanfiction,
+		"fantasy-creatures":                    TagFantasyCreatures,
+		"fantasy-world":                        TagFantasyWorld,
+		"farming":                              TagFarming,
+		"fast-cultivation":                     TagFastCultivation,
+		"fast-learner":                         TagFastLearner,
+		"fat-protagonist":                      TagFatProtagonist,
+		"fat-to-fit":                           TagFatToFit,
+		"fated-lovers":                         TagFatedLovers,
+		"fearless-protagonist":                 TagFearlessProtagonist,
+		"fellatio":                             TagFellatio,
+		"female-master":                        TagFemaleMaster,
+		"female-protagonist":                   TagFemaleProtagonist,
+		"female-to-male":                       TagFemaleToMale,
+		"feng-shui":                            TagFengShui,
+		"firearms":                             TagFirearms,
+		"first-love":                           TagFirstLove,
+		"first-time-intercourse":               TagFirstTimeIntercourse,
+		"flashbacks":                           TagFlashbacks,
+		"fleet-battles":                        TagFleetBattles,
+		"folklore":                             TagFolklore,
+		"forced-into-a-relationship":           TagForcedIntoARelationship,
+		"forced-living-arrangements":           TagForcedLivingArrangements,
+		"forced-marriage":                      TagForcedMarriage,
+		"forgetful-protagonist":                TagForgetfulProtagonist,
+		"former-hero":                          TagFormerHero,
+		"fox-spirits":                          TagFoxSpirits,
+		"friends-become-enemies":               TagFriendsBecomeEnemies,
+		"friendship":                           TagFriendship,
+		"fujoshi":                              TagFujoshi,
+		"futanari":                             TagFutanari,
+		"futuristic-setting":                   TagFuturisticSetting,
+		"galge":                                TagGalge,
+		"gambling":                             TagGambling,
+		"game-elements":                        TagGameElements,
+		"game-ranking-system":                  TagGameRankingSystem,
+		"gamers":                               TagGamers,
+		"gangs":                                TagGangs,
+		"gate-to-another-world":                TagGateToAnotherWorld,
+		"genderless-protagonist":               TagGenderlessProtagonist,
+		"generals":                             TagGenerals,
+		"genetic-modifications":                TagGeneticModifications,
+		"genies":                               TagGenies,
+		"genius-protagonist":                   TagGeniusProtagonist,
+		"ghosts":                               TagGhosts,
+		"gladiators":                           TagGladiators,
+		"glasses-wearing-love-interests":       TagGlassesWearingLoveInterests,
+		"glasses-wearing-protagonist":          TagGlassesWearingProtagonist,
+		"goblins":                              TagGoblins,
+		"god-protagonist":                      TagGodProtagonist,
+		"god-human-relationship":               TagGodHumanRelationship,
+		"goddesses":                            TagGoddesses,
+		"godly-powers":                         TagGodlyPowers,
+		"gods":                                 TagGods,
+		"golems":                               TagGolems,
+		"gore":                                 TagGore,
+		"grave-keepers":                        TagGraveKeepers,
+		"grinding":                             TagGrinding,
+		"guardian-relationship":                TagGuardianRelationship,
+		"guilds":                               TagGuilds,
+		"gunfighters":                          TagGunfighters,
+		"hackers":                              TagHackers,
+		"half-human-protagonist":               TagHalfHumanProtagonist,
+		"handjob":                              TagHandjob,
+		"handsome-male-lead":                   TagHandsomeMaleLead,
+		"hard-working-protagonist":             TagHardWorkingProtagonist,
+		"harem-seeking-protagonist":            TagHaremSeekingProtagonist,
+		"harsh-training":                       TagHarshTraining,
+		"hated-protagonist":                    TagHatedProtagonist,
+		"healers":                              TagHealers,
+		"heartwarming":                         TagHeartwarming,
+		"heaven":                               TagHeaven,
+		"heavenly-tribulation":                 TagHeavenlyTribulation,
+		"hell":                                 TagHell,
+		"helpful-protagonist":                  TagHelpfulProtagonist,
+		"herbalist":                            TagHerbalist,
+		"heroes":                               TagHeroes,
+		"heterochromia":                        TagHeterochromia,
+		"hidden-abilities":                     TagHiddenAbilities,
+		"hiding-true-abilities":                TagHidingTrueAbilities,
+		"hiding-true-identity":                 TagHidingTrueIdentity,
+		"hikikomori":                           TagHikikomori,
+		"homunculus":                           TagHomunculus,
+		"honest-protagonist":                   TagHonestProtagonist,
+		"hospital":                             TagHospital,
+		"hot-blooded-protagonist":              TagHotBloodedProtagonist,
+		"human-experimentation":                TagHumanExperimentation,
+		"human-weapon":                         TagHumanWeapon,
+		"human-nonhuman-relationship":          TagHumanNonhumanRelationship,
+		"humanoid-protagonist":                 TagHumanoidProtagonist,
+		"hunters":                              TagHunters,
+		"hypnotism":                            TagHypnotism,
+		"identity-crisis":                      TagIdentityCrisis,
+		"imaginary-friend":                     TagImaginaryFriend,
+		"immortals":                            TagImmortals,
+		"imperial-harem":                       TagImperialHarem,
+		"incest":                               TagIncest,
+		"incubus":                              TagIncubus,
+		"indecisive-protagonist":               TagIndecisiveProtagonist,
+		"industrialization":                    TagIndustrialization,
+		"inferiority-complex":                  TagInferiorityComplex,
+		"inheritance":                          TagInheritance,
+		"inscriptions":                         TagInscriptions,
+		"insects":                              TagInsects,
+		"interconnected-storylines":            TagInterconnectedStorylines,
+		"interdimensional-travel":              TagInterdimensionalTravel,
+		"introverted-protagonist":              TagIntrovertedProtagonist,
+		"investigations":                       TagInvestigations,
+		"invisibility":                         TagInvisibility,
+		"jack-of-all-trades":                   TagJackOfAllTrades,
+		"jealousy":                             TagJealousy,
+		"jiangshi":                             TagJiangshi,
+		"jobless-class":                        TagJoblessClass,
+		"jsdf":                                 TagJSDF,
+		"kidnappings":                          TagKidnappings,
+		"kind-love-interests":                  TagKindLoveInterests,
+		"kingdom-building":                     TagKingdomBuilding,
+		"kingdoms":                             TagKingdoms,
+		"knights":                              TagKnights,
+		"kuudere":                              TagKuudere,
+		"lack-of-common-sense":                 TagLackOfCommonSense,
+		"language-barrier":                     TagLanguageBarrier,
+		"late-romance":                         TagLateRomance,
+		"lawyers":                              TagLawyers,
+		"lazy-protagonist":                     TagLazyProtagonist,
+		"leadership":                           TagLeadership,
+		"legends":                              TagLegends,
+		"level-system":                         TagLevelSystem,
+		"library":                              TagLibrary,
+		"limited-lifespan":                     TagLimitedLifespan,
+		"living-abroad":                        TagLivingAbroad,
+		"living-alone":                         TagLivingAlone,
+		"loli":                                 TagLoli,
+		"loneliness":                           TagLoneliness,
+		"loner-protagonist":                    TagLonerProtagonist,
+		"long-separations":                     TagLongSeparations,
+		"long-distance-relationship":           TagLongDistanceRelationship,
+		"lost-civilizations":                   TagLostCivilizations,
+		"lottery":                              TagLottery,
+		"love-at-first-sight":                  TagLoveAtFirstSight,
+		"love-interest-falls-in-love-first":    TagLoveInterestFallsInLoveFirst,
+		"love-rivals":                          TagLoveRivals,
+		"love-triangles":                       TagLoveTriangles,
+		"lovers-reunited":                      TagLoversReunited,
+		"low-key-protagonist":                  TagLowKeyProtagonist,
+		"loyal-subordinates":                   TagLoyalSubordinates,
+		"lucky-protagonist":                    TagLuckyProtagonist,
+		"magic":                                TagMagic,
+		"magic-beasts":                         TagMagicBeasts,
+		"magic-formations":                     TagMagicFormations,
+		"magical-girls":                        TagMagicalGirls,
+		"magical-space":                        TagMagicalSpace,
+		"magical-technology":                   TagMagicalTechnology,
+		"maids":                                TagMaids,
+		"male-protagonist":                     TagMaleProtagonist,
+		"male-to-female":                       TagMaleToFemale,
+		"male-yandere":                         TagMaleYandere,
+		"management":                           TagManagement,
+		"mangaka":                              TagMangaka,
+		"manipulative-characters":              TagManipulativeCharacters,
+		"manly-gay-couple":                     TagManlyGayCouple,
+		"marriage":                             TagMarriage,
+		"marriage-of-convenience":              TagMarriageOfConvenience,
+		"martial-spirits":                      TagMartialSpirits,
+		"masochistic-characters":               TagMasochisticCharacters,
+		"master-disciple-relationship":         TagMasterDiscipleRelationship,
+		"master-servant-relationship":          TagMasterServantRelationship,
+		"masturbation":                         TagMasturbation,
+		"matriarchy":                           TagMatriarchy,
+		"mature-protagonist":                   TagMatureProtagonist,
+		"medical-knowledge":                    TagMedicalKnowledge,
+		"medieval":                             TagMedieval,
+		"mercenaries":                          TagMercenaries,
+		"merchants":                            TagMerchants,
+		"military":                             TagMilitary,
+		"mind-break":                           TagMindBreak,
+		"mind-control":                         TagMindControl,
+		"misandry":                             TagMisandry,
+		"mismatched-couple":                    TagMismatchedCouple,
+		"misunderstandings":                    TagMisunderstandings,
+		"mmorpg":                               TagMMORPG,
+		"mob-protagonist":                      TagMobProtagonist,
+		"models":                               TagModels,
+		"modern-day":                           TagModernDay,
+		"modern-knowledge":                     TagModernKnowledge,
+		"money-grubber":                        TagMoneyGrubber,
+		"monster-girls":                        TagMonsterGirls,
+		"monster-society":                      TagMonsterSociety,
+		"monster-tamer":                        TagMonsterTamer,
+		"monsters":                             TagMonsters,
+		"movies":                               TagMovies,
+		"mpreg":                                TagMpreg,
+		"multiple-identities":                  TagMultipleIdentities,
+		"multiple-personalities":               TagMultiplePersonalities,
+		"multiple-pov":                         TagMultiplePOV,
+		"multiple-protagonists":                TagMultipleProtagonists,
+		"multiple-realms":                      TagMultipleRealms,
+		"multiple-reincarnated-individuals":    TagMultipleReincarnatedIndividuals,
+		"multiple-timelines":                   TagMultipleTimelines,
+		"multiple-transported-individuals":     TagMultipleTransportedIndividuals,
+		"murders":                              TagMurders,
+		"music":                                TagMusic,
+		"mutated-creatures":                    TagMutatedCreatures,
+		"mutations":                            TagMutations,
+		"mute-character":                       TagMuteCharacter,
+		"mysterious-family-background":         TagMysteriousFamilyBackground,
+		"mysterious-illness":                   TagMysteriousIllness,
+		"mysterious-past":                      TagMysteriousPast,
+		"mystery-solving":                      TagMysterySolving,
+		"mythical-beasts":                      TagMythicalBeasts,
+		"mythology":                            TagMythology,
+		"naive-protagonist":                    TagNaiveProtagonist,
+		"narcissistic-protagonist":             TagNarcissisticProtagonist,
+		"nationalism":                          TagNationalism,
+		"near-death-experience":                TagNearDeathExperience,
+		"necromancer":                          TagNecromancer,
+		"neet":                                 TagNeet,
+		"netorare":                             TagNetorare,
+		"netorase":                             TagNetorase,
+		"netori":                               TagNetori,
+		"nightmares":                           TagNightmares,
+		"ninjas":                               TagNinjas,
+		"nobles":                               TagNobles,
+		"non-humanoid-protagonist":             TagNonHumanoidProtagonist,
+		"non-linear-storytelling":              TagNonLinearStorytelling,
+		"nudity":                               TagNudity,
+		"nurses":                               TagNurses,
+		"obsessive-love":                       TagObsessiveLove,
+		"office-romance":                       TagOfficeRomance,
+		"older-love-interests":                 TagOlderLoveInterests,
+		"omegaverse":                           TagOmegaverse,
+		"oneshot":                              TagOneshot,
+		"online-romance":                       TagOnlineRomance,
+		"onmyouji":                             TagOnmyouji,
+		"orcs":                                 TagOrcs,
+		"organized-crime":                      TagOrganizedCrime,
+		"orgy":                                 TagOrgy,
+		"orphans":                              TagOrphans,
+		"otaku":                                TagOtaku,
+		"otome-game":                           TagOtomeGame,
+		"outcasts":                             TagOutcasts,
+		"outdoor-intercourse":                  TagOutdoorIntercourse,
+		"outer-space":                          TagOuterSpace,
+		"overpowered-protagonist":              TagOverpoweredProtagonist,
+		"overprotective-siblings":              TagOverprotectiveSiblings,
+		"pacifist-protagonist":                 TagPacifistProtagonist,
+		"paizuri":                              TagPaizuri,
+		"parallel-worlds":                      TagParallelWorlds,
+		"parasites":                            TagParasites,
+		"parent-complex":                       TagParentComplex,
+		"parody":                               TagParody,
+		"part-time-job":                        TagPartTimeJob,
+		"past-plays-a-big-role":                TagPastPlaysABigRole,
+		"past-trauma":                          TagPastTrauma,
+		"persistent-love-interests":            TagPersistentLoveInterests,
+		"personality-changes":                  TagPersonalityChanges,
+		"perverted-protagonist":                TagPervertedProtagonist,
+		"pets":                                 TagPets,
+		"pharmacist":                           TagPharmacist,
+		"philosophical":                        TagPhilosophical,
+		"phobias":                              TagPhobias,
+		"phoenixes":                            TagPhoenixes,
+		"photography":                          TagPhotography,
+		"pill-based-cultivation":               TagPillBasedCultivation,
+		"pill-concocting":                      TagPillConcocting,
+		"pilots":                               TagPilots,
+		"pirates":                              TagPirates,
+		"playboys":                             TagPlayboys,
+		"playful-protagonist":                  TagPlayfulProtagonist,
+		"poetry":                               TagPoetry,
+		"poisons":                              TagPoisons,
+		"police":                               TagPolice,
+		"polite-protagonist":                   TagPoliteProtagonist,
+		"politics":                             TagPolitics,
+		"polyandry":                            TagPolyandry,
+		"polygamy":                             TagPolygamy,
+		"poor-protagonist":                     TagPoorProtagonist,
+		"poor-to-rich":                         TagPoorToRich,
+		"popular-love-interests":               TagPopularLoveInterests,
+		"possession":                           TagPossession,
+		"possessive-characters":                TagPossessiveCharacters,
+		"post-apocalyptic":                     TagPostApocalyptic,
+		"power-couple":                         TagPowerCouple,
+		"power-struggle":                       TagPowerStruggle,
+		"pragmatic-protagonist":                TagPragmaticProtagonist,
+		"precognition":                         TagPrecognition,
+		"pregnancy":                            TagPregnancy,
+		"pretend-lovers":                       TagPretendLovers,
+		"previous-life-talent":                 TagPreviousLifeTalent,
+		"priestesses":                          TagPriestesses,
+		"priests":                              TagPriests,
+		"prison":                               TagPrison,
+		"proactive-protagonist":                TagProactiveProtagonist,
+		"programmer":                           TagProgrammer,
+		"prophecies":                           TagProphecies,
+		"prostitutes":                          TagProstitutes,
+		"protagonist-falls-in-love-first":      TagProtagonistFallsInLoveFirst,
+		"protagonist-strong-from-the-start":    TagProtagonistStrongFromTheStart,
+		"protagonist-with-multiple-bodies":     TagProtagonistWithMultipleBodies,
+		"psychic-powers":                       TagPsychicPowers,
+		"psychopaths":                          TagPsychopaths,
+		"puppeteers":                           TagPuppeteers,
+		"quiet-characters":                     TagQuietCharacters,
+		"quirky-characters":                    TagQuirkyCharacters,
+		"r-15":                                 TagR15,
+		"r-18":                                 TagR18,
+		"race-change":                          TagRaceChange,
+		"racism":                               TagRacism,
+		"rape":                                 TagRape,
+		"rape-victim-becomes-lover":            TagRapeVictimBecomesLover,
+		"rebellion":                            TagRebellion,
+		"reincarnated-as-a-monster":            TagReincarnatedAsAMonster,
+		"reincarnated-as-an-object":            TagReincarnatedAsAnObject,
+		"reincarnated-in-a-game-world":         TagReincarnatedInAGameWorld,
+		"reincarnated-in-another-world":        TagReincarnatedInAnotherWorld,
+		"reincarnation":                        TagReincarnation,
+		"religions":                            TagReligions,
+		"reluctant-protagonist":                TagReluctantProtagonist,
+		"reporters":                            TagReporters,
+		"restaurant":                           TagRestaurant,
+		"resurrection":                         TagResurrection,
+		"returning-from-another-world":         TagReturningFromAnotherWorld,
+		"revenge":                              TagRevenge,
+		"reverse-harem":                        TagReverseHarem,
+		"reverse-rape":                         TagReverseRape,
+		"reversible-couple":                    TagReversibleCouple,
+		"rich-to-poor":                         TagRichToPoor,
+		"righteous-protagonist":                TagRighteousProtagonist,
+		"rivalry":                              TagRivalry,
+		"romantic-subplot":                     TagRomanticSubplot,
+		"roommates":                            TagRoommates,
+		"royalty":                              TagRoyalty,
+		"ruthless-protagonist":                 TagRuthlessProtagonist,
+		"sadistic-characters":                  TagSadisticCharacters,
+		"saints":                               TagSaints,
+		"salaryman":                            TagSalaryman,
+		"samurai":                              TagSamurai,
+		"saving-the-world":                     TagSavingTheWorld,
+		"schemes-and-conspiracies":             TagSchemesAndConspiracies,
+		"schizophrenia":                        TagSchizophrenia,
+		"scientists":                           TagScientists,
+		"sculptors":                            TagSculptors,
+		"sealed-power":                         TagSealedPower,
+		"second-chance":                        TagSecondChance,
+		"secret-crush":                         TagSecretCrush,
+		"secret-identity":                      TagSecretIdentity,
+		"secret-organizations":                 TagSecretOrganizations,
+		"secret-relationship":                  TagSecretRelationship,
+		"secretive-protagonist":                TagSecretiveProtagonist,
+		"secrets":                              TagSecrets,
+		"sect-development":                     TagSectDevelopment,
+		"seduction":                            TagSeduction,
+		"seeing-things-other-humans-can't":     TagSeeingThingsOtherHumansCant,
+		"selfish-protagonist":                  TagSelfishProtagonist,
+		"selfless-protagonist":                 TagSelflessProtagonist,
+		"seme-protagonist":                     TagSemeProtagonist,
+		"senpai-kouhai-relationship":           TagSenpaiKouhaiRelationship,
+		"sentient-objects":                     TagSentientObjects,
+		"sentimental-protagonist":              TagSentimentalProtagonist,
+		"serial-killers":                       TagSerialKillers,
+		"servants":                             TagServants,
+		"seven-deadly-sins":                    TagSevenDeadlySins,
+		"seven-virtues":                        TagSevenVirtues,
+		"sex-friends":                          TagSexFriends,
+		"sex-slaves":                           TagSexSlaves,
+		"sexual-abuse":                         TagSexualAbuse,
+		"sexual-cultivation-technique":         TagSexualCultivationTechnique,
+		"shameless-protagonist":                TagShamelessProtagonist,
+		"shapeshifters":                        TagShapeshifters,
+		"sharing-a-body":                       TagSharingABody,
+		"sharp-tongued-characters":             TagSharpTonguedCharacters,
+		"shield-user":                          TagShieldUser,
+		"shikigami":                            TagShikigami,
+		"short-story":                          TagShortStory,
+		"shota":                                TagShota,
+		"shoujo-ai-subplot":                    TagShoujoAiSubplot,
+		"shounen-ai-subplot":                   TagShounenAiSubplot,
+		"showbiz":                              TagShowbiz,
+		"shy-characters":                       TagShyCharacters,
+		"sibling-rivalry":                      TagSiblingRivalry,
+		"sibling's-care":                       TagSiblingsCare,
+		"siblings":                             TagSiblings,
+		"siblings-not-related-by-blood":        TagSiblingsNotRelatedByBlood,
+		"sickly-characters":                    TagSicklyCharacters,
+		"sign-language":                        TagSignLanguage,
+		"singers":                              TagSingers,
+		"single-parent":                        TagSingleParent,
+		"sister-complex":                       TagSisterComplex,
+		"skill-assimilation":                   TagSkillAssimilation,
+		"skill-books":                          TagSkillBooks,
+		"skill-creation":                       TagSkillCreation,
+		"slave-harem":                          TagSlaveHarem,
+		"slave-protagonist":                    TagSlaveProtagonist,
+		"slaves":                               TagSlaves,
+		"sleeping":                             TagSleeping,
+		"slow-growth-at-start":                 TagSlowGrowthAtStart,
+		"slow-romance":                         TagSlowRomance,
+		"smart-couple":                         TagSmartCouple,
+		"social-outcasts":                      TagSocialOutcasts,
+		"soldiers":                             TagSoldiers,
+		"soul-power":                           TagSoulPower,
+		"souls":                                TagSouls,
+		"spatial-manipulation":                 TagSpatialManipulation,
+		"spear-wielder":                        TagSpearWielder,
+		"special-abilities":                    TagSpecialAbilities,
+		"spies":                                TagSpies,
+		"spirit-advisor":                       TagSpiritAdvisor,
+		"spirit-users":                         TagSpiritUsers,
+		"spirits":                              TagSpirits,
+		"stalkers":                             TagStalkers,
+		"stockholm-syndrome":                   TagStockholmSyndrome,
+		"stoic-characters":                     TagStoicCharacters,
+		"store-owner":                          TagStoreOwner,
+		"straight-seme":                        TagStraightSeme,
+		"straight-uke":                         TagStraightUke,
+		"strategic-battles":                    TagStrategicBattles,
+		"strategist":                           TagStrategist,
+		"strength-based-social-hierarchy":      TagStrengthBasedSocialHierarchy,
+		"strong-love-interests":                TagStrongLoveInterests,
+		"strong-to-stronger":                   TagStrongToStronger,
+		"stubborn-protagonist":                 TagStubbornProtagonist,
+		"student-council":                      TagStudentCouncil,
+		"student-teacher-relationship":         TagStudentTeacherRelationship,
+		"succubus":                             TagSuccubus,
+		"sudden-strength-gain":                 TagSuddenStrengthGain,
+		"sudden-wealth":                        TagSuddenWealth,
+		"suicides":                             TagSuicides,
+		"summoned-hero":                        TagSummonedHero,
+		"summoning-magic":                      TagSummoningMagic,
+		"survival":                             TagSurvival,
+		"survival-game":                        TagSurvivalGame,
+		"sword-and-magic":                      TagSwordAndMagic,
+		"sword-wielder":                        TagSwordWielder,
+		"system-administrator":                 TagSystemAdministrator,
+		"teachers":                             TagTeachers,
+		"teamwork":                             TagTeamwork,
+		"technological-gap":                    TagTechnologicalGap,
+		"tentacles":                            TagTentacles,
+		"terminal-illness":                     TagTerminalIllness,
+		"terrorists":                           TagTerrorists,
+		"thieves":                              TagThieves,
+		"threesome":                            TagThreesome,
+		"thriller":                             TagThriller,
+		"time-loop":                            TagTimeLoop,
+		"time-manipulation":                    TagTimeManipulation,
+		"time-paradox":                         TagTimeParadox,
+		"time-skip":                            TagTimeSkip,
+		"time-travel":                          TagTimeTravel,
+		"timid-protagonist":                    TagTimidProtagonist,
+		"tomboyish-female-lead":                TagTomboyishFemaleLead,
+		"torture":                              TagTorture,
+		"toys":                                 TagToys,
+		"tragic-past":                          TagTragicPast,
+		"transformation-ability":               TagTransformationAbility,
+		"transmigration":                       TagTransmigration,
+		"transplanted-memories":                TagTransplantedMemories,
+		"transported-into-a-game-world":        TagTransportedIntoAGameWorld,
+		"transported-modern-structure":         TagTransportedModernStructure,
+		"transported-to-another-world":         TagTransportedToAnotherWorld,
+		"trap":                                 TagTrap,
+		"tribal-society":                       TagTribalSociety,
+		"trickster":                            TagTrickster,
+		"tsundere":                             TagTsundere,
+		"twins":                                TagTwins,
+		"twisted-personality":                  TagTwistedPersonality,
+		"ugly-protagonist":                     TagUglyProtagonist,
+		"ugly-to-beautiful":                    TagUglyToBeautiful,
+		"unconditional-love":                   TagUnconditionalLove,
+		"underestimated-protagonist":           TagUnderestimatedProtagonist,
+		"unique-cultivation-technique":         TagUniqueCultivationTechnique,
+		"unique-weapon-user":                   TagUniqueWeaponUser,
+		"unique-weapons":                       TagUniqueWeapons,
+		"unlimited-flow":                       TagUnlimitedFlow,
+		"unlucky-protagonist":                  TagUnluckyProtagonist,
+		"unreliable-narrator":                  TagUnreliableNarrator,
+		"unrequited-love":                      TagUnrequitedLove,
+		"valkyries":                            TagValkyries,
+		"vampires":                             TagVampires,
+		"villainess-noble-girls":               TagVillainessNobleGirls,
+		"virtual-reality":                      TagVirtualReality,
+		"vocaloid":                             TagVocaloid,
+		"voice-actors":                         TagVoiceActors,
+		"voyeurism":                            TagVoyeurism,
+		"waiters":                              TagWaiters,
+		"war-records":                          TagWarRecords,
+		"wars":                                 TagWars,
+		"weak-protagonist":                     TagWeakProtagonist,
+		"weak-to-strong":                       TagWeakToStrong,
+		"wealthy-characters":                   TagWealthyCharacters,
+		"werebeasts":                           TagWerebeasts,
+		"wishes":                               TagWishes,
+		"witches":                              TagWitches,
+		"wizards":                              TagWizards,
+		"world-hopping":                        TagWorldHopping,
+		"world-travel":                         TagWorldTravel,
+		"world-tree":                           TagWorldTree,
+		"writers":                              TagWriters,
+		"yandere":                              TagYandere,
+		"youkai":                               TagYoukai,
+		"younger-brothers":                     TagYoungerBrothers,
+		"younger-love-interests":               TagYoungerLoveInterests,
+		"younger-sisters":                      TagYoungerSisters,
+		"zombies":                              TagZombies,
+	}
+)
+
+var (
+	TagToSlugString = map[Tag]string{
+		TagAbandonedChildren:                "abandoned-children",
+		TagAbilitySteal:                     "ability-steal",
+		TagAbsentParents:                    "absent-parents",
+		TagAbusiveCharacters:                "abusive-characters",
+		TagAcademy:                          "academy",
+		TagAcceleratedGrowth:                "accelerated-growth",
+		TagActing:                           "acting",
+		TagAdaptedFromManga:                 "adapted-from-manga",
+		TagAdaptedFromManhua:                "adapted-from-manhua",
+		TagAdaptedToAnime:                   "adapted-to-anime",
+		TagAdaptedToDrama:                   "adapted-to-drama",
+		TagAdaptedToDramaCD:                 "adapted-to-drama-cd",
+		TagAdaptedToGame:                    "adapted-to-game",
+		TagAdaptedToManga:                   "adapted-to-manga",
+		TagAdaptedToManhua:                  "adapted-to-manhua",
+		TagAdaptedToManhwa:                  "adapted-to-manhwa",
+		TagAdaptedToMovie:                   "adapted-to-movie",
+		TagAdaptedToVisualNovel:             "adapted-to-visual-novel",
+		TagAdoptedChildren:                  "adopted-children",
+		TagAdoptedProtagonist:               "adopted-protagonist",
+		TagAdultery:                         "adultery",
+		TagAdventurers:                      "adventurers",
+		TagAffair:                           "affair",
+		TagAgeProgression:                   "age-progression",
+		TagAgeRegression:                    "age-regression",
+		TagAggressiveCharacters:             "aggressive-characters",
+		TagAlchemy:                          "alchemy",
+		TagAliens:                           "aliens",
+		TagAllGirlsSchool:                   "all-girls-school",
+		TagAlternateWorld:                   "alternate-world",
+		TagAmnesia:                          "amnesia",
+		TagAmusementPark:                    "amusement-park",
+		TagAnal:                             "anal",
+		TagAncientChina:                     "ancient-china",
+		TagAncientTimes:                     "ancient-times",
+		TagAndrogynousCharacters:            "androgynous-characters",
+		TagAndroids:                         "androids",
+		TagAngels:                           "angels",
+		TagAnimalCharacteristics:            "animal-characteristics",
+		TagAnimalRearing:                    "animal-rearing",
+		TagAntiMagic:                        "anti-magic",
+		TagAntiSocialProtagonist:            "anti-social-protagonist",
+		TagAntiheroProtagonist:              "antihero-protagonist",
+		TagAntiqueShop:                      "antique-shop",
+		TagApartmentLife:                    "apartment-life",
+		TagApatheticProtagonist:             "apathetic-protagonist",
+		TagApocalypse:                       "apocalypse",
+		TagAppearanceChanges:                "appearance-changes",
+		TagAppearanceDifferentFromActualAge: "appearance-different-from-actual-age",
+		TagArchery:                          "archery",
+		TagAristocracy:                      "aristocracy",
+		TagArmsDealers:                      "arms-dealers",
+		TagArmy:                             "army",
+		TagArmyBuilding:                     "army-building",
+		TagArrangedMarriage:                 "arranged-marriage",
+		TagArrogantCharacters:               "arrogant-characters",
+		TagArtifactCrafting:                 "artifact-crafting",
+		TagArtifacts:                        "artifacts",
+		TagArtificialIntelligence:           "artificial-intelligence",
+		TagArtists:                          "artists",
+		TagAssassins:                        "assassins",
+		TagAstrologers:                      "astrologers",
+		TagAutism:                           "autism",
+		TagAutomatons:                       "automatons",
+		TagAverageLookingProtagonist:        "average-looking-protagonist",
+		TagAwardWinningWork:                 "award-winning-work",
+		TagAwkwardProtagonist:               "awkward-protagonist",
+		TagBands:                            "bands",
+		TagBasedOnAMovie:                    "based-on-a-movie",
+		TagBasedOnASong:                     "based-on-a-song",
+		TagBasedOnATVShow:                   "based-on-a-tv-show",
+		TagBasedOnAVideoGame:                "based-on-a-video-game",
+		TagBasedOnAVisualNovel:              "based-on-a-visual-novel",
+		TagBasedOnAnAnime:                   "based-on-an-anime",
+		TagBattleAcademy:                    "battle-academy",
+		TagBattleCompetition:                "battle-competition",
+		TagBDSM:                             "bdsm",
+		TagBeastCompanions:                  "beast-companions",
+		TagBeastkin:                         "beastkin",
+		TagBeasts:                           "beasts",
+		TagBeautifulFemaleLead:              "beautiful-female-lead",
+		TagBestiality:                       "bestiality",
+		TagBetrayal:                         "betrayal",
+		TagBickeringCouple:                  "bickering-couple",
+		TagBiochip:                          "biochip",
+		TagBisexualProtagonist:              "bisexual-protagonist",
+		TagBlackBelly:                       "black-belly",
+		TagBlackmail:                        "blackmail",
+		TagBlacksmith:                       "blacksmith",
+		TagBlindDates:                       "blind-dates",
+		TagBlindProtagonist:                 "blind-protagonist",
+		TagBloodManipulation:                "blood-manipulation",
+		TagBloodlines:                       "bloodlines",
+		TagBodySwap:                         "body-swap",
+		TagBodyTempering:                    "body-tempering",
+		TagBodyDouble:                       "body-double",
+		TagBodyguards:                       "bodyguards",
+		TagBooks:                            "books",
+		TagBookworm:                         "bookworm",
+		TagBossSubordinateRelationship:      "boss-subordinate-relationship",
+		TagBrainwashing:                     "brainwashing",
+		TagBreastFetish:                     "breast-fetish",
+		TagBrokenEngagement:                 "broken-engagement",
+		TagBrotherComplex:                   "brother-complex",
+		TagBrotherhood:                      "brotherhood",
+		TagBuddhism:                         "buddhism",
+		TagBullying:                         "bullying",
+		TagBusinessManagement:               "business-management",
+		TagBusinessmen:                      "businessmen",
+		TagButlers:                          "butlers",
+		TagCalmProtagonist:                  "calm-protagonist",
+		TagCannibalism:                      "cannibalism",
+		TagCardGames:                        "card-games",
+		TagCarefreeProtagonist:              "carefree-protagonist",
+		TagCaringProtagonist:                "caring-protagonist",
+		TagCautiousProtagonist:              "cautious-protagonist",
+		TagCelebrities:                      "celebrities",
+		TagCharacterGrowth:                  "character-growth",
+		TagCharismaticProtagonist:           "charismatic-protagonist",
+		TagCharmingProtagonist:              "charming-protagonist",
+		TagChatRooms:                        "chat-rooms",
+		TagCheats:                           "cheats",
+		TagChefs:                            "chefs",
+		TagChildAbuse:                       "child-abuse",
+		TagChildProtagonist:                 "child-protagonist",
+		TagChildcare:                        "childcare",
+		TagChildhoodFriends:                 "childhood-friends",
+		TagChildhoodLove:                    "childhood-love",
+		TagChildhoodPromise:                 "childhood-promise",
+		TagChildishProtagonist:              "childish-protagonist",
+		TagChuunibyou:                       "chuunibyou",
+		TagClanBuilding:                     "clan-building",
+		TagClassic:                          "classic",
+		TagCleverProtagonist:                "clever-protagonist",
+		TagClingyLover:                      "clingy-lover",
+		TagClones:                           "clones",
+		TagClubs:                            "clubs",
+		TagClumsyLoveInterests:              "clumsy-love-interests",
+		TagCoWorkers:                        "co-workers",
+		TagCohabitation:                     "cohabitation",
+		TagColdLoveInterests:                "cold-love-interests",
+		TagColdProtagonist:                  "cold-protagonist",
+		TagCollectionOfShortStories:         "collection-of-short-stories",
+		TagCollegeUniversity:                "college/university",
+		TagComa:                             "coma",
+		TagComedicUndertone:                 "comedic-undertone",
+		TagComingOfAge:                      "coming-of-age",
+		TagComplexFamilyRelationships:       "complex-family-relationships",
+		TagConditionalPower:                 "conditional-power",
+		TagConfidentProtagonist:             "confident-protagonist",
+		TagConfinement:                      "confinement",
+		TagConflictingLoyalties:             "conflicting-loyalties",
+		TagContracts:                        "contracts",
+		TagCooking:                          "cooking",
+		TagCorruption:                       "corruption",
+		TagCosmicWars:                       "cosmic-wars",
+		TagCosplay:                          "cosplay",
+		TagCoupleGrowth:                     "couple-growth",
+		TagCourtOfficial:                    "court-official",
+		TagCousins:                          "cousins",
+		TagCowardlyProtagonist:              "cowardly-protagonist",
+		TagCrafting:                         "crafting",
+		TagCrime:                            "crime",
+		TagCriminals:                        "criminals",
+		TagCrossDressing:                    "cross-dressing",
+		TagCrossover:                        "crossover",
+		TagCruelCharacters:                  "cruel-characters",
+		TagCryostasis:                       "cryostasis",
+		TagCultivation:                      "cultivation",
+		TagCunnilingus:                      "cunnilingus",
+		TagCunningProtagonist:               "cunning-protagonist",
+		TagCuriousProtagonist:               "curious-protagonist",
+		TagCurses:                           "curses",
+		TagCuteChildren:                     "cute-children",
+		TagCuteProtagonist:                  "cute-protagonist",
+		TagCuteStory:                        "cute-story",
+		TagDancers:                          "dancers",
+		TagDaoCompanion:                     "dao-companion",
+		TagDaoComprehension:                 "dao-comprehension",
+		TagDaoism:                           "daoism",
+		TagDark:                             "dark",
+		TagDeadProtagonist:                  "dead-protagonist",
+		TagDeath:                            "death",
+		TagDeathOfLovedOnes:                 "death-of-loved-ones",
+		TagDebts:                            "debts",
+		TagDelinquents:                      "delinquents",
+		TagDelusions:                        "delusions",
+		TagDemiHumans:                       "demi-humans",
+		TagDemonLord:                        "demon-lord",
+		TagDemonicCultivationTechnique:      "demonic-cultivation-technique",
+		TagDemons:                           "demons",
+		TagDenseProtagonist:                 "dense-protagonist",
+		TagDepictionsOfCruelty:              "depictions-of-cruelty",
+		TagDepression:                       "depression",
+		TagDestiny:                          "destiny",
+		TagDetectives:                       "detectives",
+		TagDeterminedProtagonist:            "determined-protagonist",
+		TagDevotedLoveInterests:             "devoted-love-interests",
+		TagDifferentSocialStatus:            "different-social-status",
+		TagDisabilities:                     "disabilities",
+		TagDiscrimination:                   "discrimination",
+		TagDisfigurement:                    "disfigurement",
+		TagDishonestProtagonist:             "dishonest-protagonist",
+		TagDistrustfulProtagonist:           "distrustful-protagonist",
+		TagDivination:                       "divination",
+		TagDivineProtection:                 "divine-protection",
+		TagDivorce:                          "divorce",
+		TagDoctors:                          "doctors",
+		TagDollsPuppets:                     "dolls/puppets",
+		TagDomesticAffairs:                  "domestic-affairs",
+		TagDotingLoveInterests:              "doting-love-interests",
+		TagDotingOlderSiblings:              "doting-older-siblings",
+		TagDotingParents:                    "doting-parents",
+		TagDragonRiders:                     "dragon-riders",
+		TagDragonSlayers:                    "dragon-slayers",
+		TagDragons:                          "dragons",
+		TagDreams:                           "dreams",
+		TagDrugs:                            "drugs",
+		TagDruids:                           "druids",
+		TagDungeonMaster:                    "dungeon-master",
+		TagDungeons:                         "dungeons",
+		TagDwarfs:                           "dwarfs",
+		TagDystopia:                         "dystopia",
+		TagESports:                          "e-sports",
+		TagEarlyRomance:                     "early-romance",
+		TagEarthInvasion:                    "earth-invasion",
+		TagEasyGoingLife:                    "easy-going-life",
+		TagEconomics:                        "economics",
+		TagEditors:                          "editors",
+		TagEideticMemory:                    "eidetic-memory",
+		TagElderlyProtagonist:               "elderly-protagonist",
+		TagElementalMagic:                   "elemental-magic",
+		TagElves:                            "elves",
+		TagEmotionallyWeakProtagonist:       "emotionally-weak-protagonist",
+		TagEmpires:                          "empires",
+		TagEnemiesBecomeAllies:              "enemies-become-allies",
+		TagEnemiesBecomeLovers:              "enemies-become-lovers",
+		TagEngagement:                       "engagement",
+		TagEngineer:                         "engineer",
+		TagEnlightenment:                    "enlightenment",
+		TagEpisodic:                         "episodic",
+		TagEunuch:                           "eunuch",
+		TagEuropeanAmbience:                 "european-ambience",
+		TagEvilGods:                         "evil-gods",
+		TagEvilOrganizations:                "evil-organizations",
+		TagEvilProtagonist:                  "evil-protagonist",
+		TagEvilReligions:                    "evil-religions",
+		TagEvolution:                        "evolution",
+		TagExhibitionism:                    "exhibitionism",
+		TagExorcism:                         "exorcism",
+		TagEyePowers:                        "eye-powers",
+		TagFairies:                          "fairies",
+		TagFallenAngels:                     "fallen-angels",
+		TagFallenNobility:                   "fallen-nobility",
+		TagFamilialLove:                     "familial-love",
+		TagFamiliars:                        "familiars",
+		TagFamily:                           "family",
+		TagFamilyBusiness:                   "family-business",
+		TagFamilyConflict:                   "family-conflict",
+		TagFamousParents:                    "famous-parents",
+		TagFamousProtagonist:                "famous-protagonist",
+		TagFanaticism:                       "fanaticism",
+		TagFanfiction:                       "fanfiction",
+		TagFantasyCreatures:                 "fantasy-creatures",
+		TagFantasyWorld:                     "fantasy-world",
+		TagFarming:                          "farming",
+		TagFastCultivation:                  "fast-cultivation",
+		TagFastLearner:                      "fast-learner",
+		TagFatProtagonist:                   "fat-protagonist",
+		TagFatToFit:                         "fat-to-fit",
+		TagFatedLovers:                      "fated-lovers",
+		TagFearlessProtagonist:              "fearless-protagonist",
+		TagFellatio:                         "fellatio",
+		TagFemaleMaster:                     "female-master",
+		TagFemaleProtagonist:                "female-protagonist",
+		TagFemaleToMale:                     "female-to-male",
+		TagFengShui:                         "feng-shui",
+		TagFirearms:                         "firearms",
+		TagFirstLove:                        "first-love",
+		TagFirstTimeIntercourse:             "first-time-intercourse",
+		TagFlashbacks:                       "flashbacks",
+		TagFleetBattles:                     "fleet-battles",
+		TagFolklore:                         "folklore",
+		TagForcedIntoARelationship:          "forced-into-a-relationship",
+		TagForcedLivingArrangements:         "forced-living-arrangements",
+		TagForcedMarriage:                   "forced-marriage",
+		TagForgetfulProtagonist:             "forgetful-protagonist",
+		TagFormerHero:                       "former-hero",
+		TagFoxSpirits:                       "fox-spirits",
+		TagFriendsBecomeEnemies:             "friends-become-enemies",
+		TagFriendship:                       "friendship",
+		TagFujoshi:                          "fujoshi",
+		TagFutanari:                         "futanari",
+		TagFuturisticSetting:                "futuristic-setting",
+		TagGalge:                            "galge",
+		TagGambling:                         "gambling",
+		TagGameElements:                     "game-elements",
+		TagGameRankingSystem:                "game-ranking-system",
+		TagGamers:                           "gamers",
+		TagGangs:                            "gangs",
+		TagGateToAnotherWorld:               "gate-to-another-world",
+		TagGenderlessProtagonist:            "genderless-protagonist",
+		TagGenerals:                         "generals",
+		TagGeneticModifications:             "genetic-modifications",
+		TagGenies:                           "genies",
+		TagGeniusProtagonist:                "genius-protagonist",
+		TagGhosts:                           "ghosts",
+		TagGladiators:                       "gladiators",
+		TagGlassesWearingLoveInterests:      "glasses-wearing-love-interests",
+		TagGlassesWearingProtagonist:        "glasses-wearing-protagonist",
+		TagGoblins:                          "goblins",
+		TagGodProtagonist:                   "god-protagonist",
+		TagGodHumanRelationship:             "god-human-relationship",
+		TagGoddesses:                        "goddesses",
+		TagGodlyPowers:                      "godly-powers",
+		TagGods:                             "gods",
+		TagGolems:                           "golems",
+		TagGore:                             "gore",
+		TagGraveKeepers:                     "grave-keepers",
+		TagGrinding:                         "grinding",
+		TagGuardianRelationship:             "guardian-relationship",
+		TagGuilds:                           "guilds",
+		TagGunfighters:                      "gunfighters",
+		TagHackers:                          "hackers",
+		TagHalfHumanProtagonist:             "half-human-protagonist",
+		TagHandjob:                          "handjob",
+		TagHandsomeMaleLead:                 "handsome-male-lead",
+		TagHardWorkingProtagonist:           "hard-working-protagonist",
+		TagHaremSeekingProtagonist:          "harem-seeking-protagonist",
+		TagHarshTraining:                    "harsh-training",
+		TagHatedProtagonist:                 "hated-protagonist",
+		TagHealers:                          "healers",
+		TagHeartwarming:                     "heartwarming",
+		TagHeaven:                           "heaven",
+		TagHeavenlyTribulation:              "heavenly-tribulation",
+		TagHell:                             "hell",
+		TagHelpfulProtagonist:               "helpful-protagonist",
+		TagHerbalist:                        "herbalist",
+		TagHeroes:                           "heroes",
+		TagHeterochromia:                    "heterochromia",
+		TagHiddenAbilities:                  "hidden-abilities",
+		TagHidingTrueAbilities:              "hiding-true-abilities",
+		TagHidingTrueIdentity:               "hiding-true-identity",
+		TagHikikomori:                       "hikikomori",
+		TagHomunculus:                       "homunculus",
+		TagHonestProtagonist:                "honest-protagonist",
+		TagHospital:                         "hospital",
+		TagHotBloodedProtagonist:            "hot-blooded-protagonist",
+		TagHumanExperimentation:             "human-experimentation",
+		TagHumanWeapon:                      "human-weapon",
+		TagHumanNonhumanRelationship:        "human-nonhuman-relationship",
+		TagHumanoidProtagonist:              "humanoid-protagonist",
+		TagHunters:                          "hunters",
+		TagHypnotism:                        "hypnotism",
+		TagIdentityCrisis:                   "identity-crisis",
+		TagImaginaryFriend:                  "imaginary-friend",
+		TagImmortals:                        "immortals",
+		TagImperialHarem:                    "imperial-harem",
+		TagIncest:                           "incest",
+		TagIncubus:                          "incubus",
+		TagIndecisiveProtagonist:            "indecisive-protagonist",
+		TagIndustrialization:                "industrialization",
+		TagInferiorityComplex:               "inferiority-complex",
+		TagInheritance:                      "inheritance",
+		TagInscriptions:                     "inscriptions",
+		TagInsects:                          "insects",
+		TagInterconnectedStorylines:         "interconnected-storylines",
+		TagInterdimensionalTravel:           "interdimensional-travel",
+		TagIntrovertedProtagonist:           "introverted-protagonist",
+		TagInvestigations:                   "investigations",
+		TagInvisibility:                     "invisibility",
+		TagJackOfAllTrades:                  "jack-of-all-trades",
+		TagJealousy:                         "jealousy",
+		TagJiangshi:                         "jiangshi",
+		TagJoblessClass:                     "jobless-class",
+		TagJSDF:                             "jsdf",
+		TagKidnappings:                      "kidnappings",
+		TagKindLoveInterests:                "kind-love-interests",
+		TagKingdomBuilding:                  "kingdom-building",
+		TagKingdoms:                         "kingdoms",
+		TagKnights:                          "knights",
+		TagKuudere:                          "kuudere",
+		TagLackOfCommonSense:                "lack-of-common-sense",
+		TagLanguageBarrier:                  "language-barrier",
+		TagLateRomance:                      "late-romance",
+		TagLawyers:                          "lawyers",
+		TagLazyProtagonist:                  "lazy-protagonist",
+		TagLeadership:                       "leadership",
+		TagLegends:                          "legends",
+		TagLevelSystem:                      "level-system",
+		TagLibrary:                          "library",
+		TagLimitedLifespan:                  "limited-lifespan",
+		TagLivingAbroad:                     "living-abroad",
+		TagLivingAlone:                      "living-alone",
+		TagLoli:                             "loli",
+		TagLoneliness:                       "loneliness",
+		TagLonerProtagonist:                 "loner-protagonist",
+		TagLongSeparations:                  "long-separations",
+		TagLongDistanceRelationship:         "long-distance-relationship",
+		TagLostCivilizations:                "lost-civilizations",
+		TagLottery:                          "lottery",
+		TagLoveAtFirstSight:                 "love-at-first-sight",
+		TagLoveInterestFallsInLoveFirst:     "love-interest-falls-in-love-first",
+		TagLoveRivals:                       "love-rivals",
+		TagLoveTriangles:                    "love-triangles",
+		TagLoversReunited:                   "lovers-reunited",
+		TagLowKeyProtagonist:                "low-key-protagonist",
+		TagLoyalSubordinates:                "loyal-subordinates",
+		TagLuckyProtagonist:                 "lucky-protagonist",
+		TagMagic:                            "magic",
+		TagMagicBeasts:                      "magic-beasts",
+		TagMagicFormations:                  "magic-formations",
+		TagMagicalGirls:                     "magical-girls",
+		TagMagicalSpace:                     "magical-space",
+		TagMagicalTechnology:                "magical-technology",
+		TagMaids:                            "maids",
+		TagMaleProtagonist:                  "male-protagonist",
+		TagMaleToFemale:                     "male-to-female",
+		TagMaleYandere:                      "male-yandere",
+		TagManagement:                       "management",
+		TagMangaka:                          "mangaka",
+		TagManipulativeCharacters:           "manipulative-characters",
+		TagManlyGayCouple:                   "manly-gay-couple",
+		TagMarriage:                         "marriage",
+		TagMarriageOfConvenience:            "marriage-of-convenience",
+		TagMartialSpirits:                   "martial-spirits",
+		TagMasochisticCharacters:            "masochistic-characters",
+		TagMasterDiscipleRelationship:       "master-disciple-relationship",
+		TagMasterServantRelationship:        "master-servant-relationship",
+		TagMasturbation:                     "masturbation",
+		TagMatriarchy:                       "matriarchy",
+		TagMatureProtagonist:                "mature-protagonist",
+		TagMedicalKnowledge:                 "medical-knowledge",
+		TagMedieval:                         "medieval",
+		TagMercenaries:                      "mercenaries",
+		TagMerchants:                        "merchants",
+		TagMilitary:                         "military",
+		TagMindBreak:                        "mind-break",
+		TagMindControl:                      "mind-control",
+		TagMisandry:                         "misandry",
+		TagMismatchedCouple:                 "mismatched-couple",
+		TagMisunderstandings:                "misunderstandings",
+		TagMMORPG:                           "mmorpg",
+		TagMobProtagonist:                   "mob-protagonist",
+		TagModels:                           "models",
+		TagModernDay:                        "modern-day",
+		TagModernKnowledge:                  "modern-knowledge",
+		TagMoneyGrubber:                     "money-grubber",
+		TagMonsterGirls:                     "monster-girls",
+		TagMonsterSociety:                   "monster-society",
+		TagMonsterTamer:                     "monster-tamer",
+		TagMonsters:                         "monsters",
+		TagMovies:                           "movies",
+		TagMpreg:                            "mpreg",
+		TagMultipleIdentities:               "multiple-identities",
+		TagMultiplePersonalities:            "multiple-personalities",
+		TagMultiplePOV:                      "multiple-pov",
+		TagMultipleProtagonists:             "multiple-protagonists",
+		TagMultipleRealms:                   "multiple-realms",
+		TagMultipleReincarnatedIndividuals:  "multiple-reincarnated-individuals",
+		TagMultipleTimelines:                "multiple-timelines",
+		TagMultipleTransportedIndividuals:   "multiple-transported-individuals",
+		TagMurders:                          "murders",
+		TagMusic:                            "music",
+		TagMutatedCreatures:                 "mutated-creatures",
+		TagMutations:                        "mutations",
+		TagMuteCharacter:                    "mute-character",
+		TagMysteriousFamilyBackground:       "mysterious-family-background",
+		TagMysteriousIllness:                "mysterious-illness",
+		TagMysteriousPast:                   "mysterious-past",
+		TagMysterySolving:                   "mystery-solving",
+		TagMythicalBeasts:                   "mythical-beasts",
+		TagMythology:                        "mythology",
+		TagNaiveProtagonist:                 "naive-protagonist",
+		TagNarcissisticProtagonist:          "narcissistic-protagonist",
+		TagNationalism:                      "nationalism",
+		TagNearDeathExperience:              "near-death-experience",
+		TagNecromancer:                      "necromancer",
+		TagNeet:                             "neet",
+		TagNetorare:                         "netorare",
+		TagNetorase:                         "netorase",
+		TagNetori:                           "netori",
+		TagNightmares:                       "nightmares",
+		TagNinjas:                           "ninjas",
+		TagNobles:                           "nobles",
+		TagNonHumanoidProtagonist:           "non-humanoid-protagonist",
+		TagNonLinearStorytelling:            "non-linear-storytelling",
+		TagNudity:                           "nudity",
+		TagNurses:                           "nurses",
+		TagObsessiveLove:                    "obsessive-love",
+		TagOfficeRomance:                    "office-romance",
+		TagOlderLoveInterests:               "older-love-interests",
+		TagOmegaverse:                       "omegaverse",
+		TagOneshot:                          "oneshot",
+		TagOnlineRomance:                    "online-romance",
+		TagOnmyouji:                         "onmyouji",
+		TagOrcs:                             "orcs",
+		TagOrganizedCrime:                   "organized-crime",
+		TagOrgy:                             "orgy",
+		TagOrphans:                          "orphans",
+		TagOtaku:                            "otaku",
+		TagOtomeGame:                        "otome-game",
+		TagOutcasts:                         "outcasts",
+		TagOutdoorIntercourse:               "outdoor-intercourse",
+		TagOuterSpace:                       "outer-space",
+		TagOverpoweredProtagonist:           "overpowered-protagonist",
+		TagOverprotectiveSiblings:           "overprotective-siblings",
+		TagPacifistProtagonist:              "pacifist-protagonist",
+		TagPaizuri:                          "paizuri",
+		TagParallelWorlds:                   "parallel-worlds",
+		TagParasites:                        "parasites",
+		TagParentComplex:                    "parent-complex",
+		TagParody:                           "parody",
+		TagPartTimeJob:                      "part-time-job",
+		TagPastPlaysABigRole:                "past-plays-a-big-role",
+		TagPastTrauma:                       "past-trauma",
+		TagPersistentLoveInterests:          "persistent-love-interests",
+		TagPersonalityChanges:               "personality-changes",
+		TagPervertedProtagonist:             "perverted-protagonist",
+		TagPets:                             "pets",
+		TagPharmacist:                       "pharmacist",
+		TagPhilosophical:                    "philosophical",
+		TagPhobias:                          "phobias",
+		TagPhoenixes:                        "phoenixes",
+		TagPhotography:                      "photography",
+		TagPillBasedCultivation:             "pill-based-cultivation",
+		TagPillConcocting:                   "pill-concocting",
+		TagPilots:                           "pilots",
+		TagPirates:                          "pirates",
+		TagPlayboys:                         "playboys",
+		TagPlayfulProtagonist:               "playful-protagonist",
+		TagPoetry:                           "poetry",
+		TagPoisons:                          "poisons",
+		TagPolice:                           "police",
+		TagPoliteProtagonist:                "polite-protagonist",
+		TagPolitics:                         "politics",
+		TagPolyandry:                        "polyandry",
+		TagPolygamy:                         "polygamy",
+		TagPoorProtagonist:                  "poor-protagonist",
+		TagPoorToRich:                       "poor-to-rich",
+		TagPopularLoveInterests:             "popular-love-interests",
+		TagPossession:                       "possession",
+		TagPossessiveCharacters:             "possessive-characters",
+		TagPostApocalyptic:                  "post-apocalyptic",
+		TagPowerCouple:                      "power-couple",
+		TagPowerStruggle:                    "power-struggle",
+		TagPragmaticProtagonist:             "pragmatic-protagonist",
+		TagPrecognition:                     "precognition",
+		TagPregnancy:                        "pregnancy",
+		TagPretendLovers:                    "pretend-lovers",
+		TagPreviousLifeTalent:               "previous-life-talent",
+		TagPriestesses:                      "priestesses",
+		TagPriests:                          "priests",
+		TagPrison:                           "prison",
+		TagProactiveProtagonist:             "proactive-protagonist",
+		TagProgrammer:                       "programmer",
+		TagProphecies:                       "prophecies",
+		TagProstitutes:                      "prostitutes",
+		TagProtagonistFallsInLoveFirst:      "protagonist-falls-in-love-first",
+		TagProtagonistStrongFromTheStart:    "protagonist-strong-from-the-start",
+		TagProtagonistWithMultipleBodies:    "protagonist-with-multiple-bodies",
+		TagPsychicPowers:                    "psychic-powers",
+		TagPsychopaths:                      "psychopaths",
+		TagPuppeteers:                       "puppeteers",
+		TagQuietCharacters:                  "quiet-characters",
+		TagQuirkyCharacters:                 "quirky-characters",
+		TagR15:                              "r-15",
+		TagR18:                              "r-18",
+		TagRaceChange:                       "race-change",
+		TagRacism:                           "racism",
+		TagRape:                             "rape",
+		TagRapeVictimBecomesLover:           "rape-victim-becomes-lover",
+		TagRebellion:                        "rebellion",
+		TagReincarnatedAsAMonster:           "reincarnated-as-a-monster",
+		TagReincarnatedAsAnObject:           "reincarnated-as-an-object",
+		TagReincarnatedInAGameWorld:         "reincarnated-in-a-game-world",
+		TagReincarnatedInAnotherWorld:       "reincarnated-in-another-world",
+		TagReincarnation:                    "reincarnation",
+		TagReligions:                        "religions",
+		TagReluctantProtagonist:             "reluctant-protagonist",
+		TagReporters:                        "reporters",
+		TagRestaurant:                       "restaurant",
+		TagResurrection:                     "resurrection",
+		TagReturningFromAnotherWorld:        "returning-from-another-world",
+		TagRevenge:                          "revenge",
+		TagReverseHarem:                     "reverse-harem",
+		TagReverseRape:                      "reverse-rape",
+		TagReversibleCouple:                 "reversible-couple",
+		TagRichToPoor:                       "rich-to-poor",
+		TagRighteousProtagonist:             "righteous-protagonist",
+		TagRivalry:                          "rivalry",
+		TagRomanticSubplot:                  "romantic-subplot",
+		TagRoommates:                        "roommates",
+		TagRoyalty:                          "royalty",
+		TagRuthlessProtagonist:              "ruthless-protagonist",
+		TagSadisticCharacters:               "sadistic-characters",
+		TagSaints:                           "saints",
+		TagSalaryman:                        "salaryman",
+		TagSamurai:                          "samurai",
+		TagSavingTheWorld:                   "saving-the-world",
+		TagSchemesAndConspiracies:           "schemes-and-conspiracies",
+		TagSchizophrenia:                    "schizophrenia",
+		TagScientists:                       "scientists",
+		TagSculptors:                        "sculptors",
+		TagSealedPower:                      "sealed-power",
+		TagSecondChance:                     "second-chance",
+		TagSecretCrush:                      "secret-crush",
+		TagSecretIdentity:                   "secret-identity",
+		TagSecretOrganizations:              "secret-organizations",
+		TagSecretRelationship:               "secret-relationship",
+		TagSecretiveProtagonist:             "secretive-protagonist",
+		TagSecrets:                          "secrets",
+		TagSectDevelopment:                  "sect-development",
+		TagSeduction:                        "seduction",
+		TagSeeingThingsOtherHumansCant:      "seeing-things-other-humans-can't",
+		TagSelfishProtagonist:               "selfish-protagonist",
+		TagSelflessProtagonist:              "selfless-protagonist",
+		TagSemeProtagonist:                  "seme-protagonist",
+		TagSenpaiKouhaiRelationship:         "senpai-kouhai-relationship",
+		TagSentientObjects:                  "sentient-objects",
+		TagSentimentalProtagonist:           "sentimental-protagonist",
+		TagSerialKillers:                    "serial-killers",
+		TagServants:                         "servants",
+		TagSevenDeadlySins:                  "seven-deadly-sins",
+		TagSevenVirtues:                     "seven-virtues",
+		TagSexFriends:                       "sex-friends",
+		TagSexSlaves:                        "sex-slaves",
+		TagSexualAbuse:                      "sexual-abuse",
+		TagSexualCultivationTechnique:       "sexual-cultivation-technique",
+		TagShamelessProtagonist:             "shameless-protagonist",
+		TagShapeshifters:                    "shapeshifters",
+		TagSharingABody:                     "sharing-a-body",
+		TagSharpTonguedCharacters:           "sharp-tongued-characters",
+		TagShieldUser:                       "shield-user",
+		TagShikigami:                        "shikigami",
+		TagShortStory:                       "short-story",
+		TagShota:                            "shota",
+		TagShoujoAiSubplot:                  "shoujo-ai-subplot",
+		TagShounenAiSubplot:                 "shounen-ai-subplot",
+		TagShowbiz:                          "showbiz",
+		TagShyCharacters:                    "shy-characters",
+		TagSiblingRivalry:                   "sibling-rivalry",
+		TagSiblingsCare:                     "sibling's-care",
+		TagSiblings:                         "siblings",
+		TagSiblingsNotRelatedByBlood:        "siblings-not-related-by-blood",
+		TagSicklyCharacters:                 "sickly-characters",
+		TagSignLanguage:                     "sign-language",
+		TagSingers:                          "singers",
+		TagSingleParent:                     "single-parent",
+		TagSisterComplex:                    "sister-complex",
+		TagSkillAssimilation:                "skill-assimilation",
+		TagSkillBooks:                       "skill-books",
+		TagSkillCreation:                    "skill-creation",
+		TagSlaveHarem:                       "slave-harem",
+		TagSlaveProtagonist:                 "slave-protagonist",
+		TagSlaves:                           "slaves",
+		TagSleeping:                         "sleeping",
+		TagSlowGrowthAtStart:                "slow-growth-at-start",
+		TagSlowRomance:                      "slow-romance",
+		TagSmartCouple:                      "smart-couple",
+		TagSocialOutcasts:                   "social-outcasts",
+		TagSoldiers:                         "soldiers",
+		TagSoulPower:                        "soul-power",
+		TagSouls:                            "souls",
+		TagSpatialManipulation:              "spatial-manipulation",
+		TagSpearWielder:                     "spear-wielder",
+		TagSpecialAbilities:                 "special-abilities",
+		TagSpies:                            "spies",
+		TagSpiritAdvisor:                    "spirit-advisor",
+		TagSpiritUsers:                      "spirit-users",
+		TagSpirits:                          "spirits",
+		TagStalkers:                         "stalkers",
+		TagStockholmSyndrome:                "stockholm-syndrome",
+		TagStoicCharacters:                  "stoic-characters",
+		TagStoreOwner:                       "store-owner",
+		TagStraightSeme:                     "straight-seme",
+		TagStraightUke:                      "straight-uke",
+		TagStrategicBattles:                 "strategic-battles",
+		TagStrategist:                       "strategist",
+		TagStrengthBasedSocialHierarchy:     "strength-based-social-hierarchy",
+		TagStrongLoveInterests:              "strong-love-interests",
+		TagStrongToStronger:                 "strong-to-stronger",
+		TagStubbornProtagonist:              "stubborn-protagonist",
+		TagStudentCouncil:                   "student-council",
+		TagStudentTeacherRelationship:       "student-teacher-relationship",
+		TagSuccubus:                         "succubus",
+		TagSuddenStrengthGain:               "sudden-strength-gain",
+		TagSuddenWealth:                     "sudden-wealth",
+		TagSuicides:                         "suicides",
+		TagSummonedHero:                     "summoned-hero",
+		TagSummoningMagic:                   "summoning-magic",
+		TagSurvival:                         "survival",
+		TagSurvivalGame:                     "survival-game",
+		TagSwordAndMagic:                    "sword-and-magic",
+		TagSwordWielder:                     "sword-wielder",
+		TagSystemAdministrator:              "system-administrator",
+		TagTeachers:                         "teachers",
+		TagTeamwork:                         "teamwork",
+		TagTechnologicalGap:                 "technological-gap",
+		TagTentacles:                        "tentacles",
+		TagTerminalIllness:                  "terminal-illness",
+		TagTerrorists:                       "terrorists",
+		TagThieves:                          "thieves",
+		TagThreesome:                        "threesome",
+		TagThriller:                         "thriller",
+		TagTimeLoop:                         "time-loop",
+		TagTimeManipulation:                 "time-manipulation",
+		TagTimeParadox:                      "time-paradox",
+		TagTimeSkip:                         "time-skip",
+		TagTimeTravel:                       "time-travel",
+		TagTimidProtagonist:                 "timid-protagonist",
+		TagTomboyishFemaleLead:              "tomboyish-female-lead",
+		TagTorture:                          "torture",
+		TagToys:                             "toys",
+		TagTragicPast:                       "tragic-past",
+		TagTransformationAbility:            "transformation-ability",
+		TagTransmigration:                   "transmigration",
+		TagTransplantedMemories:             "transplanted-memories",
+		TagTransportedIntoAGameWorld:        "transported-into-a-game-world",
+		TagTransportedModernStructure:       "transported-modern-structure",
+		TagTransportedToAnotherWorld:        "transported-to-another-world",
+		TagTrap:                             "trap",
+		TagTribalSociety:                    "tribal-society",
+		TagTrickster:                        "trickster",
+		TagTsundere:                         "tsundere",
+		TagTwins:                            "twins",
+		TagTwistedPersonality:               "twisted-personality",
+		TagUglyProtagonist:                  "ugly-protagonist",
+		TagUglyToBeautiful:                  "ugly-to-beautiful",
+		TagUnconditionalLove:                "unconditional-love",
+		TagUnderestimatedProtagonist:        "underestimated-protagonist",
+		TagUniqueCultivationTechnique:       "unique-cultivation-technique",
+		TagUniqueWeaponUser:                 "unique-weapon-user",
+		TagUniqueWeapons:                    "unique-weapons",
+		TagUnlimitedFlow:                    "unlimited-flow",
+		TagUnluckyProtagonist:               "unlucky-protagonist",
+		TagUnreliableNarrator:               "unreliable-narrator",
+		TagUnrequitedLove:                   "unrequited-love",
+		TagValkyries:                        "valkyries",
+		TagVampires:                         "vampires",
+		TagVillainessNobleGirls:             "villainess-noble-girls",
+		TagVirtualReality:                   "virtual-reality",
+		TagVocaloid:                         "vocaloid",
+		TagVoiceActors:                      "voice-actors",
+		TagVoyeurism:                        "voyeurism",
+		TagWaiters:                          "waiters",
+		TagWarRecords:                       "war-records",
+		TagWars:                             "wars",
+		TagWeakProtagonist:                  "weak-protagonist",
+		TagWeakToStrong:                     "weak-to-strong",
+		TagWealthyCharacters:                "wealthy-characters",
+		TagWerebeasts:                       "werebeasts",
+		TagWishes:                           "wishes",
+		TagWitches:                          "witches",
+		TagWizards:                          "wizards",
+		TagWorldHopping:                     "world-hopping",
+		TagWorldTravel:                      "world-travel",
+		TagWorldTree:                        "world-tree",
+		TagWriters:                          "writers",
+		TagYandere:                          "yandere",
+		TagYoukai:                           "youkai",
+		TagYoungerBrothers:                  "younger-brothers",
+		TagYoungerLoveInterests:             "younger-love-interests",
+		TagYoungerSisters:                   "younger-sisters",
+		TagZombies:                          "zombies",
+	}
+)
+
+func (s Tag) String() string {
+	return string(s)
+}
+
+func (s Tag) SlugString() string {
+	v, _ := TagToSlugString[s]
+	return v
+}
+
+func (s Tag) DisplayString() string {
+	v, _ := TagToDisplayString[s]
+	return v
+}
+
+func SlugStringToTagOr(s string, def Tag) Tag {
+	if v, ok := SlugStringToTag[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s Tag) IsValid() bool {
+	if _, ok := TagToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type TagList []Tag
+
+func (s TagList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToTagList(s []string) (tl TagList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToTag[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found Tag slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToTagList(s []string) TagList {
+	list, err := SlugListToTagList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
+
+type StoryStatus string
+
+// StoryStatus: Total(4)
+const (
+	StoryStatusAll       StoryStatus = "1"
+	StoryStatusCompleted StoryStatus = "2"
+	StoryStatusOngoing   StoryStatus = "3"
+	StoryStatusHiatus    StoryStatus = "4"
+)
+
+var (
+	StoryStatusToDisplayString = map[StoryStatus]string{
+		StoryStatusAll:       "All",
+		StoryStatusCompleted: "Completed",
+		StoryStatusOngoing:   "Ongoing",
+		StoryStatusHiatus:    "Hiatus",
+	}
+)
+
+var (
+	DisplayStringToStoryStatus = map[string]StoryStatus{
+		"All":       StoryStatusAll,
+		"Completed": StoryStatusCompleted,
+		"Ongoing":   StoryStatusOngoing,
+		"Hiatus":    StoryStatusHiatus,
+	}
+)
+
+var (
+	SlugStringToStoryStatus = map[string]StoryStatus{
+		"all":       StoryStatusAll,
+		"completed": StoryStatusCompleted,
+		"ongoing":   StoryStatusOngoing,
+		"hiatus":    StoryStatusHiatus,
+	}
+)
+
+var (
+	StoryStatusToSlugString = map[StoryStatus]string{
+		StoryStatusAll:       "all",
+		StoryStatusCompleted: "completed",
+		StoryStatusOngoing:   "ongoing",
+		StoryStatusHiatus:    "hiatus",
+	}
+)
+
+func (s StoryStatus) String() string {
+	return string(s)
+}
+
+func (s StoryStatus) SlugString() string {
+	v, _ := StoryStatusToSlugString[s]
+	return v
+}
+
+func (s StoryStatus) DisplayString() string {
+	v, _ := StoryStatusToDisplayString[s]
+	return v
+}
+
+func SlugStringToStoryStatusOr(s string, def StoryStatus) StoryStatus {
+	if v, ok := SlugStringToStoryStatus[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s StoryStatus) IsValid() bool {
+	if _, ok := StoryStatusToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type StoryStatusList []StoryStatus
+
+func (s StoryStatusList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToStoryStatusList(s []string) (tl StoryStatusList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToStoryStatus[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found StoryStatus slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToStoryStatusList(s []string) StoryStatusList {
+	list, err := SlugListToStoryStatusList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
+
+type SortBy string
+
+// SortBy: Total(8)
+const (
+	SortByChapters    SortBy = "srel"
+	SortByFrequency   SortBy = "sfrel"
+	SortByRank        SortBy = "srank"
+	SortByRating      SortBy = "srate"
+	SortByReaders     SortBy = "sread"
+	SortByReviews     SortBy = "sreview"
+	SortByTitle       SortBy = "abc"
+	SortByLastUpdated SortBy = "sdate"
+)
+
+var (
+	SortByToDisplayString = map[SortBy]string{
+		SortByChapters:    "Chapters",
+		SortByFrequency:   "Frequency",
+		SortByRank:        "Rank",
+		SortByRating:      "Rating",
+		SortByReaders:     "Readers",
+		SortByReviews:     "Reviews",
+		SortByTitle:       "Title",
+		SortByLastUpdated: "Last Updated",
+	}
+)
+
+var (
+	DisplayStringToSortBy = map[string]SortBy{
+		"Chapters":     SortByChapters,
+		"Frequency":    SortByFrequency,
+		"Rank":         SortByRank,
+		"Rating":       SortByRating,
+		"Readers":      SortByReaders,
+		"Reviews":      SortByReviews,
+		"Title":        SortByTitle,
+		"Last Updated": SortByLastUpdated,
+	}
+)
+
+var (
+	SlugStringToSortBy = map[string]SortBy{
+		"chapters":     SortByChapters,
+		"frequency":    SortByFrequency,
+		"rank":         SortByRank,
+		"rating":       SortByRating,
+		"readers":      SortByReaders,
+		"reviews":      SortByReviews,
+		"title":        SortByTitle,
+		"last-updated": SortByLastUpdated,
+	}
+)
+
+var (
+	SortByToSlugString = map[SortBy]string{
+		SortByChapters:    "chapters",
+		SortByFrequency:   "frequency",
+		SortByRank:        "rank",
+		SortByRating:      "rating",
+		SortByReaders:     "readers",
+		SortByReviews:     "reviews",
+		SortByTitle:       "title",
+		SortByLastUpdated: "last-updated",
+	}
+)
+
+func (s SortBy) String() string {
+	return string(s)
+}
+
+func (s SortBy) SlugString() string {
+	v, _ := SortByToSlugString[s]
+	return v
+}
+
+func (s SortBy) DisplayString() string {
+	v, _ := SortByToDisplayString[s]
+	return v
+}
+
+func SlugStringToSortByOr(s string, def SortBy) SortBy {
+	if v, ok := SlugStringToSortBy[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s SortBy) IsValid() bool {
+	if _, ok := SortByToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type SortByList []SortBy
+
+func (s SortByList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToSortByList(s []string) (tl SortByList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToSortBy[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found SortBy slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToSortByList(s []string) SortByList {
+	list, err := SlugListToSortByList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}
+
+type OrderBy string
+
+// OrderBy: Total(2)
+const (
+	OrderByAscending  OrderBy = "asc"
+	OrderByDescending OrderBy = "desc"
+)
+
+var (
+	OrderByToDisplayString = map[OrderBy]string{
+		OrderByAscending:  "Ascending",
+		OrderByDescending: "Descending",
+	}
+)
+
+var (
+	DisplayStringToOrderBy = map[string]OrderBy{
+		"Ascending":  OrderByAscending,
+		"Descending": OrderByDescending,
+	}
+)
+
+var (
+	SlugStringToOrderBy = map[string]OrderBy{
+		"ascending":  OrderByAscending,
+		"descending": OrderByDescending,
+	}
+)
+
+var (
+	OrderByToSlugString = map[OrderBy]string{
+		OrderByAscending:  "ascending",
+		OrderByDescending: "descending",
+	}
+)
+
+func (s OrderBy) String() string {
+	return string(s)
+}
+
+func (s OrderBy) SlugString() string {
+	v, _ := OrderByToSlugString[s]
+	return v
+}
+
+func (s OrderBy) DisplayString() string {
+	v, _ := OrderByToDisplayString[s]
+	return v
+}
+
+func SlugStringToOrderByOr(s string, def OrderBy) OrderBy {
+	if v, ok := SlugStringToOrderBy[s]; ok {
+		return v
+	}
+	return def
+}
+
+func (s OrderBy) IsValid() bool {
+	if _, ok := OrderByToSlugString[s]; ok {
+		return true
+	}
+	return false
+}
+
+type OrderByList []OrderBy
+
+func (s OrderByList) StringSlice() (sl []string) {
+	for _, n := range s {
+		sl = append(sl, string(n))
+	}
+	return
+}
+
+func SlugListToOrderByList(s []string) (tl OrderByList, err error) {
+	for _, n := range s {
+		tli, ok := SlugStringToOrderBy[n]
+		if !ok {
+			return nil, fmt.Errorf("error: slug %s was not found OrderBy slugs", tli)
+		}
+		tl = append(tl, tli)
+	}
+	return
+}
+
+func MustSlugListToOrderByList(s []string) OrderByList {
+	list, err := SlugListToOrderByList(s)
+	if err != nil {
+		panic(err)
+	}
+	return list
+}

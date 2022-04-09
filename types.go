@@ -1,6 +1,8 @@
 package NovelUpdatesClient
 
-import "io"
+import (
+	"io"
+)
 
 type Requester interface {
 	Request(url string) (io.ReadCloser, error)
@@ -13,31 +15,22 @@ func (f RequesterFunc) Request(url string) (io.ReadCloser, error) {
 }
 
 const (
-	SeriesFinderEnabled = "1"
+	StoryStatusDefault = StoryStatusAll
+	SortByDefault      = SortByLastUpdated
+	OrderByDefault     = OrderByDescending
 )
 
-const (
-	StoryStatusAll       = "1"
-	StoryStatusCompleted = "2"
-	StoryStatusOngoing   = "3"
-	StoryStatusHiatus    = "4"
-)
+func SlugStringToStoryStatusOrDefault(s string) StoryStatus {
+	return SlugStringToStoryStatusOr(s, StoryStatusDefault)
+}
 
-const (
-	SortByChapters    = "srel"
-	SortByFrequency   = "sfrel"
-	SortByRank        = "srank"
-	SortByRating      = "srating"
-	SortByReaders     = "sread"
-	SortByReviews     = "sreview"
-	SortByTitle       = "abc"
-	SortByLastUpdated = "sdate"
-)
+func SlugStringToSortByOrDefault(s string) SortBy {
+	return SlugStringToSortByOr(s, SortByDefault)
+}
 
-const (
-	OrderAscending  = "asc"
-	OrderDescending = "desc"
-)
+func SlugStringToOrderByOrDefault(s string) OrderBy {
+	return SlugStringToOrderByOr(s, OrderByDefault)
+}
 
 const (
 	ScaleMin = "min"
@@ -49,22 +42,7 @@ const (
 	OperatorOr  = "or"
 )
 
-type NovelTypeResult struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
-type LanguageResult struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
-type GenreResult struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
-type TagResult struct {
+type KeyValueResult struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
@@ -92,18 +70,18 @@ type SearchQuery struct {
 	GenreInclude          GenreList     `json:"genre_include"`
 	GenreExclude          GenreList     `json:"genre_exclude"`
 	TagOperator           string        `json:"tag_operator"`
-	TagInclude            []string      `json:"tag_include"`
-	TagExclude            []string      `json:"tag_exclude"`
-	StoryStatus           string        `json:"story_status"`
-	SortBy                string        `json:"sort_by"`
-	OrderBy               string        `json:"order_by"`
+	TagInclude            TagList       `json:"tag_include"`
+	TagExclude            TagList       `json:"tag_exclude"`
+	StoryStatus           StoryStatus   `json:"story_status"`
+	SortBy                SortBy        `json:"sort_by"`
+	OrderBy               OrderBy       `json:"order_by"`
 	Page                  int           `json:"page"`
 }
 
 type SearchResult struct {
+	ID                     string    `json:"id"`
+	URL                    string    `json:"url"`
 	Title                  string    `json:"title"`
-	Slug                   string    `json:"slug"`
-	SlugURL                string    `json:"slug_url"`
 	Chapters               int       `json:"chapters"`
 	ReleaseFrequencyInDays float64   `json:"release_frequency_in_days"`
 	Readers                int       `json:"readers"`

@@ -37,6 +37,10 @@ const (
 	urlPageKey                  = "pg"
 )
 
+const (
+	urlSeriesFinderEnabled = "1"
+)
+
 // TODO: this code is crap (but it works) so clean it up later
 
 func appendNonEmpty(dst []string, src string) []string {
@@ -187,10 +191,10 @@ func buildTag(q *SearchQuery) string {
 	if q != nil && len(q.TagInclude) > 0 || len(q.TagExclude) > 0 {
 		v := ""
 		if len(q.TagInclude) > 0 {
-			v += fmt.Sprintf("%s=%s", urlTagIncludeKey, strings.Join(q.TagInclude, ","))
+			v += fmt.Sprintf("%s=%s", urlTagIncludeKey, strings.Join(q.TagInclude.StringSlice(), ","))
 		}
 		if len(q.TagExclude) > 0 {
-			v += fmt.Sprintf("&%s=%s", urlTagExcludeKey, strings.Join(q.TagExclude, ","))
+			v += fmt.Sprintf("&%s=%s", urlTagExcludeKey, strings.Join(q.TagExclude.StringSlice(), ","))
 		}
 		if q.TagOperator == "" {
 			v += fmt.Sprintf("&%s=%s", urlTagOperatorKey, OperatorOr)
@@ -203,10 +207,15 @@ func buildTag(q *SearchQuery) string {
 }
 
 func buildStoryStatus(q *SearchQuery) string {
-	if q != nil && q.StoryStatus != "" {
-		return fmt.Sprintf("%s=%s", urlStoryStatusKey, q.StoryStatus)
+	if q == nil {
+		return ""
 	}
-	return ""
+
+	if !q.StoryStatus.IsValid() {
+		q.StoryStatus = StoryStatusDefault
+	}
+
+	return fmt.Sprintf("%s=%s", urlStoryStatusKey, q.StoryStatus)
 }
 
 func buildSort(q *SearchQuery) string {
@@ -220,7 +229,7 @@ func buildOrder(q *SearchQuery) string {
 	if q != nil && q.OrderBy != "" {
 		return fmt.Sprintf("%s=%s", urlOrderKey, q.OrderBy)
 	}
-	return fmt.Sprintf("%s=%s", urlOrderKey, OrderDescending)
+	return fmt.Sprintf("%s=%s", urlOrderKey, OrderByDescending)
 }
 
 func buildPage(q *SearchQuery) string {

@@ -3,11 +3,12 @@ package NovelUpdatesClient
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"net/url"
 	"strconv"
 	"strings"
 )
 
-func DoFetchNovelTypeRequestWith(req Requester) (r []NovelTypeResult, err error) {
+func doFetchKeyValueRequestWith(req Requester, selector string, valueAttr string) (r []KeyValueResult, err error) {
 
 	// Create Document From URL
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
@@ -16,70 +17,42 @@ func DoFetchNovelTypeRequestWith(req Requester) (r []NovelTypeResult, err error)
 	}
 
 	// Find & Extract Data
-	doc.Find(".rankfl > div:nth-child(3) a").Each(func(i int, s *goquery.Selection) {
-		r = append(r, NovelTypeResult{
+	doc.Find(selector).Each(func(i int, s *goquery.Selection) {
+		r = append(r, KeyValueResult{
 			Name:  s.Text(),
-			Value: s.AttrOr("genreid", ""),
+			Value: s.AttrOr(valueAttr, ""),
 		})
 	})
 
 	return r, nil
 }
 
-func DoFetchLanguageRequestWith(req Requester) (r []NovelTypeResult, err error) {
-
-	// Create Document From URL
-	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
-	if err != nil {
-		return nil, err
-	}
-
-	// Find & Extract Data
-	doc.Find("div.g-cols:nth-child(5) a").Each(func(i int, s *goquery.Selection) {
-		r = append(r, NovelTypeResult{
-			Name:  s.Text(),
-			Value: s.AttrOr("genreid", ""),
-		})
-	})
-
-	return r, nil
+func DoFetchNovelTypeRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, ".rankfl > div:nth-child(3) a", "genreid")
 }
 
-func DoFetchGenresRequestWith(req Requester) (r []GenreResult, err error) {
-
-	// Create Document From URL
-	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
-	if err != nil {
-		return nil, err
-	}
-
-	// Find & Extract Data
-	doc.Find("div.g-cols:nth-child(24) a").Each(func(i int, s *goquery.Selection) {
-		r = append(r, GenreResult{
-			Name:  s.Text(),
-			Value: s.AttrOr("genreid", ""),
-		})
-	})
-
-	return r, nil
+func DoFetchLanguageRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, "div.g-cols:nth-child(5) a", "genreid")
 }
 
-func DoFetchTagsRequestWith(req Requester) (r []TagResult, err error) {
+func DoFetchGenresRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, "div.g-cols:nth-child(24) a", "genreid")
+}
 
-	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
-	if err != nil {
-		return nil, err
-	}
+func DoFetchTagsRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, "select#tags_include option", "value")
+}
 
-	// Find & Extract Data
-	doc.Find("select#tags_include option").Each(func(i int, s *goquery.Selection) {
-		r = append(r, TagResult{
-			Name:  s.Text(),
-			Value: s.AttrOr("value", ""),
-		})
-	})
+func DoFetchStoryStatusRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, ".storystatus option", "value")
+}
 
-	return r, nil
+func DoFetchSortByRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, ".sortresults option", "value")
+}
+
+func DoFetchOrderByRequestWith(req Requester) (r []KeyValueResult, err error) {
+	return doFetchKeyValueRequestWith(req, ".sortorder option", "value")
 }
 
 func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err error) {
@@ -102,18 +75,18 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 			}
 		}
 		///////////////////////////////////////////////////////////
-		Slug := "ERR"
-		SlugURL := "ERR"
+		ID := "ERR"
+		URL := "ERR"
 		{
-			oSlug := s.Find(".search_title a").AttrOr("href", "")
-			oSlug = strings.Trim(oSlug, " ")
-			if oSlug != "" {
-				SlugURL = oSlug
+			oURL := s.Find(".search_title a").AttrOr("href", "")
+			oURL = strings.Trim(oURL, " ")
+			if _, err := url.ParseRequestURI(oURL); oURL != "" && err == nil {
+				URL = oURL
 			}
-			oSlugSplit := strings.Split(oSlug, "/")
-			if len(oSlugSplit) == 6 {
-				if oSlug != "" {
-					Slug = oSlugSplit[4]
+			oURLSplit := strings.Split(oURL, "/")
+			if len(oURLSplit) == 6 {
+				if oURL != "" {
+					ID = oURLSplit[4]
 				}
 			}
 		}
@@ -173,7 +146,7 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 			s.Find(".search_genre a").Each(func(i int, selection *goquery.Selection) {
 				oGenre := selection.Text()
 				oGenre = strings.Trim(oGenre, " ")
-				if genre, ok := NameToGenre[oGenre]; ok && oGenre != "" {
+				if genre, ok := DisplayStringToGenre[oGenre]; ok && oGenre != "" {
 					genreList = append(genreList, genre)
 				}
 			})
@@ -201,7 +174,7 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 		Description := "ERR"
 		{
 			oDescription := s.Find(".search_body_nu").Contents().FilterFunction(func(i int, s *goquery.Selection) bool {
-				return !s.Is(".search_title,.search_stats,.search_genre,.dots,.list")
+				return !s.Is(".search_title,.search_stats,.search_genre,div,.dots,.list")
 			}).Text()
 			oDescription = strings.Replace(oDescription, "<<less", "", -1)
 			oDescription = strings.Trim(oDescription, " \n")
@@ -212,8 +185,8 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 
 		r = append(r, SearchResult{
 			Title:                  Title,
-			Slug:                   Slug,
-			SlugURL:                SlugURL,
+			ID:                     ID,
+			URL:                    URL,
 			Chapters:               Chapters,
 			ReleaseFrequencyInDays: ReleaseFrequency,
 			Readers:                Readers,
