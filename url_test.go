@@ -119,7 +119,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlChaptersScaleKey: {ScaleMin},
+				urlChaptersScaleKey: {ScaleMin.String()},
 				urlChaptersKey:      {"10"},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -132,7 +132,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlChaptersScaleKey: {ScaleMin},
+				urlChaptersScaleKey: {ScaleMin.String()},
 				urlChaptersKey:      {"10"},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -145,7 +145,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlChaptersScaleKey: {ScaleMax},
+				urlChaptersScaleKey: {ScaleMax.String()},
 				urlChaptersKey:      {"10"},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -157,7 +157,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlReleaseFrequencyScaleKey: {ScaleMax},
+				urlReleaseFrequencyScaleKey: {ScaleMax.String()},
 				urlReleaseFrequencyKey:      {"10"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -170,7 +170,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlReleaseFrequencyScaleKey: {ScaleMin},
+				urlReleaseFrequencyScaleKey: {ScaleMin.String()},
 				urlReleaseFrequencyKey:      {"10"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -183,7 +183,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlReleaseFrequencyScaleKey: {ScaleMax},
+				urlReleaseFrequencyScaleKey: {ScaleMax.String()},
 				urlReleaseFrequencyKey:      {"10"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -195,7 +195,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReviewsScaleKey: {ScaleMin},
+				urlReviewsScaleKey: {ScaleMin.String()},
 				urlReviewsKey:      {"10"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -208,7 +208,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReviewsScaleKey: {ScaleMin},
+				urlReviewsScaleKey: {ScaleMin.String()},
 				urlReviewsKey:      {"10"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -221,7 +221,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReviewsScaleKey: {ScaleMax},
+				urlReviewsScaleKey: {ScaleMax.String()},
 				urlReviewsKey:      {"10"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -233,7 +233,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlRatingScaleKey:  {ScaleMin},
+				urlRatingScaleKey:  {ScaleMin.String()},
 				urlRatingKey:       {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -246,7 +246,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlRatingScaleKey:  {ScaleMin},
+				urlRatingScaleKey:  {ScaleMin.String()},
 				urlRatingKey:       {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -259,7 +259,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlRatingScaleKey:  {ScaleMax},
+				urlRatingScaleKey:  {ScaleMax.String()},
 				urlRatingKey:       {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -271,7 +271,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlNumberOfRatingsScaleKey: {ScaleMin},
+				urlNumberOfRatingsScaleKey: {ScaleMin.String()},
 				urlNumberOfRatingsKey:      {"5"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -284,7 +284,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlNumberOfRatingsScaleKey: {ScaleMin},
+				urlNumberOfRatingsScaleKey: {ScaleMin.String()},
 				urlNumberOfRatingsKey:      {"5"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -297,7 +297,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlNumberOfRatingsScaleKey: {ScaleMax},
+				urlNumberOfRatingsScaleKey: {ScaleMax.String()},
 				urlNumberOfRatingsKey:      {"5"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -309,7 +309,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReadersScaleKey: {ScaleMin},
+				urlReadersScaleKey: {ScaleMin.String()},
 				urlReadersKey:      {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -322,7 +322,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReadersScaleKey: {ScaleMin},
+				urlReadersScaleKey: {ScaleMin.String()},
 				urlReadersKey:      {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -335,7 +335,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlReadersScaleKey: {ScaleMax},
+				urlReadersScaleKey: {ScaleMax.String()},
 				urlReadersKey:      {"5"},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -347,7 +347,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlFirstReleaseDateScaleKey: {ScaleMin},
+				urlFirstReleaseDateScaleKey: {ScaleMin.String()},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -360,7 +360,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlFirstReleaseDateScaleKey: {ScaleMin},
+				urlFirstReleaseDateScaleKey: {ScaleMin.String()},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -373,7 +373,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:          {urlSeriesFinderEnabled},
-				urlFirstReleaseDateScaleKey: {ScaleMax},
+				urlFirstReleaseDateScaleKey: {ScaleMax.String()},
 				urlFirstReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                  {SortByLastUpdated.String()},
 				urlOrderKey:                 {OrderByDescending.String()},
@@ -385,7 +385,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlLastReleaseDateScaleKey: {ScaleMin},
+				urlLastReleaseDateScaleKey: {ScaleMin.String()},
 				urlLastReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -398,7 +398,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlLastReleaseDateScaleKey: {ScaleMin},
+				urlLastReleaseDateScaleKey: {ScaleMin.String()},
 				urlLastReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -411,7 +411,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:         {urlSeriesFinderEnabled},
-				urlLastReleaseDateScaleKey: {ScaleMax},
+				urlLastReleaseDateScaleKey: {ScaleMax.String()},
 				urlLastReleaseDateKey:      {"04/04/2022"},
 				urlSortKey:                 {SortByLastUpdated.String()},
 				urlOrderKey:                {OrderByDescending.String()},
@@ -425,7 +425,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -442,7 +442,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -460,7 +460,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -478,7 +478,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorOr},
+				urlGenreOperatorKey: {OperatorOr.String()},
 				urlGenreIncludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -492,7 +492,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreExcludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -509,7 +509,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -527,7 +527,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -545,7 +545,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorOr},
+				urlGenreOperatorKey: {OperatorOr.String()},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
 				urlOrderKey:         {OrderByDescending.String()},
@@ -562,7 +562,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreFantasy)},
 				urlGenreExcludeKey:  {string(GenreAction)},
 				urlSortKey:          {SortByLastUpdated.String()},
@@ -586,7 +586,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
@@ -611,7 +611,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorAnd},
+				urlGenreOperatorKey: {OperatorAnd.String()},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
@@ -636,7 +636,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey:  {urlSeriesFinderEnabled},
-				urlGenreOperatorKey: {OperatorOr},
+				urlGenreOperatorKey: {OperatorOr.String()},
 				urlGenreIncludeKey:  {string(GenreAdult), string(GenreDrama), string(GenreHarem), string(GenreHistorical)},
 				urlGenreExcludeKey:  {string(GenreAction), string(GenreAdventure), string(GenreComedy), string(GenreFantasy)},
 				urlSortKey:          {SortByLastUpdated.String()},
@@ -651,7 +651,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagBlacksmith.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -668,7 +668,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -686,7 +686,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -704,7 +704,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorAnd},
+				urlTagOperatorKey:  {OperatorAnd.String()},
 				urlTagIncludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -718,7 +718,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagExcludeKey:   {TagBlacksmith.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -735,7 +735,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -753,7 +753,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -771,7 +771,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorAnd},
+				urlTagOperatorKey:  {OperatorAnd.String()},
 				urlTagExcludeKey:   {TagArtificialIntelligence.String(), TagBetrayal.String(), TagAliens.String(), TagApocalypse.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
 				urlOrderKey:        {OrderByDescending.String()},
@@ -788,7 +788,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagBlacksmith.String()},
 				urlTagExcludeKey:   {TagArtists.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
@@ -812,7 +812,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
 				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
@@ -837,7 +837,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorOr},
+				urlTagOperatorKey:  {OperatorOr.String()},
 				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
 				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
 				urlSortKey:         {SortByLastUpdated.String()},
@@ -862,7 +862,7 @@ func TestBuildSearchStringFromQuery(t *testing.T) {
 			},
 			Expected: map[string][]interface{}{
 				urlSeriesFinderKey: {urlSeriesFinderEnabled},
-				urlTagOperatorKey:  {OperatorAnd},
+				urlTagOperatorKey:  {OperatorAnd.String()},
 				urlTagIncludeKey:   {TagBlacksmith.String(), TagArtificialIntelligence.String(), TagAbsentParents.String(), TagAcademy.String()},
 				urlTagExcludeKey:   {TagArtists.String(), TagDestiny.String(), TagColdProtagonist.String(), TagDemonicCultivationTechnique.String()},
 				urlSortKey:         {SortByLastUpdated.String()},

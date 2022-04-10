@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func doFetchKeyValueRequestWith(req Requester, selector string, valueAttr string) (r []KeyValueResult, err error) {
+func doFetchKeyValueRequestWith(req Requester, selector string, valueAttr string) (r []*KeyValueResult, err error) {
 
 	// Create Document From URL
 	doc, err := createDocumentFromRequest(req, "https://www.novelupdates.com/series-finder")
@@ -18,7 +18,7 @@ func doFetchKeyValueRequestWith(req Requester, selector string, valueAttr string
 
 	// Find & Extract Data
 	doc.Find(selector).Each(func(i int, s *goquery.Selection) {
-		r = append(r, KeyValueResult{
+		r = append(r, &KeyValueResult{
 			Name:  s.Text(),
 			Value: s.AttrOr(valueAttr, ""),
 		})
@@ -27,35 +27,35 @@ func doFetchKeyValueRequestWith(req Requester, selector string, valueAttr string
 	return r, nil
 }
 
-func DoFetchNovelTypeRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchNovelTypeRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, ".rankfl > div:nth-child(3) a", "genreid")
 }
 
-func DoFetchLanguageRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchLanguageRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, "div.g-cols:nth-child(5) a", "genreid")
 }
 
-func DoFetchGenresRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchGenresRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, "div.g-cols:nth-child(24) a", "genreid")
 }
 
-func DoFetchTagsRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchTagsRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, "select#tags_include option", "value")
 }
 
-func DoFetchStoryStatusRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchStoryStatusRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, ".storystatus option", "value")
 }
 
-func DoFetchSortByRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchSortByRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, ".sortresults option", "value")
 }
 
-func DoFetchOrderByRequestWith(req Requester) (r []KeyValueResult, err error) {
+func DoFetchOrderByRequestWith(req Requester) (r []*KeyValueResult, err error) {
 	return doFetchKeyValueRequestWith(req, ".sortorder option", "value")
 }
 
-func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err error) {
+func DoSearchRequestWith(req Requester, q *SearchQuery) (r []*SearchResult, err error) {
 
 	doc, err := createDocumentFromRequest(req, fmt.Sprintf("https://www.novelupdates.com/series-finder/?%s", buildSearchStringFromQuery(q)))
 	if err != nil {
@@ -183,7 +183,7 @@ func DoSearchRequestWith(req Requester, q *SearchQuery) (r []SearchResult, err e
 			}
 		}
 
-		r = append(r, SearchResult{
+		r = append(r, &SearchResult{
 			Title:                  Title,
 			ID:                     ID,
 			URL:                    URL,

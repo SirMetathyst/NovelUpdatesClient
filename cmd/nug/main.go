@@ -208,13 +208,6 @@ func writeFor(s string, results []NovelUpdatesClient.KeyValueResult, b *strings.
 			return def
 		}
 	
-		func (s ${s}) IsValid() bool {
-			if _, ok := ${s}ToSlugString[s]; ok {
-				return true
-			}
-			return false
-		}
-	
 		type ${s}List []${s}
 	
 		func (s ${s}List) StringSlice() (sl []string) {

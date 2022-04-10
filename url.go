@@ -207,12 +207,9 @@ func buildTag(q *SearchQuery) string {
 }
 
 func buildStoryStatus(q *SearchQuery) string {
-	if q == nil {
-		return ""
-	}
 
-	if !q.StoryStatus.IsValid() {
-		q.StoryStatus = StoryStatusDefault
+	if q == nil && q.StoryStatus != "" {
+		return ""
 	}
 
 	return fmt.Sprintf("%s=%s", urlStoryStatusKey, q.StoryStatus)
