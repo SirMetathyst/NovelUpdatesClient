@@ -130,7 +130,7 @@ func writeHeader(b *strings.Builder, packageName string) {
 
 ////////////////////////////////////////////////////////
 
-func writeFor(s string, results []NovelUpdatesClient.KeyValueResult, b *strings.Builder) {
+func writeFor(s string, results []*NovelUpdatesClient.KeyValueResult, b *strings.Builder) {
 
 	//////// Main
 	b.WriteString(fmt.Sprintf("type %s string\n\n", s))
